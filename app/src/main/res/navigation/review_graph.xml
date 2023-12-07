@@ -2,9 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/review_graph"
-    app:startDestination="@id/empty_screen">
+    app:startDestination="@id/review_screen">
 
     <fragment
-        android:id="@+id/empty_screen"
-        android:name="com.bav.core.EmptyScreen" />
+        android:id="@+id/review_screen"
+        android:name="com.bav.wbapp.review.ReviewScreen" />
 </navigation>

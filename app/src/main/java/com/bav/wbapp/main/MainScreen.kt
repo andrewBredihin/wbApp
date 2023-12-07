@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.bav.core.navigate
 import com.bav.wbapp.databinding.MainScreenBinding
+import com.bav.wbapp.main.model.MainCategoryModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainScreen : Fragment() {
@@ -17,6 +20,7 @@ class MainScreen : Fragment() {
 
     private var _currentAdapter: MainScreenAdapter? = null
     private val currentAdapter get() = _currentAdapter!!
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -32,7 +36,23 @@ class MainScreen : Fragment() {
     }
 
     private fun initViews() {
-        _currentAdapter = MainScreenAdapter()
+        _currentAdapter = MainScreenAdapter { position ->
+            val action = when(currentAdapter.currentList[position].id) {
+                MainCategoryModel.PROFILE       -> MainScreenDirections.actionMainScreenToProfileScreen()
+                MainCategoryModel.STOCK         -> MainScreenDirections.actionMainScreenToStockScreen()
+                MainCategoryModel.MENU          -> MainScreenDirections.actionMainScreenToMenuScreen()
+                MainCategoryModel.INFO          -> MainScreenDirections.actionMainScreenToInfoScreen()
+                MainCategoryModel.REVIEW        -> MainScreenDirections.actionMainScreenToReviewScreen()
+                MainCategoryModel.RESTAURANTS   -> MainScreenDirections.actionMainScreenToRestaurantsScreen()
+                MainCategoryModel.HISTORY       -> MainScreenDirections.actionMainScreenToHistoryScreen2()
+                MainCategoryModel.DELIVERY      -> MainScreenDirections.actionMainScreenToDeliveryScreen()
+
+                else                        -> null
+            }
+            action?.let { navigate(action) }
+        }.apply {
+            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+        }
         binding.mainRecycler.apply {
             adapter = currentAdapter
         }

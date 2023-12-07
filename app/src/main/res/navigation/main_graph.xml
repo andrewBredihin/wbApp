@@ -8,18 +8,63 @@
         android:id="@+id/main_screen"
         android:name="com.bav.wbapp.main.MainScreen" >
         <action
-            android:id="@+id/action_main_screen_to_profile_graph"
-            app:destination="@id/profile_graph"
-            app:popUpTo="@id/main_screen" />
+            android:id="@+id/action_main_screen_to_stockScreen"
+            app:destination="@id/stockScreen" />
         <action
-            android:id="@+id/action_main_screen_to_menu_graph"
-            app:destination="@id/menu_graph"
-            app:popUpTo="@id/main_screen" />
+            android:id="@+id/action_main_screen_to_deliveryScreen"
+            app:destination="@id/deliveryScreen" />
         <action
-            android:id="@+id/action_main_screen_to_stock_graph"
-            app:destination="@id/stock_graph"
-            app:popUpTo="@id/main_screen" />
+            android:id="@+id/action_main_screen_to_historyScreen2"
+            app:destination="@id/historyScreen2" />
+        <action
+            android:id="@+id/action_main_screen_to_profileScreen"
+            app:destination="@id/profileScreen" />
+        <action
+            android:id="@+id/action_main_screen_to_reviewScreen"
+            app:destination="@id/reviewScreen" />
+        <action
+            android:id="@+id/action_main_screen_to_menuScreen"
+            app:destination="@id/menuScreen" />
+        <action
+            android:id="@+id/action_main_screen_to_infoScreen"
+            app:destination="@id/infoScreen" />
+        <action
+            android:id="@+id/action_main_screen_to_restaurantsScreen"
+            app:destination="@id/restaurantsScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/stockScreen"
+        android:name="com.bav.wbapp.stock.StockScreen"
+        android:label="StockScreen" />
+    <fragment
+        android:id="@+id/deliveryScreen"
+        android:name="com.bav.wbapp.delivery.DeliveryScreen"
+        android:label="DeliveryScreen" />
+    <fragment
+        android:id="@+id/historyScreen2"
+        android:name="com.bav.wbapp.history.HistoryScreen"
+        android:label="HistoryScreen" />
+    <fragment
+        android:id="@+id/infoScreen"
+        android:name="com.bav.wbapp.info.InfoScreen"
+        android:label="InfoScreen" />
+    <fragment
+        android:id="@+id/menuScreen"
+        android:name="com.bav.wbapp.menu.MenuScreen"
+        android:label="MenuScreen" />
+    <fragment
+        android:id="@+id/reviewScreen"
+        android:name="com.bav.wbapp.review.ReviewScreen"
+        android:label="ReviewScreen" />
+    <fragment
+        android:id="@+id/profileScreen"
+        android:name="com.bav.wbapp.profile.ProfileScreen"
+        android:label="ProfileScreen" />
+    <fragment
+        android:id="@+id/restaurantsScreen"
+        android:name="com.bav.wbapp.restaurants.RestaurantsScreen"
+        android:label="RestaurantsScreen" />
+
     <include app:graph="@navigation/stock_graph" />
     <include app:graph="@navigation/menu_graph" />
     <include app:graph="@navigation/restaurants_graph" />
@@ -27,5 +72,6 @@
     <include app:graph="@navigation/review_graph" />
     <include app:graph="@navigation/profile_graph" />
     <include app:graph="@navigation/info_graph" />
+    <include app:graph="@navigation/history_graph" />
 
 </navigation>

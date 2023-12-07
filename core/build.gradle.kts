@@ -32,6 +32,7 @@ android {
 dependencies {
 
     // libs
+    implementation(libs.glide)
 
     // bundles-libs
     implementation(libs.bundles.common)

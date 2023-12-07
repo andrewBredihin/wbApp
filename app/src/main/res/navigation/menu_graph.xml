@@ -2,9 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/menu_graph"
-    app:startDestination="@id/empty_screen">
+    app:startDestination="@id/menu_screen">
 
     <fragment
-        android:id="@+id/empty_screen"
-        android:name="com.bav.core.EmptyScreen" />
+        android:id="@+id/menu_screen"
+        android:name="com.bav.wbapp.menu.MenuScreen" />
 </navigation>

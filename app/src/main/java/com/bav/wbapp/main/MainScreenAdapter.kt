@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bav.wbapp.R
 import com.bav.wbapp.main.model.MainCategoryModel
 
-class MainScreenAdapter : ListAdapter<MainCategoryModel, RecyclerView.ViewHolder>(DiffCallback) {
+class MainScreenAdapter(val callback: (Int) -> Unit) : ListAdapter<MainCategoryModel, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object {
         private const val BIG_VIEW_TYPE = 1
@@ -26,15 +26,17 @@ class MainScreenAdapter : ListAdapter<MainCategoryModel, RecyclerView.ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
             BIG_VIEW_TYPE  -> bigCategoryViewHolder(
-                LayoutInflater
+                view = LayoutInflater
                     .from(parent.context)
-                    .inflate(R.layout.main_recycler_big_holder, parent, false)
+                    .inflate(R.layout.main_recycler_big_holder, parent, false),
+                callback = callback
             )
 
             SMALL_VIEW_TYPE -> smallCategoryViewHolder(
-                LayoutInflater
+                view = LayoutInflater
                     .from(parent.context)
-                    .inflate(R.layout.main_recycler_small_holder, parent, false)
+                    .inflate(R.layout.main_recycler_small_holder, parent, false),
+                callback = callback
             )
 
             else            -> error("MainScreenAdapter invalid view type")
