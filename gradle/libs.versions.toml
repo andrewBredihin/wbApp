@@ -28,6 +28,7 @@ test-espresso           = { module = "androidx.test.espresso:espresso-core", ver
 constraint              = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraint" }
 navigation-ui           = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 navigation-fragment     = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigation-plugin       = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 recycler                = { module = "androidx.recyclerview:recyclerview", version.ref = "recycler" }
 
 [plugins]

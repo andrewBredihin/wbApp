@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/main_screen">
+
+    <fragment
+        android:id="@+id/main_screen"
+        android:name="com.bav.wbapp.main.MainScreen" >
+        <action
+            android:id="@+id/action_main_screen_to_profile_graph"
+            app:destination="@id/profile_graph"
+            app:popUpTo="@id/main_screen" />
+        <action
+            android:id="@+id/action_main_screen_to_menu_graph"
+            app:destination="@id/menu_graph"
+            app:popUpTo="@id/main_screen" />
+        <action
+            android:id="@+id/action_main_screen_to_stock_graph"
+            app:destination="@id/stock_graph"
+            app:popUpTo="@id/main_screen" />
+    </fragment>
+    <include app:graph="@navigation/stock_graph" />
+    <include app:graph="@navigation/menu_graph" />
+    <include app:graph="@navigation/restaurants_graph" />
+    <include app:graph="@navigation/delivery_graph" />
+    <include app:graph="@navigation/review_graph" />
+    <include app:graph="@navigation/profile_graph" />
+    <include app:graph="@navigation/info_graph" />
+
+</navigation>
