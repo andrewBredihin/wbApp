@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.bav.wbapp"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.bav.wbapp"
-        minSdk = 26
-        targetSdk = 34
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -30,15 +30,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
+    
+    // libs
+    implementation(libs.recycler)
+    implementation(libs.constraint)
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // bundles-libs
+    implementation(libs.bundles.common)
+    implementation(libs.bundles.navigation)
+    implementation(libs.bundles.koin)
+    androidTestImplementation(libs.bundles.test)
+
+    implementation(project(":core"))
+    implementation(project(":core-ui"))
 }
