@@ -47,6 +47,9 @@ dependencies {
     implementation(libs.bundles.common)
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.koin)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.coroutines)
+    implementation(libs.bundles.lifecycle)
     androidTestImplementation(libs.bundles.test)
 
     implementation(project(":core"))
