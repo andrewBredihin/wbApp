@@ -38,4 +38,6 @@ dependencies {
 
     // bundles-libs
     implementation(libs.bundles.common)
+
+    implementation(project(":core"))
 }

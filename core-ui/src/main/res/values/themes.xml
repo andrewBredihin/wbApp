@@ -1,0 +1,36 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.WBApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.WBApp" parent="Base.Theme.WBApp" />
+
+    <!--Toolbar style-->
+    <style name="Widget.AppCompat.Toolbar.MyToolbar">
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <!--Custom Edit Text Style-->
+    <style name="Base.Widget.AppCompat.EditText.CustomEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/cool_grey</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:paddingEnd">@dimen/custom_edit_text_text_size</item>
+    </style>
+    <!--Custom Edit Text Title Style-->
+    <style name="Base.Widget.AppCompat.TextView.CustomEditTextTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/cool_grey</item>
+    </style>
+    <!--Custom Edit Text ClickableText Style-->
+    <style name="Base.Widget.AppCompat.TextView.CustomEditTextButton" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/cool_grey</item>
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:paddingEnd">@dimen/custom_edit_text_text_padding</item>
+    </style>
+
+</resources>

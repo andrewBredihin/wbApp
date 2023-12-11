@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WB App</string>
+
+    <!--Login page-->
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="show">Показать</string>
+    <string name="hide">Скрыть</string>
+
+</resources>
