@@ -6,5 +6,10 @@
     <string name="password">Пароль</string>
     <string name="show">Показать</string>
     <string name="hide">Скрыть</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login">Войти</string>
+    <string name="registration">Регистрация</string>
+    <string name="login_with_social_networks">или с помощью соц. сетей</string>
+    <string name="login_error">Неверный логин и/или пароль</string>
 
 </resources>

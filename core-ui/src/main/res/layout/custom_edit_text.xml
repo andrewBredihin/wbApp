@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
-        style="@style/Base.Widget.AppCompat.TextView.CustomEditTextTitle"
+        style="@style/Base.Widget.AppCompat.TextView.Grey12"
+
         tools:text="@string/password" />
 
     <EditText
@@ -36,7 +37,10 @@
         app:layout_constraintTop_toTopOf="@id/custom_edit_text"
         app:layout_constraintBottom_toBottomOf="@id/custom_edit_text"
         android:visibility="invisible"
-        style="@style/Base.Widget.AppCompat.TextView.CustomEditTextButton"
-        android:text="@string/show"
+        android:gravity="end|center_vertical"
+        android:paddingEnd="@dimen/custom_edit_text_text_padding"
+        style="@style/Base.Widget.AppCompat.TextView.Grey14"
+
+        tools:text="@string/show"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

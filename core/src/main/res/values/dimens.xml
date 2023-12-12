@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dp_56">56dp</dimen>
-    <dimen name="dp_124">124dp</dimen>
     <dimen name="dp_33">33dp</dimen>
     <dimen name="dp_46">46dp</dimen>
     <dimen name="dp_23">23dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_124">124dp</dimen>
+    <dimen name="dp_255">255dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
 
     <dimen name="sp_20">20sp</dimen>
     <dimen name="sp_12">12sp</dimen>

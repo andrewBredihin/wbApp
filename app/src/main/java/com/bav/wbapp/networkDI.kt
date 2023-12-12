@@ -38,7 +38,6 @@ fun networkModule() = module {
             .addConverterFactory(GsonConverterFactory.create(get()))
             .client(get())
             .build()
-            .create(AuthenticationApi::class.java)
     }
 
     single<AuthenticationApi> {

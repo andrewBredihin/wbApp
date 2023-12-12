@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <gradient
+                android:startColor="@android:color/transparent"
+                android:endColor="@android:color/transparent" />
+            <corners
+                android:radius="100dp" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <gradient
+                android:startColor="@color/tangerine_two_disable"
+                android:endColor="@color/tangerine_two_disable" />
+            <corners
+                android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:startColor="@color/tangerine_two"
+                android:endColor="@color/tangerine_two" />
+            <corners
+                android:radius="100dp" />
+        </shape>
+    </item>
+</selector>

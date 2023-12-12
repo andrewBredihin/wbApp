@@ -38,6 +38,7 @@ dependencies {
 
     // bundles-libs
     implementation(libs.bundles.common)
+    implementation(libs.bundles.navigation)
 
     implementation(project(":core"))
 }

@@ -1,7 +1,7 @@
 package com.bav.core.auth
 
 data class RequestBody(
-    val name: String?,
+    val name: String? = null,
     val email: String,
     val password: String
 )
