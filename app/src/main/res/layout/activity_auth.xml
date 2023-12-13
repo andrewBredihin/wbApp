@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/Widget.AppCompat.Toolbar.MyToolbar">
+        style="@style/Widget.AppCompat.Toolbar.MyToolbar"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -23,7 +24,7 @@
             android:layout_gravity="center"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:textColor="@android:color/white"
-            tools:text="Toolbar Title" />
+            tools:text="@string/authorization"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
@@ -31,7 +32,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="false"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

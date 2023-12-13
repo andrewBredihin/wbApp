@@ -14,8 +14,6 @@ import java.util.Locale
  *
  * Также есть возможность установить цвет, если EditText в фокусе - targetColor,
  * цвет по умолчанию - notTargetColor
- *
- * inputTypeId - пока что возможно установить только Email и Password (дальше изменится)
  */
 class CustomEditTextBinder(
     private val titleView: TextView,
@@ -36,11 +34,11 @@ class CustomEditTextBinder(
         const val HIDE = "Скрыть"
         const val SHOW = "Показать"
 
-        /**
-         * InputTypes у EditText (скрытый пароль и почта)
-         */
         const val PASSWORD = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         const val EMAIL = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        const val PHONE = InputType.TYPE_CLASS_PHONE
+        const val NAME = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        const val NULL = InputType.TYPE_NULL
     }
 
     fun bind() {
@@ -53,9 +51,11 @@ class CustomEditTextBinder(
                     PASSWORD
                 }
 
-                CustomEditTextInputType.Email -> {
-                    EMAIL
-                }
+                CustomEditTextInputType.Email    -> EMAIL
+
+                CustomEditTextInputType.Name     -> NAME
+
+                CustomEditTextInputType.Phone    -> PHONE
             }
             setOnFocusChangeListener { v, hasFocus ->
                 val colorRes = if (hasFocus) {
@@ -83,7 +83,7 @@ class CustomEditTextBinder(
             clickableText.visibility = View.VISIBLE
             clickableText.setOnClickListener {
                 if (editTextView.inputType == PASSWORD) {
-                    editTextView.inputType = EMAIL
+                    editTextView.inputType = NULL
                     clickableText.text = HIDE
                 } else {
                     editTextView.inputType = PASSWORD
@@ -97,4 +97,6 @@ class CustomEditTextBinder(
 sealed class CustomEditTextInputType {
     data object Password : CustomEditTextInputType()
     data object Email : CustomEditTextInputType()
+    data object Phone : CustomEditTextInputType()
+    data object Name : CustomEditTextInputType()
 }

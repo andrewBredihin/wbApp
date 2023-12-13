@@ -7,12 +7,16 @@
     <fragment
         android:id="@+id/login_screen"
         android:name="com.bav.wbapp.auth.LoginScreen"
-        android:label="Авторизация" >
+        android:label="@string/authorization" >
         <action
-            android:id="@+id/action_login_screen_to_main_graph"
-            app:destination="@id/main_graph"/>
+            android:id="@+id/action_login_screen_to_registrationScreen"
+            app:destination="@id/registration_screen"
+            app:popUpTo="@id/login_screen" />
     </fragment>
 
-    <include app:graph="@navigation/main_graph" />
+    <fragment
+        android:id="@+id/registration_screen"
+        android:name="com.bav.wbapp.auth.RegistrationScreen"
+        android:label="@string/registration" />
 
 </navigation>

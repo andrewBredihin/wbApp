@@ -38,4 +38,9 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <!--RadioButton Styles-->
+    <style name="MyRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/tangerine_two</item>
+    </style>
+
 </resources>

@@ -10,16 +10,17 @@ import androidx.lifecycle.lifecycleScope
 import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.R
+import com.bav.core.ToolbarActivity
 import com.bav.core.api.ResponseCode
 import com.bav.core.navigate
+import com.bav.wbapp.AuthActivity
 import com.bav.wbapp.databinding.LoginScreenBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class LoginScreen : Fragment() {
 
-    private val viewModel: AuthViewModel by viewModel()
+    private val viewModel: AuthViewModel by activityViewModel()
 
     private var _binding: LoginScreenBinding? = null
     private val binding get() = _binding!!
@@ -27,6 +28,7 @@ class LoginScreen : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = LoginScreenBinding.inflate(inflater, container, false)
+        (requireActivity() as ToolbarActivity).setupToolbar()
         return binding.root
     }
 
@@ -67,7 +69,7 @@ class LoginScreen : Fragment() {
             loginButton.setOnClickListener {
                 viewModel.login { response ->
                     when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> navigate(LoginScreenDirections.actionLoginScreenToMainGraph())
+                        ResponseCode.RESPONSE_SUCCESSFUL -> (requireActivity() as AuthActivity).navigateToMainScreen()
 
                         else -> {
                             response.message?.let { respMessage ->
@@ -81,6 +83,10 @@ class LoginScreen : Fragment() {
                         }
                     }
                 }
+            }
+
+            registration.setOnClickListener {
+                navigate(LoginScreenDirections.actionLoginScreenToRegistrationScreen())
             }
         }
     }

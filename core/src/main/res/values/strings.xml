@@ -1,15 +1,22 @@
 <resources>
     <string name="app_name">WB App</string>
 
-    <!--Login page-->
+    <!--Login/Registration page-->
     <string name="email">Email</string>
     <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="phone">Телефон</string>
     <string name="show">Показать</string>
     <string name="hide">Скрыть</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="login">Войти</string>
+    <string name="authorization">Авторизация</string>
     <string name="registration">Регистрация</string>
     <string name="login_with_social_networks">или с помощью соц. сетей</string>
     <string name="login_error">Неверный логин и/или пароль</string>
+    <string name="registration_error">Пользователь уже существует</string>
+    <string name="processing_of_personal_data">Даю свое согласие на обработку персональных данных</string>
+    <string name="registration_ok">Зарегистрироваться</string>
+    <string name="registration_bad">Не все поля заполнены</string>
 
 </resources>
