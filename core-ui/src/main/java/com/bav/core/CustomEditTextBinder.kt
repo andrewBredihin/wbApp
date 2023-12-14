@@ -1,6 +1,9 @@
 package com.bav.core
 
+import android.telephony.PhoneNumberFormattingTextWatcher
+import android.text.InputFilter
 import android.text.InputType
+import android.text.method.DigitsKeyListener
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.EditText
@@ -39,23 +42,30 @@ class CustomEditTextBinder(
         const val PHONE = InputType.TYPE_CLASS_PHONE
         const val NAME = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         const val NULL = InputType.TYPE_NULL
+
+        const val MAX_PHONE_LENGTH = 16
     }
 
     fun bind() {
         titleView.text = title
         editTextView.apply {
             hint = title.uppercase(Locale.getDefault())
-            inputType = when(inputTypeId) {
+            when(inputTypeId) {
                 CustomEditTextInputType.Password -> {
                     transformationMethod = PasswordTransformationMethod()
-                    PASSWORD
+                    inputType = PASSWORD
                 }
 
-                CustomEditTextInputType.Email    -> EMAIL
+                CustomEditTextInputType.Email    -> inputType = EMAIL
 
-                CustomEditTextInputType.Name     -> NAME
+                CustomEditTextInputType.Name     -> inputType = NAME
 
-                CustomEditTextInputType.Phone    -> PHONE
+                CustomEditTextInputType.Phone    -> {
+                    keyListener = DigitsKeyListener.getInstance("0123456789 ()-+")
+                    filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_PHONE_LENGTH))
+                    inputType = PHONE
+                    addTextChangedListener(PhoneNumberFormattingTextWatcher())
+                }
             }
             setOnFocusChangeListener { v, hasFocus ->
                 val colorRes = if (hasFocus) {

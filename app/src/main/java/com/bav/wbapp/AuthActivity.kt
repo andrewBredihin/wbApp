@@ -1,7 +1,6 @@
 package com.bav.wbapp
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.bav.core.CommonActivity
@@ -33,11 +32,5 @@ class AuthActivity :
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }
-    }
-
-    fun navigateToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }

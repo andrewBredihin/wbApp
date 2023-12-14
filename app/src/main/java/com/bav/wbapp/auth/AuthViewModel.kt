@@ -18,6 +18,7 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
 
     companion object {
         const val MIN_FIELD_LENGTH = 6
+        const val PHONE_TEMPLATE = "(8|\\+7 )?(\\d{3}) (\\d{3})-(\\d{2})-(\\d{2})"
     }
 
     /**
@@ -30,9 +31,8 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     private val _passwordFlow = MutableStateFlow("")
     private val passwordFlow: StateFlow<String> get() = _passwordFlow
 
-    private val _enableButton = loginFlow.combine(passwordFlow) { login, password ->
-        // TODO() заменить проверку почты
-        login.length >= MIN_FIELD_LENGTH && password.length >= MIN_FIELD_LENGTH
+    private val _enableButton = loginFlow.combine(passwordFlow) { email, password ->
+        checkEmail(email) && password.length >= MIN_FIELD_LENGTH
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableButton: StateFlow<Boolean> get() = _enableButton
 
@@ -60,16 +60,22 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
         loginRegFlow,
         passwordRegFlow,
         personalDataRegRegFlow
-    ) { name, phone, login, password, personalData ->
-        // TODO() заменить проверку почты и телефона
+    ) { name, phone, email, password, personalData ->
         name.length >= MIN_FIELD_LENGTH
-                && phone.length >= MIN_FIELD_LENGTH
-                && login.length >= MIN_FIELD_LENGTH
+                && checkPhone(phone)
+                && checkEmail(email)
                 && password.length >= MIN_FIELD_LENGTH
                 && personalData
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableRegButton: StateFlow<Boolean> get() = _enableRegButton
 
+    private fun checkEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+    private fun checkPhone(phone: String): Boolean {
+        val result = PHONE_TEMPLATE.toRegex().find(phone)?.value
+        return !result.isNullOrEmpty()
+     }
 
     /**
      * Функции для логина

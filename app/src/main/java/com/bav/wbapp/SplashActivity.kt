@@ -19,6 +19,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun scheduleSplashScreen() {
+        /** Если токен существует в системе,
+         * то переходить сразу на глывный экран
+         */
         lifecycleScope.launch {
             val tokenManager: TokenManager = get()
             tokenManager.getToken.collect {

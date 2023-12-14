@@ -1,5 +1,7 @@
 package com.bav.core
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import androidx.core.graphics.drawable.DrawableCompat
@@ -25,4 +27,10 @@ fun View.setTintColor(color: Int) {
     val wrappedDrawable = DrawableCompat.wrap(this.background)
     DrawableCompat.setTint(wrappedDrawable.mutate(), color)
     this.background = wrappedDrawable
+}
+
+fun Activity.navigate(activity: Class<out Activity>) {
+    val intent = Intent(this, activity)
+    startActivity(intent)
+    finish()
 }

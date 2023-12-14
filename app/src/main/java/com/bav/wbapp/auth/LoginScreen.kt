@@ -13,7 +13,7 @@ import com.bav.core.R
 import com.bav.core.ToolbarActivity
 import com.bav.core.api.ResponseCode
 import com.bav.core.navigate
-import com.bav.wbapp.AuthActivity
+import com.bav.wbapp.MainActivity
 import com.bav.wbapp.databinding.LoginScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -69,7 +69,7 @@ class LoginScreen : Fragment() {
             loginButton.setOnClickListener {
                 viewModel.login { response ->
                     when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> (requireActivity() as AuthActivity).navigateToMainScreen()
+                        ResponseCode.RESPONSE_SUCCESSFUL -> requireActivity().navigate(MainActivity::class.java)
 
                         else -> {
                             response.message?.let { respMessage ->
