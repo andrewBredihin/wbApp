@@ -10,5 +10,5 @@ fun appModule() = module {
 
     viewModel { MainScreenViewModel() }
     viewModel { AuthViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
 }

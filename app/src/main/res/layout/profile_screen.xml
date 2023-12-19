@@ -150,6 +150,17 @@
             layout="@layout/custom_text" />
     </FrameLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout_button"
+        style="@style/Widget.AppCompat.Button.MyRoundedButton"
+        android:layout_width="@dimen/dp_255"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_56"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_container" />
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="@dimen/dp_100"

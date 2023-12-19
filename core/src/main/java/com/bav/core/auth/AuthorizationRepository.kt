@@ -37,9 +37,7 @@ class AuthorizationRepositoryImpl(
 
     override suspend fun logout(): ResponseDataModel {
         val response = api.logout()
-        if(response.isSuccessful) {
-            tokenManager.removeToken()
-        }
+        tokenManager.removeToken()
         return ResponseDataModel(
             response.code(),
             response.message()

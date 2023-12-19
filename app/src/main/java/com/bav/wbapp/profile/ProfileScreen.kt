@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bav.core.R
 import com.bav.core.getNavController
+import com.bav.core.navigate
+import com.bav.wbapp.AuthActivity
 import com.bav.wbapp.databinding.ProfileScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +42,12 @@ class ProfileScreen : Fragment() {
             phone.customTextTitle.text = context?.getString(R.string.profile_phone)
             email.customTextTitle.text = context?.getString(R.string.profile_email)
             dateOfBirth.customTextTitle.text = context?.getString(R.string.profile_date_of_birth)
+
+            logoutButton.setOnClickListener {
+                viewModel.logout {
+                    requireActivity().navigate(AuthActivity::class.java)
+                }
+            }
         }
     }
 

@@ -24,5 +24,6 @@
     <string name="profile_date_of_birth">Дата рождения</string>
     <string name="profile_phone">Номер телефона</string>
     <string name="profile_email">Email</string>
+    <string name="logout">Выйти</string>
 
 </resources>

@@ -16,5 +16,5 @@ interface AuthenticationApi {
      * Если возникнут проблемы - заменить ResponseBody на okhttp3.ResponseBody
      */
     @POST("/api/v1/auth/logout")
-    suspend fun logout(): Response<ResponseBody>
+    suspend fun logout(): Response<okhttp3.ResponseBody>
 }
