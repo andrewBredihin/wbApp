@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bav.core.R
 import com.bav.core.getNavController
 import com.bav.core.navigate
+import com.bav.core.setupImage
 import com.bav.wbapp.AuthActivity
 import com.bav.wbapp.databinding.ProfileScreenBinding
 import kotlinx.coroutines.launch
@@ -75,6 +76,10 @@ class ProfileScreen : Fragment() {
                             binding.phone.customTextContent.text = body.phone
                             binding.email.customTextContent.text = body.email
                             binding.dateOfBirth.customTextContent.text = body.birthday
+
+                            body.imageUrl?.let { url ->
+                                binding.profilePhoto.setupImage(url)
+                            }
                         }
                     }
                 }
