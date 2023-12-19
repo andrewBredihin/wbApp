@@ -58,24 +58,37 @@ class ProfileScreen : Fragment() {
                 when(result) {
                     ProfileDataState.Default -> {
                         binding.loading.visibility = View.INVISIBLE
+                        binding.logoutButton.visibility = View.INVISIBLE
                     }
 
                     ProfileDataState.Loading -> {
                         binding.loading.visibility = View.VISIBLE
+                        binding.logoutButton.visibility = View.INVISIBLE
                     }
 
                     ProfileDataState.Error   -> {
                         binding.loading.visibility = View.INVISIBLE
+                        binding.logoutButton.visibility = View.INVISIBLE
                     }
 
                     is ProfileDataState.Loaded  -> {
                         result.response?.let { body ->
                             binding.loading.visibility = View.INVISIBLE
+                            binding.logoutButton.visibility = View.VISIBLE
 
                             binding.name.text = body.name
                             binding.phone.customTextContent.text = body.phone
                             binding.email.customTextContent.text = body.email
-                            binding.dateOfBirth.customTextContent.text = body.birthday
+                            binding.dateOfBirth.customTextContent.apply {
+                                if (!body.birthday.isNullOrEmpty()) {
+                                    text = body.birthday
+                                } else {
+                                    text = context?.getString(R.string.not_data)
+                                    context?.getColor(R.color.cool_grey)?.let { color ->
+                                        setTextColor(color)
+                                    }
+                                }
+                            }
 
                             body.imageUrl?.let { url ->
                                 binding.profilePhoto.setupImage(url)
