@@ -6,6 +6,9 @@ import com.bav.core.api.TokenInterceptor
 import com.bav.core.api.TokenManager
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.AuthorizationRepositoryImpl
+import com.bav.core.profile.ProfileApi
+import com.bav.core.profile.ProfileRepository
+import com.bav.core.profile.ProfileRepositoryImpl
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,6 +47,11 @@ fun networkModule() = module {
         val retrofit: Retrofit = get()
         retrofit.create(AuthenticationApi::class.java)
     }
+    single<ProfileApi> {
+        val retrofit: Retrofit = get()
+        retrofit.create(ProfileApi::class.java)
+    }
 
     single<AuthorizationRepository> { AuthorizationRepositoryImpl(get(), get()) }
+    single<ProfileRepository> { ProfileRepositoryImpl(get()) }
 }

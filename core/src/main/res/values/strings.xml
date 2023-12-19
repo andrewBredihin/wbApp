@@ -19,4 +19,10 @@
     <string name="registration_ok">Зарегистрироваться</string>
     <string name="registration_bad">Не все поля заполнены</string>
 
+    <!--Profile page-->
+    <string name="profile_toolbar">Личные данные</string>
+    <string name="profile_date_of_birth">Дата рождения</string>
+    <string name="profile_phone">Номер телефона</string>
+    <string name="profile_email">Email</string>
+
 </resources>
