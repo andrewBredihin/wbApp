@@ -6,6 +6,9 @@ import com.bav.core.api.TokenInterceptor
 import com.bav.core.api.TokenManager
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.AuthorizationRepositoryImpl
+import com.bav.core.menu.MenuApi
+import com.bav.core.menu.MenuRepository
+import com.bav.core.menu.MenuRepositoryImpl
 import com.bav.core.profile.ProfileApi
 import com.bav.core.profile.ProfileRepository
 import com.bav.core.profile.ProfileRepositoryImpl
@@ -51,7 +54,12 @@ fun networkModule() = module {
         val retrofit: Retrofit = get()
         retrofit.create(ProfileApi::class.java)
     }
+    single<MenuApi> {
+        val retrofit: Retrofit = get()
+        retrofit.create(MenuApi::class.java)
+    }
 
     single<AuthorizationRepository> { AuthorizationRepositoryImpl(get(), get()) }
     single<ProfileRepository> { ProfileRepositoryImpl(get()) }
+    single<MenuRepository> { MenuRepositoryImpl(get()) }
 }

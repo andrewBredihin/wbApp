@@ -30,4 +30,7 @@
     <string name="edit_profile">Редактирование</string>
     <string name="save">Сохранить</string>
 
+    <!--Profile page-->
+    <string name="menu_toolbar">Меню</string>
+
 </resources>
