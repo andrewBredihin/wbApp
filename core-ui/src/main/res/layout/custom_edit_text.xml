@@ -18,7 +18,8 @@
         android:visibility="invisible"
         style="@style/Base.Widget.AppCompat.TextView.Grey12"
 
-        tools:text="@string/password" />
+        tools:text="@string/password"
+        tools:visibility="visible"/>
 
     <EditText
         android:id="@+id/custom_edit_text"
@@ -27,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/custom_title"
-        style="@style/Base.Widget.AppCompat.EditText.CustomEditText"/>
+        style="@style/Base.Widget.AppCompat.EditText.CustomEditText"
+        tools:text="@string/email"/>
 
     <TextView
         android:id="@+id/custom_edit_right_click"

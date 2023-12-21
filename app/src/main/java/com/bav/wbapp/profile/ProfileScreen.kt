@@ -58,23 +58,23 @@ class ProfileScreen : Fragment() {
                 when(result) {
                     ProfileDataState.Default -> {
                         binding.loading.visibility = View.INVISIBLE
-                        binding.logoutButton.visibility = View.INVISIBLE
+                        renderVisibility(View.INVISIBLE)
                     }
 
                     ProfileDataState.Loading -> {
                         binding.loading.visibility = View.VISIBLE
-                        binding.logoutButton.visibility = View.INVISIBLE
+                        renderVisibility(View.INVISIBLE)
                     }
 
                     ProfileDataState.Error   -> {
                         binding.loading.visibility = View.INVISIBLE
-                        binding.logoutButton.visibility = View.INVISIBLE
+                        renderVisibility(View.INVISIBLE)
                     }
 
                     is ProfileDataState.Loaded  -> {
                         result.response?.let { body ->
                             binding.loading.visibility = View.INVISIBLE
-                            binding.logoutButton.visibility = View.VISIBLE
+                            renderVisibility(View.VISIBLE)
 
                             binding.name.text = body.name
                             binding.phone.customTextContent.text = body.phone
@@ -100,6 +100,20 @@ class ProfileScreen : Fragment() {
         }
     }
 
+    private fun renderVisibility(visibility: Int) {
+        binding.name.visibility = visibility
+        binding.phone.customTextContent.visibility = visibility
+        binding.phone.customTextTitle.visibility = visibility
+        binding.email.customTextContent.visibility = visibility
+        binding.email.customTextTitle.visibility = visibility
+        binding.dateOfBirth.customTextContent.visibility = visibility
+        binding.dateOfBirth.customTextTitle.visibility = visibility
+        binding.separator.visibility = visibility
+        binding.profilePhoto.visibility = visibility
+        binding.editPhoto.visibility = visibility
+        binding.logoutButton.visibility = visibility
+    }
+
     private fun bindToolbar() {
         val toolbar = binding.toolbar
         toolbar.setNavigationOnClickListener {
@@ -109,7 +123,7 @@ class ProfileScreen : Fragment() {
             // TODO() кнопка корзины
         }
         binding.editButton.setOnClickListener {
-            // TODO() кнопка редактирования профиля
+            navigate(ProfileScreenDirections.actionProfileScreenToProfileEditScreen())
         }
     }
 }

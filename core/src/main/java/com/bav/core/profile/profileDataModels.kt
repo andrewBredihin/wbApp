@@ -18,3 +18,11 @@ data class ResponseProfileAvatarDataModel(
     val code: Int,
     val image: String? = null
 )
+
+data class ProfileRequestBody(
+    val name: String?,
+    val phone: String?,
+    val email: String,
+    val password: String?,
+    val birthday: String?
+)

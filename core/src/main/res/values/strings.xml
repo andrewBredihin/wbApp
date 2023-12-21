@@ -5,6 +5,7 @@
     <string name="email">Email</string>
     <string name="password">Пароль</string>
     <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
     <string name="phone">Телефон</string>
     <string name="show">Показать</string>
     <string name="hide">Скрыть</string>
@@ -26,5 +27,7 @@
     <string name="profile_email">Email</string>
     <string name="logout">Выйти</string>
     <string name="not_data">Не заполнено</string>
+    <string name="edit_profile">Редактирование</string>
+    <string name="save">Сохранить</string>
 
 </resources>

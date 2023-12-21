@@ -75,7 +75,7 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     private fun checkPhone(phone: String): Boolean {
         val result = PHONE_TEMPLATE.toRegex().find(phone)?.value
         return !result.isNullOrEmpty()
-     }
+    }
 
     /**
      * Функции для логина
