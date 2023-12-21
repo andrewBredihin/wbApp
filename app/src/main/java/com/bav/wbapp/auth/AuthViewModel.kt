@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.RequestBody
-import com.bav.core.auth.ResponseDataModel
 import com.bav.core.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +43,7 @@ class AuthViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableButton: StateFlow<Boolean> get() = _enableButton
 
-    private val _loginState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Default)
+    private val _loginState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Default)
     val loginState = _loginState.asStateFlow()
 
     /**
@@ -80,6 +79,10 @@ class AuthViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableRegButton: StateFlow<Boolean> get() = _enableRegButton
 
+    private val _registrationState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState.Default)
+    val registrationState = _registrationState.asStateFlow()
+
+
     private fun checkEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
@@ -101,7 +104,7 @@ class AuthViewModel(
     }
 
     fun login() {
-        _loginState.value = LoginState.Loading
+        _loginState.value = AuthState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val request = RequestBody(
@@ -111,14 +114,14 @@ class AuthViewModel(
                 val response = authRepository.login(request = request)
                 withContext(Dispatchers.Main) {
                     _loginState.value = if (response.code == ResponseCode.RESPONSE_SUCCESSFUL) {
-                        LoginState.Login
+                        AuthState.Success
                     } else {
-                        LoginState.Error(context.getString(R.string.login_error))
+                        AuthState.Error(context.getString(R.string.login_error))
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _loginState.value = LoginState.Error("Error")
+                    _loginState.value = AuthState.Error("Error")
                 }
             }
         }
@@ -147,17 +150,26 @@ class AuthViewModel(
         _personalDataRegRegFlow.value = newValue
     }
 
-    fun registration(callback: (ResponseDataModel) -> Unit) {
+    fun registration() {
+        _registrationState.value = AuthState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val request = RequestBody(
-                name = nameRegFlow.value,
-                phone = phoneRegFlow.value,
-                email = loginRegFlow.value,
-                password = passwordRegFlow.value,
-            )
-            val response = authRepository.register(request = request)
-            withContext(Dispatchers.Main) {
-                callback(response)
+            try {
+                val request = RequestBody(
+                    name = nameRegFlow.value,
+                    phone = phoneRegFlow.value,
+                    email = loginRegFlow.value,
+                    password = passwordRegFlow.value,
+                )
+                val response = authRepository.register(request = request)
+                withContext(Dispatchers.Main) {
+                    _registrationState.value = if (response.code == ResponseCode.RESPONSE_SUCCESSFUL) {
+                        AuthState.Success
+                    } else {
+                        AuthState.Error(context.getString(R.string.registration_error))
+                    }
+                }
+            } catch (e: Exception) {
+                _registrationState.value = AuthState.Error("Error")
             }
         }
     }

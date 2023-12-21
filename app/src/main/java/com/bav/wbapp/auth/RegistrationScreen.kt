@@ -12,7 +12,6 @@ import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.ToolbarActivity
 import com.bav.core.R
-import com.bav.core.api.ResponseCode
 import com.bav.wbapp.databinding.RegistrationScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -92,25 +91,7 @@ class RegistrationScreen : Fragment() {
             }
 
             registrationButton.setOnClickListener {
-                viewModel.registration { response ->
-                    when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> {
-                            val loginPage = findNavController().graph.startDestinationId
-                            findNavController().navigate(loginPage)
-                        }
-
-                        else                             -> {
-                            response.message?.let { respMessage ->
-                                val message = if (respMessage != "") {
-                                    respMessage
-                                } else {
-                                    context.getString(R.string.registration_error)
-                                }
-                                showError(message)
-                            }
-                        }
-                    }
-                }
+                viewModel.registration()
             }
         }
     }
@@ -131,6 +112,40 @@ class RegistrationScreen : Fragment() {
 
                 }
             }
+        }
+        lifecycleScope.launch {
+            viewModel.registrationState.collect { state ->
+                when(state) {
+                    AuthState.Default  -> {
+                        binding.progress.visibility = View.INVISIBLE
+                    }
+                    is AuthState.Error -> {
+                        binding.progress.visibility = View.INVISIBLE
+                        renderEnable(true)
+                        showError(state.message)
+                    }
+                    AuthState.Loading -> {
+                        binding.progress.visibility = View.VISIBLE
+                        renderEnable(false)
+                    }
+                    AuthState.Success -> {
+                        val loginPage = findNavController().graph.startDestinationId
+                        findNavController().navigate(loginPage)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun renderEnable(enable: Boolean) {
+        with(binding) {
+            registrationButton.isEnabled = enable
+            personalDataCheck.isEnabled = enable
+            nameReg.customEditText.isEnabled = enable
+            loginReg.customEditText.isEnabled = enable
+            phoneReg.customEditText.isEnabled = enable
+            passwordReg.customEditText.isEnabled = enable
         }
     }
 

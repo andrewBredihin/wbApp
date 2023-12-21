@@ -107,19 +107,19 @@ class LoginScreen : Fragment() {
         lifecycleScope.launch {
             viewModel.loginState.collect { state ->
                 when(state) {
-                    LoginState.Default -> {
+                    AuthState.Default  -> {
                         binding.progress.visibility = View.INVISIBLE
                     }
-                    is LoginState.Error   -> {
+                    is AuthState.Error -> {
                         binding.progress.visibility = View.INVISIBLE
                         renderEnable(true)
                         showError(state.message)
                     }
-                    LoginState.Loading -> {
+                    AuthState.Loading -> {
                         binding.progress.visibility = View.VISIBLE
                         renderEnable(false)
                     }
-                    LoginState.Login   -> {
+                    AuthState.Success -> {
                         requireActivity().navigate(MainActivity::class.java)
                     }
                 }
