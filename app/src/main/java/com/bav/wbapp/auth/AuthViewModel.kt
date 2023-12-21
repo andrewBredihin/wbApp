@@ -1,20 +1,28 @@
 package com.bav.wbapp.auth
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bav.core.api.ResponseCode
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.RequestBody
 import com.bav.core.auth.ResponseDataModel
+import com.bav.core.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
-class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewModel() {
+class AuthViewModel(
+    private val context: Context,
+    private val authRepository: AuthorizationRepository
+) : ViewModel() {
 
     companion object {
         const val MIN_FIELD_LENGTH = 6
@@ -36,9 +44,12 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableButton: StateFlow<Boolean> get() = _enableButton
 
+    private val _loginState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Default)
+    val loginState = _loginState.asStateFlow()
+
     /**
-    * Поля для регистрации
-    */
+     * Поля для регистрации
+     */
     private val _nameRegFlow = MutableStateFlow("")
     private val nameRegFlow: StateFlow<String> get() = _nameRegFlow
 
@@ -72,10 +83,11 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     private fun checkEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
     private fun checkPhone(phone: String): Boolean {
         val result = PHONE_TEMPLATE.toRegex().find(phone)?.value
         return !result.isNullOrEmpty()
-     }
+    }
 
     /**
      * Функции для логина
@@ -83,19 +95,31 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     fun updateLoginFlow(newValue: String) {
         _loginFlow.value = newValue
     }
+
     fun updatePasswordFlow(newValue: String) {
         _passwordFlow.value = newValue
     }
 
-    fun login(callback: (ResponseDataModel) -> Unit) {
+    fun login() {
+        _loginState.value = LoginState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val request = RequestBody(
-                email = loginFlow.value,
-                password = passwordFlow.value,
-            )
-            val response = authRepository.login(request = request)
-            withContext(Dispatchers.Main) {
-                callback(response)
+            try {
+                val request = RequestBody(
+                    email = loginFlow.value,
+                    password = passwordFlow.value,
+                )
+                val response = authRepository.login(request = request)
+                withContext(Dispatchers.Main) {
+                    _loginState.value = if (response.code == ResponseCode.RESPONSE_SUCCESSFUL) {
+                        LoginState.Login
+                    } else {
+                        LoginState.Error(context.getString(R.string.login_error))
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _loginState.value = LoginState.Error("Error")
+                }
             }
         }
     }
@@ -106,12 +130,15 @@ class AuthViewModel(private val authRepository: AuthorizationRepository) : ViewM
     fun updateNameRegFlow(newValue: String) {
         _nameRegFlow.value = newValue
     }
+
     fun updatePhoneRegFlow(newValue: String) {
         _phoneRegFlow.value = newValue
     }
+
     fun updateLoginRegFlow(newValue: String) {
         _loginRegFlow.value = newValue
     }
+
     fun updatePasswordRegFlow(newValue: String) {
         _passwordRegFlow.value = newValue
     }

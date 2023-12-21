@@ -11,7 +11,6 @@ import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.R
 import com.bav.core.ToolbarActivity
-import com.bav.core.api.ResponseCode
 import com.bav.core.navigate
 import com.bav.wbapp.MainActivity
 import com.bav.wbapp.databinding.LoginScreenBinding
@@ -67,9 +66,9 @@ class LoginScreen : Fragment() {
             ).bind()
 
             loginButton.setOnClickListener {
-                viewModel.login { response ->
+                viewModel.login() /*{ response ->
                     when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> requireActivity().navigate(MainActivity::class.java)
+                        ResponseCode.RESPONSE_SUCCESSFUL ->
 
                         else -> {
                             response.message?.let { respMessage ->
@@ -82,7 +81,7 @@ class LoginScreen : Fragment() {
                             }
                         }
                     }
-                }
+                }*/
             }
 
             registration.setOnClickListener {
@@ -105,6 +104,33 @@ class LoginScreen : Fragment() {
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.loginState.collect { state ->
+                when(state) {
+                    LoginState.Default -> {
+                        binding.progress.visibility = View.INVISIBLE
+                    }
+                    is LoginState.Error   -> {
+                        binding.progress.visibility = View.INVISIBLE
+                        renderEnable(true)
+                        showError(state.message)
+                    }
+                    LoginState.Loading -> {
+                        binding.progress.visibility = View.VISIBLE
+                        renderEnable(false)
+                    }
+                    LoginState.Login   -> {
+                        requireActivity().navigate(MainActivity::class.java)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun renderEnable(enable: Boolean) {
+        binding.loginButton.isEnabled = enable
+        binding.login.customEditText.isEnabled = enable
+        binding.password.customEditText.isEnabled = enable
     }
 
     private fun showError(message: String) {

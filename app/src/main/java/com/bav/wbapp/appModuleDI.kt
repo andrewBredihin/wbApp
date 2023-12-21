@@ -8,5 +8,5 @@ import org.koin.dsl.module
 fun appModule() = module {
 
     viewModel { MainScreenViewModel() }
-    viewModel { AuthViewModel(get()) }
+    viewModel { AuthViewModel(get(), get()) }
 }
