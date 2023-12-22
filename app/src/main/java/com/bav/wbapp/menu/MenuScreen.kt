@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.appcompat.widget.Toolbar.LayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bav.core.getNavController
 import com.bav.wbapp.databinding.MenuScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,6 +55,39 @@ class MenuScreen : Fragment() {
         }
         binding.menuRecycler.apply {
             adapter = currentAdapter
+        }
+
+        val navIcon = binding.menuToolbar.navigationIcon
+        binding.menuToolbar.setNavigationOnClickListener {
+            getNavController().popBackStack()
+        }
+
+        binding.menuSearchField.apply {
+            setOnSearchClickListener {
+                binding.menuToolbarTitle.visibility = View.GONE
+                binding.menuToolbarBasketButton.visibility = View.GONE
+                layoutParams.width = LayoutParams.MATCH_PARENT
+                binding.menuToolbar.navigationIcon = null
+            }
+
+            setOnCloseListener {
+                binding.menuToolbarTitle.visibility = View.VISIBLE
+                binding.menuToolbarBasketButton.visibility = View.VISIBLE
+                layoutParams.width = LayoutParams.WRAP_CONTENT
+                binding.menuToolbar.navigationIcon = navIcon
+                false
+            }
+
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    viewModel.updateSearchFlow(newText)
+                    return true
+                }
+            })
         }
     }
 

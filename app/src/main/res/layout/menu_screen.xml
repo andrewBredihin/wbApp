@@ -32,14 +32,12 @@
             android:background="@android:color/transparent"
             android:src="@drawable/basket" />
 
-        <ImageButton
-            android:id="@+id/menu_toolbar_search_button"
-            android:layout_width="@dimen/dp_23"
-            android:layout_height="@dimen/dp_23"
+        <SearchView
+            android:id="@+id/menu_search_field"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:background="@android:color/transparent"
-            android:src="@drawable/edit" />
+            android:iconifiedByDefault="true"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
