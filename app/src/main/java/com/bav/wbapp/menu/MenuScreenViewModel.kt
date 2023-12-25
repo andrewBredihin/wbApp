@@ -63,23 +63,30 @@ class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() 
     fun loadAllProducts() {
         _menuDataState.value = MenuDataState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.loadAllProducts()
-            withContext(Dispatchers.Main) {
-                if (result.code == ResponseCode.RESPONSE_SUCCESSFUL && result.body != null) {
-                    _loadedList = result.body!!.map { dto ->
-                        MenuItemModel(
-                            id = dto.id,
-                            amount = dto.amount,
-                            title = dto.title,
-                            description = dto.description,
-                            type = dto.type
-                        )
+            try {
+                val result = repository.loadAllProducts()
+                withContext(Dispatchers.Main) {
+                    if (result.code == ResponseCode.RESPONSE_SUCCESSFUL && result.body != null) {
+                        _loadedList = result.body!!.map { dto ->
+                            MenuItemModel(
+                                id = dto.id,
+                                amount = dto.amount,
+                                title = dto.title,
+                                description = dto.description,
+                                type = dto.type
+                            )
+                        }
+                        _menuDataState.value = MenuDataState.Loaded(_loadedList)
+                    } else {
+                        _menuDataState.value = MenuDataState.Error
                     }
-                    _menuDataState.value = MenuDataState.Loaded(_loadedList)
-                } else {
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
                     _menuDataState.value = MenuDataState.Error
                 }
             }
+
         }
     }
 }
