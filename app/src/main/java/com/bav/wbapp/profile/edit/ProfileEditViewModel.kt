@@ -3,6 +3,7 @@ package com.bav.wbapp.profile.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
+import com.bav.core.combine
 import com.bav.core.profile.ProfileRepository
 import com.bav.core.profile.ProfileRequestBody
 import com.bav.wbapp.profile.ProfileDataState
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,6 +22,7 @@ class ProfileEditViewModel(
 
     companion object {
         const val MIN_NAME_LENGTH = 2
+        const val MIN_PASSWORD_LENGTH = 2
         const val PHONE_TEMPLATE = "(8|\\+7 )?(\\d{3}) (\\d{3})-(\\d{2})-(\\d{2})"
         const val DATE_TEMPLATE = "([1-9]|[1-2][0-9]|3[0-1])[.|/]([1-9]|1[0-2])[.|/][0-9]{4}"
     }
@@ -44,18 +45,31 @@ class ProfileEditViewModel(
     private val _dateFlow = MutableStateFlow("")
     private val dateFlow: StateFlow<String> get() = _dateFlow
 
+    private val _passwordFlow = MutableStateFlow("")
+    private val passwordFlow: StateFlow<String> get() = _passwordFlow
+
+    private val _confirmPasswordFlow = MutableStateFlow("")
+    private val confirmPasswordFlow: StateFlow<String> get() = _confirmPasswordFlow
+
+    private val _editPasswordCheckFlow = MutableStateFlow(false)
+    private val editPasswordCheckFlow: StateFlow<Boolean> get() = _editPasswordCheckFlow
+
     private val _enableEditProfileButton = combine(
         nameFlow,
         lastNameFlow,
         phoneFlow,
         emailFlow,
-        dateFlow
-    ) { name, lastName, phone, email, date ->
+        dateFlow,
+        passwordFlow,
+        confirmPasswordFlow,
+        editPasswordCheckFlow
+    ) { name, lastName, phone, email, date, password, confirmPassword, passwordCheck ->
         name.length >= MIN_NAME_LENGTH
                 && lastName.length >= MIN_NAME_LENGTH
                 && checkPhone(phone)
                 && checkEmail(email)
                 && checkDate(date)
+                && checkPassword(password, confirmPassword, passwordCheck)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
     val enableEditProfileButton: StateFlow<Boolean> get() = _enableEditProfileButton
 
@@ -73,6 +87,15 @@ class ProfileEditViewModel(
     }
     fun updateDateFlow(newValue: String) {
         _dateFlow.value = newValue
+    }
+    fun updatePasswordFlow(newValue: String) {
+        _passwordFlow.value = newValue
+    }
+    fun updateConfirmPasswordFlow(newValue: String) {
+        _confirmPasswordFlow.value = newValue
+    }
+    fun updateEditPasswordCheckFlow(newValue: Boolean) {
+        _editPasswordCheckFlow.value = newValue
     }
 
     fun loadProfile() {
@@ -120,5 +143,21 @@ class ProfileEditViewModel(
         }
         val result = DATE_TEMPLATE.toRegex().find(date)?.value
         return !result.isNullOrEmpty()
+    }
+
+    private fun checkPassword(
+        newPassword: String,
+        confirmPassword: String,
+        passwordCheck: Boolean
+    ): Boolean {
+        return if(passwordCheck) {
+            if(newPassword.length >= MIN_PASSWORD_LENGTH && confirmPassword.length >= MIN_PASSWORD_LENGTH) {
+                newPassword == confirmPassword
+            } else {
+                false
+            }
+        } else {
+            true
+        }
     }
 }

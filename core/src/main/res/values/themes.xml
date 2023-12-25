@@ -53,4 +53,10 @@
         <item name="buttonTint">@color/tangerine_two</item>
     </style>
 
+    <!--CheckBox Styles-->
+    <style name="MyCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/tangerine_two</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
 </resources>

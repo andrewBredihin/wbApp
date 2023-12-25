@@ -32,13 +32,69 @@ class ProfileEditScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bindToolbar()
-        initViews()
         observeData()
     }
 
-    private fun initViews() {
-        viewModel.loadProfile()
+    private fun observeData() {
+        lifecycleScope.launch {
+            viewModel.profileDataState.collect { state ->
+                renderLoadingState(state)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.enableEditProfileButton.collect { enabled ->
+                binding.editProfileButton.apply {
+                    isEnabled = enabled
+                    if (enabled) {
+                        setTextColor(context.getColor(R.color.white))
+                        setText(R.string.edit_profile)
+                    } else {
+                        setTextColor(context.getColor(R.color.cool_grey))
+                        setText(R.string.registration_bad)
+                    }
+                }
+            }
+        }
+    }
 
+    private fun renderLoadingState(state: ProfileDataState) {
+        when (state) {
+            ProfileDataState.Default -> {
+                renderDefault()
+                binding.loading.visibility = View.INVISIBLE
+                renderVisibility(View.INVISIBLE)
+                renderPasswordFieldsVisibility(View.GONE)
+                viewModel.loadProfile()
+            }
+
+            ProfileDataState.Loading -> {
+                binding.loading.visibility = View.VISIBLE
+                renderVisibility(View.INVISIBLE)
+            }
+
+            ProfileDataState.Error -> {
+                binding.loading.visibility = View.INVISIBLE
+                renderVisibility(View.INVISIBLE)
+            }
+
+            is ProfileDataState.Loaded -> {
+                state.response?.let { body ->
+                    binding.loading.visibility = View.INVISIBLE
+                    renderVisibility(View.VISIBLE)
+
+                    val nameAndLastName = body.name.split(' ')
+                    binding.editName.customEditText.setText(nameAndLastName[0])
+                    binding.editLastName.customEditText.setText(nameAndLastName.getOrNull(1) ?: "")
+                    binding.editDateOfBirth.customEditText.setText(body.birthday)
+                    binding.editPhone.customEditText.setText(body.phone)
+                    binding.editEmail.customEditText.setText(body.email)
+                }
+            }
+        }
+
+    }
+
+    private fun renderDefault() {
         with(binding) {
             val context = binding.root.context
             CustomEditTextBinder(
@@ -97,6 +153,41 @@ class ProfileEditScreen : Fragment() {
                 }
             ).bind()
 
+            CustomEditTextBinder(
+                titleView = editPassword.customTitle,
+                editTextView = editPassword.customEditText,
+                rightClickView = editPassword.customEditRightClick,
+                title = context.getString(R.string.new_password),
+                inputTypeId = CustomEditTextInputType.Password,
+                targetColor = R.color.tangerine_two,
+                notTargetColor = R.color.cool_grey,
+                enterCallback = { newValue ->
+                    viewModel.updatePasswordFlow(newValue)
+                }
+            ).bind()
+
+            CustomEditTextBinder(
+                titleView = confirmPassword.customTitle,
+                editTextView = confirmPassword.customEditText,
+                rightClickView = confirmPassword.customEditRightClick,
+                title = context.getString(R.string.confirm_password),
+                inputTypeId = CustomEditTextInputType.Password,
+                targetColor = R.color.tangerine_two,
+                notTargetColor = R.color.cool_grey,
+                enterCallback = { newValue ->
+                    viewModel.updateConfirmPasswordFlow(newValue)
+                }
+            ).bind()
+
+            editPasswordCheck.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateEditPasswordCheckFlow(isChecked)
+                if(isChecked) {
+                    renderPasswordFieldsVisibility(View.VISIBLE)
+                } else {
+                    renderPasswordFieldsVisibility(View.GONE)
+                }
+            }
+
             // FIXME() сервер не обрабатывает этот запрос
             editProfileButton.setOnClickListener {
                 viewModel.editProfile {
@@ -106,62 +197,6 @@ class ProfileEditScreen : Fragment() {
         }
     }
 
-    private fun observeData() {
-        lifecycleScope.launch {
-            viewModel.profileDataState.collect { state ->
-                renderLoadingState(state)
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.enableEditProfileButton.collect { enabled ->
-                binding.editProfileButton.apply {
-                    isEnabled = enabled
-                    if (enabled) {
-                        setTextColor(context.getColor(R.color.white))
-                        setText(R.string.edit_profile)
-                    } else {
-                        setTextColor(context.getColor(R.color.cool_grey))
-                        setText(R.string.registration_bad)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun renderLoadingState(state: ProfileDataState) {
-        when (state) {
-            ProfileDataState.Default -> {
-                binding.loading.visibility = View.INVISIBLE
-                renderVisibility(View.INVISIBLE)
-            }
-
-            ProfileDataState.Loading -> {
-                binding.loading.visibility = View.VISIBLE
-                renderVisibility(View.INVISIBLE)
-            }
-
-            ProfileDataState.Error -> {
-                binding.loading.visibility = View.INVISIBLE
-                renderVisibility(View.INVISIBLE)
-            }
-
-            is ProfileDataState.Loaded -> {
-                state.response?.let { body ->
-                    binding.loading.visibility = View.INVISIBLE
-                    renderVisibility(View.VISIBLE)
-
-                    val nameAndLastName = body.name.split(' ')
-                    binding.editName.customEditText.setText(nameAndLastName[0])
-                    binding.editLastName.customEditText.setText(nameAndLastName.getOrNull(1) ?: "")
-                    binding.editDateOfBirth.customEditText.setText(body.birthday)
-                    binding.editPhone.customEditText.setText(body.phone)
-                    binding.editEmail.customEditText.setText(body.email)
-                }
-            }
-        }
-
-    }
-
     private fun renderVisibility(visibility: Int) {
         binding.editName.customEditText.visibility = visibility
         binding.editLastName.customEditText.visibility = visibility
@@ -169,6 +204,15 @@ class ProfileEditScreen : Fragment() {
         binding.editPhone.customEditText.visibility = visibility
         binding.editEmail.customEditText.visibility = visibility
         binding.editProfileButton.visibility = visibility
+    }
+    private fun renderPasswordFieldsVisibility(visibility: Int) {
+        binding.confirmPassword.customTitle.visibility = visibility
+        binding.confirmPassword.customEditText.visibility = visibility
+        binding.confirmPassword.customEditRightClick.visibility = visibility
+
+        binding.editPassword.customTitle.visibility = visibility
+        binding.editPassword.customEditText.visibility = visibility
+        binding.editPassword.customEditRightClick.visibility = visibility
     }
 
     private fun bindToolbar() {
