@@ -32,5 +32,6 @@
     <string name="new_password">Новый пароль</string>
     <string name="confirm_password">Подтверждение пароля</string>
     <string name="save">Сохранить</string>
+    <string name="permissions_denied">Отсутствует разрешение</string>
 
 </resources>

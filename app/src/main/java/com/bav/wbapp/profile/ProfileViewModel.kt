@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class ProfileViewModel(
     private val repository: ProfileRepository,
@@ -39,6 +43,15 @@ class ProfileViewModel(
             withContext(Dispatchers.Main) {
                 callback.invoke()
             }
+        }
+    }
+
+    fun uploadAvatar(path: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val file = File(path)
+            val requestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("name", file.name, requestBody)
+            repository.uploadAvatar(body)
         }
     }
 }

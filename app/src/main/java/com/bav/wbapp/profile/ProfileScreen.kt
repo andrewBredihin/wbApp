@@ -1,9 +1,17 @@
 package com.bav.wbapp.profile
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bav.core.R
@@ -14,6 +22,7 @@ import com.bav.wbapp.AuthActivity
 import com.bav.wbapp.databinding.ProfileScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ProfileScreen : Fragment() {
     private val viewModel: ProfileViewModel by viewModel()
@@ -49,29 +58,33 @@ class ProfileScreen : Fragment() {
                     requireActivity().navigate(AuthActivity::class.java)
                 }
             }
+
+            editPhoto.setOnClickListener {
+                requestPermissions.launch(permissions())
+            }
         }
     }
 
     private fun observeData() {
         lifecycleScope.launch {
             viewModel.profileDataState.collect { result ->
-                when(result) {
-                    ProfileDataState.Default -> {
+                when (result) {
+                    ProfileDataState.Default   -> {
                         binding.loading.visibility = View.INVISIBLE
                         renderVisibility(View.INVISIBLE)
                     }
 
-                    ProfileDataState.Loading -> {
+                    ProfileDataState.Loading   -> {
                         binding.loading.visibility = View.VISIBLE
                         renderVisibility(View.INVISIBLE)
                     }
 
-                    ProfileDataState.Error   -> {
+                    ProfileDataState.Error     -> {
                         binding.loading.visibility = View.INVISIBLE
                         renderVisibility(View.INVISIBLE)
                     }
 
-                    is ProfileDataState.Loaded  -> {
+                    is ProfileDataState.Loaded -> {
                         result.response?.let { body ->
                             binding.loading.visibility = View.INVISIBLE
                             renderVisibility(View.VISIBLE)
@@ -126,4 +139,67 @@ class ProfileScreen : Fragment() {
             navigate(ProfileScreenDirections.actionProfileScreenToProfileEditScreen())
         }
     }
+
+    private val changeImage =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val imgUri = data?.data
+                imgUri?.let { uri ->
+                    val cursor = requireActivity().contentResolver.query(
+                        uri,
+                        arrayOf(MediaStore.Images.ImageColumns.DATA),
+                        null,
+                        null,
+                        null
+                    )
+                    cursor?.moveToFirst()
+                    val path = cursor?.getString(0)
+                    cursor?.close()
+                    path?.let {
+                        viewModel.uploadAvatar(it)
+                    }
+                }
+            }
+        }
+
+    private val storagePermissions = arrayOf(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private val storagePermissions33 = arrayOf(
+        Manifest.permission.READ_MEDIA_IMAGES
+    )
+
+    private fun permissions(): Array<String> {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            storagePermissions33
+        } else {
+            storagePermissions
+        }
+    }
+
+    private val requestPermissions =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            var areAllGranted = true
+            for (isGranted in result.values) {
+                areAllGranted = areAllGranted && isGranted
+            }
+            if (areAllGranted) {
+                val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+                changeImage.launch(pickImg)
+            } else {
+                Toast.makeText(
+                    context,
+                    R.string.permissions_denied,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 }
