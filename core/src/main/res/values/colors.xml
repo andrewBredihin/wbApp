@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="tangerine_two">#FFF29200</color>
+    <color name="tangerine_two_disable">#FF804F05</color>
+    <color name="cool_grey">#FF9A9AA1</color>
+</resources>

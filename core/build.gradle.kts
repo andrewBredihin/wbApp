@@ -33,8 +33,11 @@ dependencies {
 
     // libs
     implementation(libs.glide)
+    implementation(libs.datastore)
+    implementation(libs.okhttp)
 
     // bundles-libs
     implementation(libs.bundles.common)
     implementation(libs.bundles.navigation)
+    implementation(libs.bundles.retrofit)
 }
