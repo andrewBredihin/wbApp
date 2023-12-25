@@ -119,7 +119,7 @@ class ProfileEditViewModel(
                 phone = phoneFlow.value,
                 email = emailFlow.value,
                 birthday = dateFlow.value,
-                password = "test@mail.ru"
+                password = passwordFlow.value
             )
             repository.updateProfile(body)
             withContext(Dispatchers.Main) {
