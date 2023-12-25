@@ -73,8 +73,7 @@ class ProfileEditScreen : Fragment() {
             }
 
             ProfileDataState.Error -> {
-                binding.loading.visibility = View.INVISIBLE
-                renderVisibility(View.INVISIBLE)
+
             }
 
             is ProfileDataState.Loaded -> {

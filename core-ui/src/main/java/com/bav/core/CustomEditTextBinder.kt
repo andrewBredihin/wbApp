@@ -73,7 +73,7 @@ class CustomEditTextBinder(
                 CustomEditTextInputType.Date     -> {
                     inputType = DATE
                     filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_DATE_LENGTH))
-                    keyListener = DigitsKeyListener.getInstance("0123456789./")
+                    keyListener = DigitsKeyListener.getInstance("0123456789-")
                 }
             }
             setOnFocusChangeListener { v, hasFocus ->

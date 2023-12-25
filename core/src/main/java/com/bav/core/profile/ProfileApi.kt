@@ -14,13 +14,13 @@ interface ProfileApi {
     @GET("/api/v1/profile/details")
     suspend fun loadProfile(): Response<ProfileResponseDataModel>
 
-    @POST("/api/v1/updateUserInfo")
+    @POST("/api/v1/profile/updateUserInfo")
     suspend fun updateProfile(@Body requestBody: ProfileRequestBody): Response<ResponseBody>
 
-    @GET("/api/v1/downloadAvatar")
+    @GET("/api/v1/profile/downloadAvatar")
     suspend fun loadAvatar(): Response<ResponseBody>
 
     @Multipart
-    @POST("/api/v1/uploadAvatar")
+    @POST("/api/v1/profile/uploadAvatar")
     suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<ResponseBody>
 }
