@@ -28,7 +28,7 @@ class ProfileRepositoryImpl(
         // FIXME()
         return ResponseProfileAvatarDataModel(
             code = response.code(),
-            image = ""
+            image = "https://www.mtsolar.us/wp-content/uploads/2020/04/avatar-placeholder.png"
         )
     }
 

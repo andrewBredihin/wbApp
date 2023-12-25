@@ -23,13 +23,31 @@ class ProfileViewModel(
     private val _profileDataState: MutableStateFlow<ProfileDataState> = MutableStateFlow(ProfileDataState.Default)
     val profileDataState = _profileDataState.asStateFlow()
 
-    fun loadProfile() {
+    /*fun loadProfile() {
         _profileDataState.value = ProfileDataState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.loadProfile()
             withContext(Dispatchers.Main) {
                 _profileDataState.value = when (response.code) {
                     ResponseCode.RESPONSE_SUCCESSFUL -> ProfileDataState.Loaded(response = response.body)
+
+                    else                             -> ProfileDataState.Error
+                }
+            }
+        }
+    }*/
+
+    fun loadProfile() {
+        _profileDataState.value = ProfileDataState.Loading
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.loadProfile()
+            val result = repository.loadAvatar()
+            withContext(Dispatchers.Main) {
+                _profileDataState.value = when (response.code) {
+                    ResponseCode.RESPONSE_SUCCESSFUL -> {
+                        val body = response.body?.copy(imageUrl = result.image)
+                        ProfileDataState.Loaded(response = body)
+                    }
 
                     else                             -> ProfileDataState.Error
                 }
@@ -51,7 +69,10 @@ class ProfileViewModel(
             val file = File(path)
             val requestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
             val body = MultipartBody.Part.createFormData("name", file.name, requestBody)
-            repository.uploadAvatar(body)
+            val response = repository.uploadAvatar(body)
+            if(response.code() == ResponseCode.RESPONSE_SUCCESSFUL) {
+                loadProfile()
+            }
         }
     }
 }
