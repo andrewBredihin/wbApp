@@ -38,6 +38,7 @@ class RegistrationScreen : Fragment() {
     }
 
     private fun initViews() {
+        viewModel.defaultStates()
         with(binding) {
             val context = binding.root.context
             CustomEditTextBinder(
@@ -48,7 +49,7 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateNameRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdateNameAction(value))
                 }
             ).bind()
             CustomEditTextBinder(
@@ -59,7 +60,7 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePhoneRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdatePhoneAction(value))
                 }
             ).bind()
             CustomEditTextBinder(
@@ -70,7 +71,7 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateLoginRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdateEmailAction(value))
                 }
             ).bind()
             CustomEditTextBinder(
@@ -82,16 +83,16 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePasswordRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdatePasswordAction(value))
                 }
             ).bind()
 
             personalDataCheck.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.updatePersonalDataCheck(isChecked)
+                viewModel.updateRegistrationState(RegistrationAction.UpdateCheckAction(isChecked))
             }
 
             registrationButton.setOnClickListener {
-                viewModel.registration()
+                viewModel.updateRegistrationState(RegistrationAction.LoadingAction)
             }
         }
     }
@@ -99,53 +100,55 @@ class RegistrationScreen : Fragment() {
 
     private fun observeData() {
         lifecycleScope.launch {
-            viewModel.enableRegButton.collect { enabled ->
-                binding.registrationButton.apply {
-                    isEnabled = enabled
-                    if (enabled) {
-                        setTextColor(context.getColor(R.color.white))
-                        setText(R.string.registration_ok)
-                    } else {
-                        setTextColor(context.getColor(R.color.cool_grey))
-                        setText(R.string.registration_bad)
-                    }
-
-                }
-            }
-        }
-        lifecycleScope.launch {
             viewModel.registrationState.collect { state ->
-                when(state) {
-                    AuthState.Default  -> {
-                        binding.progress.visibility = View.INVISIBLE
-                    }
-                    is AuthState.Error -> {
-                        binding.progress.visibility = View.INVISIBLE
-                        renderEnable(true)
-                        showError(state.message)
-                    }
-                    AuthState.Loading -> {
-                        binding.progress.visibility = View.VISIBLE
-                        renderEnable(false)
-                    }
-                    AuthState.Success -> {
-                        val loginPage = findNavController().graph.startDestinationId
-                        findNavController().navigate(loginPage)
+                if (state.isRegistration) {
+                    val loginPage = findNavController().graph.startDestinationId
+                    findNavController().navigate(loginPage)
+                } else {
+                    if (state.isLoading) {
+                        renderLoading()
+                    } else {
+                        renderLoaded(state)
                     }
                 }
             }
         }
-
     }
 
-    private fun renderEnable(enable: Boolean) {
+    private fun renderLoading() {
         with(binding) {
-            registrationButton.isEnabled = enable
-            personalDataCheck.isEnabled = enable
-            nameReg.customEditText.isEnabled = enable
-            loginReg.customEditText.isEnabled = enable
-            phoneReg.customEditText.isEnabled = enable
-            passwordReg.customEditText.isEnabled = enable
+            progress.visibility = View.VISIBLE
+            registrationButton.isEnabled = false
+            personalDataCheck.isEnabled = false
+            nameReg.customEditText.isEnabled = false
+            loginReg.customEditText.isEnabled = false
+            phoneReg.customEditText.isEnabled = false
+            passwordReg.customEditText.isEnabled = false
+        }
+    }
+    private fun renderLoaded(state: RegistrationState) {
+        with(binding) {
+            registrationButton.apply {
+                isEnabled = state.isEnabled
+                if (state.isEnabled) {
+                    setTextColor(context.getColor(R.color.white))
+                    setText(R.string.registration_ok)
+                } else {
+                    setTextColor(context.getColor(R.color.cool_grey))
+                    setText(R.string.registration_bad)
+                }
+            }
+            if (state.errorMessage.isNotEmpty()) {
+                showError(state.errorMessage)
+            }
+            if (progress.visibility != View.INVISIBLE) {
+                progress.visibility = View.INVISIBLE
+                personalDataCheck.isEnabled = true
+                nameReg.customEditText.isEnabled = true
+                loginReg.customEditText.isEnabled = true
+                phoneReg.customEditText.isEnabled = true
+                passwordReg.customEditText.isEnabled = true
+            }
         }
     }
 

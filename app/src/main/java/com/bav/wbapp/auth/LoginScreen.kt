@@ -49,7 +49,7 @@ class LoginScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateLoginFlow(value)
+                    viewModel.updateLoginState(LoginAction.UpdateEmailAction(value))
                 }
             ).bind()
             CustomEditTextBinder(
@@ -61,27 +61,12 @@ class LoginScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePasswordFlow(value)
+                    viewModel.updateLoginState(LoginAction.UpdatePasswordAction(value))
                 }
             ).bind()
 
             loginButton.setOnClickListener {
-                viewModel.login() /*{ response ->
-                    when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL ->
-
-                        else -> {
-                            response.message?.let { respMessage ->
-                                val message = if (respMessage != "") {
-                                    respMessage
-                                } else {
-                                    context.getString(R.string.login_error)
-                                }
-                                showError(message)
-                            }
-                        }
-                    }
-                }*/
+                viewModel.updateLoginState(LoginAction.LoadingAction)
             }
 
             registration.setOnClickListener {
@@ -92,45 +77,44 @@ class LoginScreen : Fragment() {
 
     private fun observeData() {
         lifecycleScope.launch {
-            viewModel.enableButton.collect { enabled ->
-                binding.loginButton.apply {
-                    isEnabled = enabled
-                    val textColor = if (enabled) {
-                        R.color.white
-                    } else {
-                        R.color.cool_grey
-                    }
-                    setTextColor(context.getColor(textColor))
-                }
-            }
-        }
-        lifecycleScope.launch {
             viewModel.loginState.collect { state ->
-                when(state) {
-                    AuthState.Default  -> {
-                        binding.progress.visibility = View.INVISIBLE
-                    }
-                    is AuthState.Error -> {
-                        binding.progress.visibility = View.INVISIBLE
-                        renderEnable(true)
-                        showError(state.message)
-                    }
-                    AuthState.Loading -> {
-                        binding.progress.visibility = View.VISIBLE
-                        renderEnable(false)
-                    }
-                    AuthState.Success -> {
-                        requireActivity().navigate(MainActivity::class.java)
+                if (state.isAuth) {
+                    requireActivity().navigate(MainActivity::class.java)
+                } else {
+                    if (state.isLoading) {
+                        renderLoading()
+                    } else {
+                        renderLoaded(state)
                     }
                 }
             }
         }
     }
 
-    private fun renderEnable(enable: Boolean) {
-        binding.loginButton.isEnabled = enable
-        binding.login.customEditText.isEnabled = enable
-        binding.password.customEditText.isEnabled = enable
+    private fun renderLoading() {
+        binding.progress.visibility = View.VISIBLE
+        binding.loginButton.isEnabled = false
+        binding.login.customEditText.isEnabled = false
+        binding.password.customEditText.isEnabled = false
+    }
+    private fun renderLoaded(state: LoginState) {
+        binding.loginButton.apply {
+            isEnabled = state.isEnabled
+            val textColor = if (state.isEnabled) {
+                R.color.white
+            } else {
+                R.color.cool_grey
+            }
+            setTextColor(context.getColor(textColor))
+        }
+        if (state.errorMessage.isNotEmpty()) {
+            showError(state.errorMessage)
+        }
+        if (binding.progress.visibility != View.INVISIBLE) {
+            binding.progress.visibility = View.INVISIBLE
+            binding.login.customEditText.isEnabled = true
+            binding.password.customEditText.isEnabled = true
+        }
     }
 
     private fun showError(message: String) {

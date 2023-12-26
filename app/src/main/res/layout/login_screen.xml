@@ -17,33 +17,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/auth_icon" />
 
-    <FrameLayout
-        android:id="@+id/login_container"
+    <include
+        android:id="@+id/login"
+        layout="@layout/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_46"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_icon">
+        app:layout_constraintTop_toBottomOf="@+id/login_icon" />
 
-        <include
-            android:id="@+id/login"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/password_container"
+    <include
+        android:id="@+id/password"
+        layout="@layout/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_23"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_container">
-
-        <include
-            android:id="@+id/password"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <TextView
         android:id="@+id/forgot_password"
@@ -54,7 +46,7 @@
         android:text="@string/forgot_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_container" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_button"
@@ -144,9 +136,9 @@
         android:id="@+id/progress"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
