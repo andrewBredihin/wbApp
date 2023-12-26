@@ -1,4 +1,4 @@
-package com.bav.wbapp.auth
+package com.bav.wbapp.auth.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,13 +12,15 @@ import com.bav.core.CustomEditTextInputType
 import com.bav.core.ToolbarActivity
 import com.bav.core.R
 import com.bav.core.customEditTextBinder
+import com.bav.wbapp.auth.RegistrationAction
+import com.bav.wbapp.auth.RegistrationState
 import com.bav.wbapp.databinding.RegistrationScreenBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegistrationScreen : Fragment() {
 
-    private val viewModel: AuthViewModel by activityViewModel()
+    private val viewModel: RegistrationViewModel by viewModel()
 
     private var _binding: RegistrationScreenBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +40,6 @@ class RegistrationScreen : Fragment() {
     }
 
     private fun initViews() {
-        viewModel.defaultStates()
         with(binding) {
             val context = binding.root.context
             customEditTextBinder(

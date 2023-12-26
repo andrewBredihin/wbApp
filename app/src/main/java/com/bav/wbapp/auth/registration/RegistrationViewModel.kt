@@ -1,12 +1,12 @@
-package com.bav.wbapp.auth
+package com.bav.wbapp.auth.registration
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bav.core.R
 import com.bav.core.api.ResponseCode
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.RequestBody
+import com.bav.wbapp.auth.RegistrationAction
+import com.bav.wbapp.auth.RegistrationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,54 +14,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class AuthViewModel(
-    private val context: Context,
-    private val authRepository: AuthorizationRepository
-) : ViewModel() {
+class RegistrationViewModel(private val authRepository: AuthorizationRepository) : ViewModel() {
 
     companion object {
+        const val ERROR_MESSAGE = "Error"
+        const val REGISTRATION_ERROR_MESSAGE = "Пользователь уже существует"
         const val MIN_FIELD_LENGTH = 6
         const val PHONE_TEMPLATE = "(8|\\+7 )?(\\d{3}) (\\d{3})-(\\d{2})-(\\d{2})"
     }
 
-    private val _loginState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState())
-    val loginState = _loginState.asStateFlow()
-
     private val _registrationState: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState())
     val registrationState = _registrationState.asStateFlow()
-
-    fun updateLoginState(action: LoginAction) {
-        when (action) {
-            is LoginAction.LoadingAction        -> {
-                _loginState.value = _loginState.value.copy(
-                    isLoading = true
-                )
-                login()
-            }
-
-            is LoginAction.UpdateEmailAction    -> {
-                _loginState.value = _loginState.value.copy(
-                    email = action.email,
-                    errorMessage = "",
-                    isEnabled = checkLoginFields(
-                        email = action.email,
-                        password = _loginState.value.password
-                    )
-                )
-            }
-
-            is LoginAction.UpdatePasswordAction -> {
-                _loginState.value = _loginState.value.copy(
-                    password = action.password,
-                    errorMessage = "",
-                    isEnabled = checkLoginFields(
-                        email = _loginState.value.email,
-                        password = action.password
-                    )
-                )
-            }
-        }
-    }
 
     fun updateRegistrationState(action: RegistrationAction) {
         when (action) {
@@ -144,42 +107,6 @@ class AuthViewModel(
         }
     }
 
-    fun defaultStates() {
-        _loginState.value = LoginState()
-        _registrationState.value = RegistrationState()
-    }
-
-    private fun login() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val request = RequestBody(
-                    email = _loginState.value.email,
-                    password = _loginState.value.password,
-                )
-                val response = authRepository.login(request = request)
-                withContext(Dispatchers.Main) {
-                    _loginState.value = if (response.code == ResponseCode.RESPONSE_SUCCESSFUL) {
-                        _loginState.value.copy(
-                            isAuth = true
-                        )
-                    } else {
-                        _loginState.value.copy(
-                            errorMessage = context.getString(R.string.login_error),
-                            isLoading = false
-                        )
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _loginState.value = _loginState.value.copy(
-                        errorMessage = "Error",
-                        isLoading = false
-                    )
-                }
-            }
-        }
-    }
-
     private fun registration() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -197,26 +124,18 @@ class AuthViewModel(
                         )
                     } else {
                         _registrationState.value.copy(
-                            errorMessage = context.getString(R.string.registration_error),
+                            errorMessage = REGISTRATION_ERROR_MESSAGE,
                             isLoading = false
                         )
                     }
                 }
             } catch (e: Exception) {
                 _registrationState.value = _registrationState.value.copy(
-                    errorMessage = "Error",
+                    errorMessage = ERROR_MESSAGE,
                     isLoading = false
                 )
             }
         }
-    }
-
-    private fun checkLoginFields(
-        email: String,
-        password: String
-    ): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-                && password.length >= MIN_FIELD_LENGTH
     }
 
     private fun checkRegistrationFields(

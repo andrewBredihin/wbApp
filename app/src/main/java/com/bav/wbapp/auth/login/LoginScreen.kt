@@ -1,4 +1,4 @@
-package com.bav.wbapp.auth
+package com.bav.wbapp.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,13 +13,15 @@ import com.bav.core.ToolbarActivity
 import com.bav.core.customEditTextBinder
 import com.bav.core.navigate
 import com.bav.wbapp.MainActivity
+import com.bav.wbapp.auth.LoginAction
+import com.bav.wbapp.auth.LoginState
 import com.bav.wbapp.databinding.LoginScreenBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginScreen : Fragment() {
 
-    private val viewModel: AuthViewModel by activityViewModel()
+    private val viewModel: LoginViewModel by viewModel()
 
     private var _binding: LoginScreenBinding? = null
     private val binding get() = _binding!!
