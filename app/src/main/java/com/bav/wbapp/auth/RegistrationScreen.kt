@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.ToolbarActivity
 import com.bav.core.R
+import com.bav.core.customEditTextBinder
 import com.bav.wbapp.databinding.RegistrationScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -34,14 +34,14 @@ class RegistrationScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        observeData()
+        render()
     }
 
     private fun initViews() {
         viewModel.defaultStates()
         with(binding) {
             val context = binding.root.context
-            CustomEditTextBinder(
+            customEditTextBinder(
                 titleView = nameReg.customTitle,
                 editTextView = nameReg.customEditText,
                 title = context.getString(R.string.name),
@@ -51,8 +51,8 @@ class RegistrationScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateRegistrationState(RegistrationAction.UpdateNameAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = phoneReg.customTitle,
                 editTextView = phoneReg.customEditText,
                 title = context.getString(R.string.phone),
@@ -62,8 +62,8 @@ class RegistrationScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateRegistrationState(RegistrationAction.UpdatePhoneAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = loginReg.customTitle,
                 editTextView = loginReg.customEditText,
                 title = context.getString(R.string.email),
@@ -73,8 +73,8 @@ class RegistrationScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateRegistrationState(RegistrationAction.UpdateEmailAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = passwordReg.customTitle,
                 editTextView = passwordReg.customEditText,
                 rightClickView = passwordReg.customEditRightClick,
@@ -85,7 +85,7 @@ class RegistrationScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateRegistrationState(RegistrationAction.UpdatePasswordAction(value))
                 }
-            ).bind()
+            )
 
             personalDataCheck.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.updateRegistrationState(RegistrationAction.UpdateCheckAction(isChecked))
@@ -98,7 +98,7 @@ class RegistrationScreen : Fragment() {
     }
 
 
-    private fun observeData() {
+    private fun render() {
         lifecycleScope.launch {
             viewModel.registrationState.collect { state ->
                 if (state.isRegistration) {

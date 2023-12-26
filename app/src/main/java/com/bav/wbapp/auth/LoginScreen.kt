@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.R
 import com.bav.core.ToolbarActivity
+import com.bav.core.customEditTextBinder
 import com.bav.core.navigate
 import com.bav.wbapp.MainActivity
 import com.bav.wbapp.databinding.LoginScreenBinding
@@ -35,13 +35,13 @@ class LoginScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        observeData()
+        render()
     }
 
     private fun initViews() {
         with(binding) {
             val context = binding.root.context
-            CustomEditTextBinder(
+            customEditTextBinder(
                 titleView = login.customTitle,
                 editTextView = login.customEditText,
                 title = context.getString(R.string.email),
@@ -51,8 +51,8 @@ class LoginScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateLoginState(LoginAction.UpdateEmailAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = password.customTitle,
                 editTextView = password.customEditText,
                 rightClickView = password.customEditRightClick,
@@ -63,7 +63,7 @@ class LoginScreen : Fragment() {
                 enterCallback = { value ->
                     viewModel.updateLoginState(LoginAction.UpdatePasswordAction(value))
                 }
-            ).bind()
+            )
 
             loginButton.setOnClickListener {
                 viewModel.updateLoginState(LoginAction.LoadingAction)
@@ -75,7 +75,7 @@ class LoginScreen : Fragment() {
         }
     }
 
-    private fun observeData() {
+    private fun render() {
         lifecycleScope.launch {
             viewModel.loginState.collect { state ->
                 if (state.isAuth) {
