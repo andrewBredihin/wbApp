@@ -1,8 +1,10 @@
 package com.bav.core.profile
 
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Response
+
 
 interface ProfileRepository {
     suspend fun loadProfile(): ResponseProfile
@@ -25,10 +27,9 @@ class ProfileRepositoryImpl(
 
     override suspend fun loadAvatar(): ResponseProfileAvatarDataModel {
         val response = api.loadAvatar()
-        // FIXME()
         return ResponseProfileAvatarDataModel(
             code = response.code(),
-            image = "https://www.mtsolar.us/wp-content/uploads/2020/04/avatar-placeholder.png"
+            image = response.body()
         )
     }
 

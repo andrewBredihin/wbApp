@@ -1,12 +1,16 @@
 package com.bav.core.profile
 
+import android.graphics.Bitmap
+import okhttp3.ResponseBody
+
 data class ProfileResponseDataModel(
     val name: String,
     val email: String,
     val phone: String,
     val password: String? = null,
     val birthday: String? = null,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val image: Bitmap? = null
 )
 
 data class ResponseProfile(
@@ -16,7 +20,7 @@ data class ResponseProfile(
 
 data class ResponseProfileAvatarDataModel(
     val code: Int,
-    val image: String? = null
+    val image: ResponseBody? = null
 )
 
 data class ProfileRequestBody(

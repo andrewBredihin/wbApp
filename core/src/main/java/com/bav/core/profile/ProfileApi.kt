@@ -5,6 +5,7 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -15,12 +16,14 @@ interface ProfileApi {
     suspend fun loadProfile(): Response<ProfileResponseDataModel>
 
     @POST("/api/v1/profile/updateUserInfo")
-    suspend fun updateProfile(@Body requestBody: ProfileRequestBody): Response<ResponseBody>
+    suspend fun updateProfile(
+        @Body requestBody: ProfileRequestBody
+    ): Response<ResponseBody>
 
     @GET("/api/v1/profile/downloadAvatar")
     suspend fun loadAvatar(): Response<ResponseBody>
 
-    @Multipart
     @POST("/api/v1/profile/uploadAvatar")
+    @Multipart
     suspend fun uploadAvatar(@Part image: MultipartBody.Part): Response<ResponseBody>
 }
