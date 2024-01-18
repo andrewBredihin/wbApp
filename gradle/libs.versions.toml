@@ -20,6 +20,7 @@ converter-gson  = "2.3.0"
 okhttp3         = "4.11.0"
 coroutines      = "1.6.4"
 datastore       = "1.0.0"
+viewpager2      = "1.0.0"
 
 [libraries]
 koin-android            = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -47,6 +48,7 @@ lifecycle-viewmodel     = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx
 coroutines-core         = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 datastore               = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+viewpager2              = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 
 [plugins]
 

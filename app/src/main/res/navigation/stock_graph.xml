@@ -6,5 +6,5 @@
 
     <fragment
         android:id="@+id/stock_screen"
-        android:name="com.bav.wbapp.stock.StockScreen" />
+        android:name="com.bav.wbapp.promotions.PromotionsScreen" />
 </navigation>

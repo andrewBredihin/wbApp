@@ -34,4 +34,7 @@
     <string name="save">Сохранить</string>
     <string name="permissions_denied">Отсутствует разрешение</string>
 
+    <!--Promotions page-->
+    <string name="promotions_toolbar">Акции</string>
+
 </resources>

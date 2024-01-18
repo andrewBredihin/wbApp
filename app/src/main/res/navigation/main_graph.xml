@@ -6,10 +6,15 @@
 
     <fragment
         android:id="@+id/main_screen"
-        android:name="com.bav.wbapp.main.MainScreen" >
+        android:name="com.bav.wbapp.main.MainScreen">
         <action
-            android:id="@+id/action_main_screen_to_stockScreen"
-            app:destination="@id/stockScreen" />
+            android:id="@+id/action_main_screen_to_promotionsScreen"
+            app:destination="@id/promotionsScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/main_screen" />
         <action
             android:id="@+id/action_main_screen_to_deliveryScreen"
             app:destination="@id/deliveryScreen" />
@@ -38,9 +43,9 @@
             app:destination="@id/restaurantsScreen" />
     </fragment>
     <fragment
-        android:id="@+id/stockScreen"
-        android:name="com.bav.wbapp.stock.StockScreen"
-        android:label="StockScreen" />
+        android:id="@+id/promotionsScreen"
+        android:name="com.bav.wbapp.promotions.PromotionsScreen"
+        android:label="PromotionsScreen" />
     <fragment
         android:id="@+id/deliveryScreen"
         android:name="com.bav.wbapp.delivery.DeliveryScreen"
@@ -64,7 +69,7 @@
     <fragment
         android:id="@+id/profileScreen"
         android:name="com.bav.wbapp.profile.ProfileScreen"
-        android:label="ProfileScreen" >
+        android:label="ProfileScreen">
         <action
             android:id="@+id/action_profileScreen_to_profileEditScreen"
             app:destination="@id/profileEditScreen"
@@ -72,7 +77,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/profileScreen"/>
+            app:popUpTo="@id/profileScreen" />
     </fragment>
     <fragment
         android:id="@+id/restaurantsScreen"
@@ -90,6 +95,6 @@
     <fragment
         android:id="@+id/profileEditScreen"
         android:name="com.bav.wbapp.profile.edit.ProfileEditScreen"
-        android:label="ProfileEditScreen"/>
+        android:label="ProfileEditScreen" />
 
 </navigation>
