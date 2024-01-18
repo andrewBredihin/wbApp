@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import java.util.Locale
 
+
 /**
  * Кастомный EditText с текстовой кнопкой(сейчас только для пароля)
  * и отображением hint сверху, если text.length > 0
@@ -42,8 +43,10 @@ class CustomEditTextBinder(
         const val PHONE = InputType.TYPE_CLASS_PHONE
         const val NAME = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         const val NULL = InputType.TYPE_NULL
+        const val DATE = InputType.TYPE_CLASS_DATETIME or InputType.TYPE_DATETIME_VARIATION_DATE
 
         const val MAX_PHONE_LENGTH = 16
+        const val MAX_DATE_LENGTH = 10
     }
 
     fun bind() {
@@ -65,6 +68,12 @@ class CustomEditTextBinder(
                     filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_PHONE_LENGTH))
                     inputType = PHONE
                     addTextChangedListener(PhoneNumberFormattingTextWatcher())
+                }
+
+                CustomEditTextInputType.Date     -> {
+                    inputType = DATE
+                    filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_DATE_LENGTH))
+                    keyListener = DigitsKeyListener.getInstance("0123456789-")
                 }
             }
             setOnFocusChangeListener { v, hasFocus ->
@@ -131,4 +140,5 @@ sealed class CustomEditTextInputType {
     data object Email : CustomEditTextInputType()
     data object Phone : CustomEditTextInputType()
     data object Name : CustomEditTextInputType()
+    data object Date : CustomEditTextInputType()
 }

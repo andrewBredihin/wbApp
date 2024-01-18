@@ -1,14 +1,16 @@
 package com.bav.wbapp
 
-import com.bav.wbapp.auth.login.LoginViewModel
-import com.bav.wbapp.auth.registration.RegistrationViewModel
+import com.bav.wbapp.auth.AuthViewModel
 import com.bav.wbapp.main.MainScreenViewModel
+import com.bav.wbapp.profile.ProfileViewModel
+import com.bav.wbapp.profile.edit.ProfileEditViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 fun appModule() = module {
 
     viewModel { MainScreenViewModel() }
-    viewModel { LoginViewModel(get()) }
-    viewModel { RegistrationViewModel(get()) }
+    viewModel { AuthViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileEditViewModel(get()) }
 }

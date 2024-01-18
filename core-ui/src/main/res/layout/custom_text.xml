@@ -8,41 +8,24 @@
     android:background="@android:color/transparent">
 
     <TextView
-        android:id="@+id/custom_title"
+        android:id="@+id/custom_text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/cool_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"
         style="@style/Base.Widget.AppCompat.TextView.Grey12"
 
-        tools:text="@string/password"
-        tools:visibility="visible"/>
+        tools:text="@string/password" />
 
-    <EditText
-        android:id="@+id/custom_edit_text"
+    <TextView
+        android:id="@+id/custom_text_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/custom_title"
-        style="@style/Base.Widget.AppCompat.EditText.CustomEditText"
-        tools:text="@string/email"/>
-
-    <TextView
-        android:id="@+id/custom_edit_right_click"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/custom_edit_text"
-        app:layout_constraintBottom_toBottomOf="@id/custom_edit_text"
-        android:visibility="invisible"
-        android:gravity="end|center_vertical"
-        android:paddingEnd="@dimen/custom_edit_text_text_padding"
-        style="@style/Base.Widget.AppCompat.TextView.Grey14"
-
-        tools:text="@string/show"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@id/custom_text_title"
+        style="@style/Base.Widget.AppCompat.TextView.CustomText"
+        tools:text="@string/password"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
