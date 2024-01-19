@@ -28,7 +28,14 @@
     <string name="logout">Выйти</string>
     <string name="not_data">Не заполнено</string>
     <string name="edit_profile">Редактирование</string>
+    <string name="edit_password">Изменить пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_password">Подтверждение пароля</string>
     <string name="save">Сохранить</string>
+    <string name="permissions_denied">Отсутствует разрешение</string>
+
+    <!--Promotions page-->
+    <string name="promotions_toolbar">Акции</string>
 
     <!--Profile page-->
     <string name="menu_toolbar">Меню</string>

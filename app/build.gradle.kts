@@ -42,6 +42,7 @@ dependencies {
     // libs
     implementation(libs.recycler)
     implementation(libs.constraint)
+    implementation(libs.viewpager2)
 
     // bundles-libs
     implementation(libs.bundles.common)

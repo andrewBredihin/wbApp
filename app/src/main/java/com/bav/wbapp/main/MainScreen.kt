@@ -37,17 +37,17 @@ class MainScreen : Fragment() {
 
     private fun initViews() {
         _currentAdapter = MainScreenAdapter { position ->
-            val action = when(currentAdapter.currentList[position].id) {
-                MainCategoryModel.PROFILE       -> MainScreenDirections.actionMainScreenToProfileScreen()
-                MainCategoryModel.STOCK         -> MainScreenDirections.actionMainScreenToStockScreen()
-                MainCategoryModel.MENU          -> MainScreenDirections.actionMainScreenToMenuScreen()
-                MainCategoryModel.INFO          -> MainScreenDirections.actionMainScreenToInfoScreen()
-                MainCategoryModel.REVIEW        -> MainScreenDirections.actionMainScreenToReviewScreen()
-                MainCategoryModel.RESTAURANTS   -> MainScreenDirections.actionMainScreenToRestaurantsScreen()
-                MainCategoryModel.HISTORY       -> MainScreenDirections.actionMainScreenToHistoryScreen2()
-                MainCategoryModel.DELIVERY      -> MainScreenDirections.actionMainScreenToDeliveryScreen()
+            val action = when (currentAdapter.currentList[position].id) {
+                MainCategoryModel.PROFILE     -> MainScreenDirections.actionMainScreenToProfileScreen()
+                MainCategoryModel.STOCK       -> MainScreenDirections.actionMainScreenToPromotionsScreen()
+                MainCategoryModel.MENU        -> MainScreenDirections.actionMainScreenToMenuScreen()
+                MainCategoryModel.INFO        -> MainScreenDirections.actionMainScreenToInfoScreen()
+                MainCategoryModel.REVIEW      -> MainScreenDirections.actionMainScreenToReviewScreen()
+                MainCategoryModel.RESTAURANTS -> MainScreenDirections.actionMainScreenToRestaurantsScreen()
+                MainCategoryModel.HISTORY     -> MainScreenDirections.actionMainScreenToHistoryScreen2()
+                MainCategoryModel.DELIVERY    -> MainScreenDirections.actionMainScreenToDeliveryScreen()
 
-                else                        -> null
+                else                          -> null
             }
             action?.let { navigate(action) }
         }.apply {

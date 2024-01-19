@@ -73,7 +73,7 @@ class CustomEditTextBinder(
                 CustomEditTextInputType.Date     -> {
                     inputType = DATE
                     filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_DATE_LENGTH))
-                    keyListener = DigitsKeyListener.getInstance("0123456789./")
+                    keyListener = DigitsKeyListener.getInstance("0123456789-")
                 }
             }
             setOnFocusChangeListener { v, hasFocus ->
@@ -111,6 +111,28 @@ class CustomEditTextBinder(
             }
         }
     }
+}
+
+fun customEditTextBinder(
+    titleView: TextView,
+    editTextView: EditText,
+    rightClickView: TextView? = null,
+    title: String,
+    inputTypeId: CustomEditTextInputType,
+    targetColor: Int,
+    notTargetColor: Int,
+    enterCallback: (String) -> Unit
+) {
+    CustomEditTextBinder(
+        titleView = titleView,
+        editTextView = editTextView,
+        rightClickView = rightClickView,
+        title = title,
+        inputTypeId = inputTypeId,
+        targetColor = targetColor,
+        notTargetColor = notTargetColor,
+        enterCallback = enterCallback
+    ).bind()
 }
 
 sealed class CustomEditTextInputType {

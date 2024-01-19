@@ -1,143 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/dp_33"
     tools:background="@drawable/background_auth">
 
-    <ImageView
-        android:id="@+id/login_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_56"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/auth_icon" />
-
-    <FrameLayout
-        android:id="@+id/login_container"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_icon">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dp_33">
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_56"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/auth_icon" />
 
         <include
             android:id="@+id/login"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/password_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_container">
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_46"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
 
         <include
             android:id="@+id/password"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login" />
 
-    <TextView
-        android:id="@+id/forgot_password"
-        style="@style/Base.Widget.AppCompat.TextView.Grey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_15"
-        android:text="@string/forgot_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_container" />
+        <TextView
+            android:id="@+id/forgot_password"
+            style="@style/Base.Widget.AppCompat.TextView.Grey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:text="@string/forgot_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_button"
-        style="@style/Widget.AppCompat.Button.MyRoundedButton"
-        android:layout_width="@dimen/dp_255"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_15"
-        android:text="@string/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_button"
+            style="@style/Widget.AppCompat.Button.MyRoundedButton"
+            android:layout_width="@dimen/dp_255"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
 
-    <TextView
-        android:id="@+id/login_with_social_networks"
-        style="@style/Base.Widget.AppCompat.TextView.Grey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        android:text="@string/login_with_social_networks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        <TextView
+            android:id="@+id/login_with_social_networks"
+            style="@style/Base.Widget.AppCompat.TextView.Grey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            android:text="@string/login_with_social_networks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="@dimen/dp_15"
-        android:background="@color/cool_grey"
-        app:layout_constraintBottom_toBottomOf="@+id/login_with_social_networks"
-        app:layout_constraintEnd_toStartOf="@+id/login_with_social_networks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/login_with_social_networks" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@color/cool_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/login_with_social_networks"
+            app:layout_constraintEnd_toStartOf="@+id/login_with_social_networks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/login_with_social_networks" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="@dimen/dp_15"
-        android:background="@color/cool_grey"
-        app:layout_constraintBottom_toBottomOf="@+id/login_with_social_networks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/login_with_social_networks"
-        app:layout_constraintTop_toTopOf="@+id/login_with_social_networks" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/dp_15"
+            android:background="@color/cool_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/login_with_social_networks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/login_with_social_networks"
+            app:layout_constraintTop_toTopOf="@+id/login_with_social_networks" />
 
-    <ImageView
-        android:id="@+id/facebook_image"
-        android:layout_width="@dimen/dp_46"
-        android:layout_height="@dimen/dp_46"
-        android:layout_marginTop="@dimen/dp_23"
-        app:layout_constraintEnd_toStartOf="@+id/vk_image"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_with_social_networks"
-        app:srcCompat="@drawable/facebook_icon" />
+        <ImageView
+            android:id="@+id/facebook_image"
+            android:layout_width="@dimen/dp_46"
+            android:layout_height="@dimen/dp_46"
+            android:layout_marginTop="@dimen/dp_23"
+            app:layout_constraintEnd_toStartOf="@+id/vk_image"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_with_social_networks"
+            app:srcCompat="@drawable/facebook_icon" />
 
-    <ImageView
-        android:id="@+id/vk_image"
-        android:layout_width="@dimen/dp_46"
-        android:layout_height="@dimen/dp_46"
-        app:layout_constraintEnd_toStartOf="@+id/google_image"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/facebook_image"
-        app:layout_constraintTop_toTopOf="@+id/facebook_image"
-        app:srcCompat="@drawable/vk_icon" />
+        <ImageView
+            android:id="@+id/vk_image"
+            android:layout_width="@dimen/dp_46"
+            android:layout_height="@dimen/dp_46"
+            app:layout_constraintEnd_toStartOf="@+id/google_image"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/facebook_image"
+            app:layout_constraintTop_toTopOf="@+id/facebook_image"
+            app:srcCompat="@drawable/vk_icon" />
 
-    <ImageView
-        android:id="@+id/google_image"
-        android:layout_width="@dimen/dp_46"
-        android:layout_height="@dimen/dp_46"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/vk_image"
-        app:layout_constraintTop_toTopOf="@+id/facebook_image"
-        app:srcCompat="@drawable/google_icon" />
+        <ImageView
+            android:id="@+id/google_image"
+            android:layout_width="@dimen/dp_46"
+            android:layout_height="@dimen/dp_46"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/vk_image"
+            app:layout_constraintTop_toTopOf="@+id/facebook_image"
+            app:srcCompat="@drawable/google_icon" />
 
-    <TextView
-        android:id="@+id/registration"
-        style="@style/Base.Widget.AppCompat.TextView.Grey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        android:text="@string/registration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/facebook_image" />
+        <TextView
+            android:id="@+id/registration"
+            style="@style/Base.Widget.AppCompat.TextView.Grey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:text="@string/registration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/facebook_image"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

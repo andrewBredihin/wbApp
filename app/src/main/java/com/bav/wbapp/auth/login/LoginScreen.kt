@@ -1,4 +1,4 @@
-package com.bav.wbapp.auth
+package com.bav.wbapp.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.R
 import com.bav.core.ToolbarActivity
-import com.bav.core.api.ResponseCode
+import com.bav.core.customEditTextBinder
 import com.bav.core.navigate
 import com.bav.wbapp.MainActivity
+import com.bav.wbapp.auth.LoginAction
+import com.bav.wbapp.auth.LoginState
 import com.bav.wbapp.databinding.LoginScreenBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginScreen : Fragment() {
 
-    private val viewModel: AuthViewModel by activityViewModel()
+    private val viewModel: LoginViewModel by viewModel()
 
     private var _binding: LoginScreenBinding? = null
     private val binding get() = _binding!!
@@ -36,13 +37,13 @@ class LoginScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        observeData()
+        render()
     }
 
     private fun initViews() {
         with(binding) {
             val context = binding.root.context
-            CustomEditTextBinder(
+            customEditTextBinder(
                 titleView = login.customTitle,
                 editTextView = login.customEditText,
                 title = context.getString(R.string.email),
@@ -50,10 +51,10 @@ class LoginScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateLoginFlow(value)
+                    viewModel.updateLoginState(LoginAction.UpdateEmailAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = password.customTitle,
                 editTextView = password.customEditText,
                 rightClickView = password.customEditRightClick,
@@ -62,27 +63,12 @@ class LoginScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePasswordFlow(value)
+                    viewModel.updateLoginState(LoginAction.UpdatePasswordAction(value))
                 }
-            ).bind()
+            )
 
             loginButton.setOnClickListener {
-                viewModel.login { response ->
-                    when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> requireActivity().navigate(MainActivity::class.java)
-
-                        else -> {
-                            response.message?.let { respMessage ->
-                                val message = if (respMessage != "") {
-                                    respMessage
-                                } else {
-                                    context.getString(R.string.login_error)
-                                }
-                                showError(message)
-                            }
-                        }
-                    }
-                }
+                viewModel.updateLoginState(LoginAction.LoadingAction)
             }
 
             registration.setOnClickListener {
@@ -91,19 +77,45 @@ class LoginScreen : Fragment() {
         }
     }
 
-    private fun observeData() {
+    private fun render() {
         lifecycleScope.launch {
-            viewModel.enableButton.collect { enabled ->
-                binding.loginButton.apply {
-                    isEnabled = enabled
-                    val textColor = if (enabled) {
-                        R.color.white
+            viewModel.loginState.collect { state ->
+                if (state.isAuth) {
+                    requireActivity().navigate(MainActivity::class.java)
+                } else {
+                    if (state.isLoading) {
+                        renderLoading()
                     } else {
-                        R.color.cool_grey
+                        renderLoaded(state)
                     }
-                    setTextColor(context.getColor(textColor))
                 }
             }
+        }
+    }
+
+    private fun renderLoading() {
+        binding.progress.visibility = View.VISIBLE
+        binding.loginButton.isEnabled = false
+        binding.login.customEditText.isEnabled = false
+        binding.password.customEditText.isEnabled = false
+    }
+    private fun renderLoaded(state: LoginState) {
+        binding.loginButton.apply {
+            isEnabled = state.isEnabled
+            val textColor = if (state.isEnabled) {
+                R.color.white
+            } else {
+                R.color.cool_grey
+            }
+            setTextColor(context.getColor(textColor))
+        }
+        if (state.errorMessage.isNotEmpty()) {
+            showError(state.errorMessage)
+        }
+        if (binding.progress.visibility != View.INVISIBLE) {
+            binding.progress.visibility = View.INVISIBLE
+            binding.login.customEditText.isEnabled = true
+            binding.password.customEditText.isEnabled = true
         }
     }
 

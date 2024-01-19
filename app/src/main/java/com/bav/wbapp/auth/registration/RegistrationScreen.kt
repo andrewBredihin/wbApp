@@ -1,4 +1,4 @@
-package com.bav.wbapp.auth
+package com.bav.wbapp.auth.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bav.core.CustomEditTextBinder
 import com.bav.core.CustomEditTextInputType
 import com.bav.core.ToolbarActivity
 import com.bav.core.R
-import com.bav.core.api.ResponseCode
+import com.bav.core.customEditTextBinder
+import com.bav.wbapp.auth.RegistrationAction
+import com.bav.wbapp.auth.RegistrationState
 import com.bav.wbapp.databinding.RegistrationScreenBinding
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegistrationScreen : Fragment() {
 
-    private val viewModel: AuthViewModel by activityViewModel()
+    private val viewModel: RegistrationViewModel by viewModel()
 
     private var _binding: RegistrationScreenBinding? = null
     private val binding get() = _binding!!
@@ -35,13 +36,13 @@ class RegistrationScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        observeData()
+        render()
     }
 
     private fun initViews() {
         with(binding) {
             val context = binding.root.context
-            CustomEditTextBinder(
+            customEditTextBinder(
                 titleView = nameReg.customTitle,
                 editTextView = nameReg.customEditText,
                 title = context.getString(R.string.name),
@@ -49,10 +50,10 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateNameRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdateNameAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = phoneReg.customTitle,
                 editTextView = phoneReg.customEditText,
                 title = context.getString(R.string.phone),
@@ -60,10 +61,10 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePhoneRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdatePhoneAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = loginReg.customTitle,
                 editTextView = loginReg.customEditText,
                 title = context.getString(R.string.email),
@@ -71,10 +72,10 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updateLoginRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdateEmailAction(value))
                 }
-            ).bind()
-            CustomEditTextBinder(
+            )
+            customEditTextBinder(
                 titleView = passwordReg.customTitle,
                 editTextView = passwordReg.customEditText,
                 rightClickView = passwordReg.customEditRightClick,
@@ -83,53 +84,71 @@ class RegistrationScreen : Fragment() {
                 targetColor = R.color.tangerine_two,
                 notTargetColor = R.color.cool_grey,
                 enterCallback = { value ->
-                    viewModel.updatePasswordRegFlow(value)
+                    viewModel.updateRegistrationState(RegistrationAction.UpdatePasswordAction(value))
                 }
-            ).bind()
+            )
 
             personalDataCheck.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.updatePersonalDataCheck(isChecked)
+                viewModel.updateRegistrationState(RegistrationAction.UpdateCheckAction(isChecked))
             }
 
             registrationButton.setOnClickListener {
-                viewModel.registration { response ->
-                    when(response.code) {
-                        ResponseCode.RESPONSE_SUCCESSFUL -> {
-                            val loginPage = findNavController().graph.startDestinationId
-                            findNavController().navigate(loginPage)
-                        }
+                viewModel.updateRegistrationState(RegistrationAction.LoadingAction)
+            }
+        }
+    }
 
-                        else                             -> {
-                            response.message?.let { respMessage ->
-                                val message = if (respMessage != "") {
-                                    respMessage
-                                } else {
-                                    context.getString(R.string.registration_error)
-                                }
-                                showError(message)
-                            }
-                        }
+
+    private fun render() {
+        lifecycleScope.launch {
+            viewModel.registrationState.collect { state ->
+                if (state.isRegistration) {
+                    val loginPage = findNavController().graph.startDestinationId
+                    findNavController().navigate(loginPage)
+                } else {
+                    if (state.isLoading) {
+                        renderLoading()
+                    } else {
+                        renderLoaded(state)
                     }
                 }
             }
         }
     }
 
-
-    private fun observeData() {
-        lifecycleScope.launch {
-            viewModel.enableRegButton.collect { enabled ->
-                binding.registrationButton.apply {
-                    isEnabled = enabled
-                    if (enabled) {
-                        setTextColor(context.getColor(R.color.white))
-                        setText(R.string.registration_ok)
-                    } else {
-                        setTextColor(context.getColor(R.color.cool_grey))
-                        setText(R.string.registration_bad)
-                    }
-
+    private fun renderLoading() {
+        with(binding) {
+            progress.visibility = View.VISIBLE
+            registrationButton.isEnabled = false
+            personalDataCheck.isEnabled = false
+            nameReg.customEditText.isEnabled = false
+            loginReg.customEditText.isEnabled = false
+            phoneReg.customEditText.isEnabled = false
+            passwordReg.customEditText.isEnabled = false
+        }
+    }
+    private fun renderLoaded(state: RegistrationState) {
+        with(binding) {
+            registrationButton.apply {
+                isEnabled = state.isEnabled
+                if (state.isEnabled) {
+                    setTextColor(context.getColor(R.color.white))
+                    setText(R.string.registration_ok)
+                } else {
+                    setTextColor(context.getColor(R.color.cool_grey))
+                    setText(R.string.registration_bad)
                 }
+            }
+            if (state.errorMessage.isNotEmpty()) {
+                showError(state.errorMessage)
+            }
+            if (progress.visibility != View.INVISIBLE) {
+                progress.visibility = View.INVISIBLE
+                personalDataCheck.isEnabled = true
+                nameReg.customEditText.isEnabled = true
+                loginReg.customEditText.isEnabled = true
+                phoneReg.customEditText.isEnabled = true
+                passwordReg.customEditText.isEnabled = true
             }
         }
     }

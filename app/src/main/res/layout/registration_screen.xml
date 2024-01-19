@@ -1,110 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="@dimen/dp_33"
     tools:background="@drawable/background_auth">
 
-    <ImageView
-        android:id="@+id/login_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_56"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/auth_icon" />
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    <FrameLayout
-        android:id="@+id/name_container_reg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_icon">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dp_33">
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_56"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/auth_icon" />
 
         <include
             android:id="@+id/name_reg"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/phone_container_reg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_container_reg">
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_46"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_icon" />
 
         <include
             android:id="@+id/phone_reg"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/login_container_reg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone_container_reg">
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_reg" />
 
         <include
             android:id="@+id/login_reg"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/password_container_reg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_container_reg">
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phone_reg" />
 
         <include
             android:id="@+id/password_reg"
-            layout="@layout/custom_edit_text" />
-    </FrameLayout>
+            layout="@layout/custom_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_reg" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/personal_data_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_23"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_container_reg"
-        style="@style/MyRadioButton"/>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/personal_data_check"
+            style="@style/MyRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_23"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_reg" />
 
-    <TextView
-        android:id="@+id/personal_data_text"
-        style="@style/Base.Widget.AppCompat.TextView.Grey12"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_15"
-        android:text="@string/processing_of_personal_data"
-        app:layout_constraintBottom_toBottomOf="@+id/personal_data_check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/personal_data_check"
-        app:layout_constraintTop_toTopOf="@+id/personal_data_check" />
+        <TextView
+            android:id="@+id/personal_data_text"
+            style="@style/Base.Widget.AppCompat.TextView.Grey12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:text="@string/processing_of_personal_data"
+            app:layout_constraintBottom_toBottomOf="@+id/personal_data_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/personal_data_check"
+            app:layout_constraintTop_toTopOf="@+id/personal_data_check" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/registration_button"
-        style="@style/Widget.AppCompat.Button.MyRoundedButton"
-        android:layout_width="@dimen/dp_255"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_46"
-        tools:text="@string/registration_bad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_data_check" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/registration_button"
+            style="@style/Widget.AppCompat.Button.MyRoundedButton"
+            android:layout_width="@dimen/dp_255"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_46"
+            android:layout_marginBottom="@dimen/dp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personal_data_check"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/registration_bad" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
