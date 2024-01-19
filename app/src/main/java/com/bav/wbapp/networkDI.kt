@@ -1,17 +1,19 @@
 package com.bav.wbapp
 
-import android.app.Application
 import android.content.Context
-import com.bav.core.auth.AuthenticationApi
 import com.bav.core.api.AppTokenManager
 import com.bav.core.api.CacheInterceptor
 import com.bav.core.api.TokenInterceptor
 import com.bav.core.api.TokenManager
+import com.bav.core.auth.AuthenticationApi
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.AuthorizationRepositoryImpl
 import com.bav.core.profile.ProfileApi
 import com.bav.core.profile.ProfileRepository
 import com.bav.core.profile.ProfileRepositoryImpl
+import com.bav.core.promotions.PromotionRepository
+import com.bav.core.promotions.PromotionRepositoryImpl
+import com.bav.core.promotions.PromotionsApi
 import com.google.gson.GsonBuilder
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -66,7 +68,12 @@ fun networkModule() = module {
         val retrofit: Retrofit = get()
         retrofit.create(ProfileApi::class.java)
     }
+    single<PromotionsApi> {
+        val retrofit: Retrofit = get()
+        retrofit.create(PromotionsApi::class.java)
+    }
 
     single<AuthorizationRepository> { AuthorizationRepositoryImpl(get(), get()) }
     single<ProfileRepository> { ProfileRepositoryImpl(get()) }
+    single<PromotionRepository> { PromotionRepositoryImpl(get()) }
 }
