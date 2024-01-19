@@ -80,24 +80,31 @@ class ProfileEditViewModel(
     fun updateNameFlow(newValue: String) {
         _nameFlow.value = newValue
     }
+
     fun updateLastNameFlow(newValue: String) {
         _lastNameFlow.value = newValue
     }
+
     fun updateEmailFlow(newValue: String) {
         _emailFlow.value = newValue
     }
+
     fun updatePhoneFlow(newValue: String) {
         _phoneFlow.value = newValue
     }
+
     fun updateDateFlow(newValue: String) {
         _dateFlow.value = newValue
     }
+
     fun updatePasswordFlow(newValue: String) {
         _passwordFlow.value = newValue
     }
+
     fun updateConfirmPasswordFlow(newValue: String) {
         _confirmPasswordFlow.value = newValue
     }
+
     fun updateEditPasswordCheckFlow(newValue: Boolean) {
         _editPasswordCheckFlow.value = newValue
     }
@@ -167,8 +174,8 @@ class ProfileEditViewModel(
         confirmPassword: String,
         passwordCheck: Boolean
     ): Boolean {
-        return if(passwordCheck) {
-            if(newPassword.length >= MIN_PASSWORD_LENGTH && confirmPassword.length >= MIN_PASSWORD_LENGTH) {
+        return if (passwordCheck) {
+            if (newPassword.length >= MIN_PASSWORD_LENGTH && confirmPassword.length >= MIN_PASSWORD_LENGTH) {
                 newPassword == confirmPassword
             } else {
                 false

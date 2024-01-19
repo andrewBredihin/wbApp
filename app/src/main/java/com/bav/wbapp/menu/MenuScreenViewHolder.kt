@@ -42,7 +42,7 @@ class MenuScreenViewHolder(
                 menuRecyclerHolderButtonPrice.visibility = View.INVISIBLE
             }
             // FIXME() картинка тоже не приходит, поставил заглушку
-            menuRecyclerHolderBackground.setupImage("https://cdn.zeplin.io/594d116d8ab5d1e677728fa6/assets/F262F850-820A-4BC5-AB96-56253A623752.png")
+            menuRecyclerHolderBackground.setupImage("https://cdn.zeplin.io/594d116d8ab5d1e677728fa6/assets/C8F2D97A-53B0-4CC0-8B0A-27F45D50399C.png")
 
             EditAmountBinder(
                 amount = menuRecyclerHolderEditAmount.amount,

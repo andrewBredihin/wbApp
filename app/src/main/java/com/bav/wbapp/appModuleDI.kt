@@ -3,6 +3,7 @@ package com.bav.wbapp
 import com.bav.wbapp.auth.login.LoginViewModel
 import com.bav.wbapp.auth.registration.RegistrationViewModel
 import com.bav.wbapp.main.MainScreenViewModel
+import com.bav.wbapp.menu.MenuScreenViewModel
 import com.bav.wbapp.profile.ProfileViewModel
 import com.bav.wbapp.profile.edit.ProfileEditViewModel
 import com.bav.wbapp.promotions.PromotionViewModel

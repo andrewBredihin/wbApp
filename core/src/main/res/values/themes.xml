@@ -29,7 +29,7 @@
     <!--TextView Styles-->
     <style name="Base.Widget.AppCompat.TextView.Grey12" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/sp_12</item>
-        <item name="android:textColor">@color/cool_grey</item>
+        <item name="android:textColor">@color/light_grey</item>
     </style>
 
     <style name="Base.Widget.AppCompat.TextView.Grey14" parent="Widget.AppCompat.TextView">

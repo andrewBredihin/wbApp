@@ -1,29 +1,20 @@
 package com.bav.wbapp.profile
 
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Environment
 import android.util.Log
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.profile.ProfileRepository
-import com.bav.core.profile.ResponseProfileAvatarDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.get
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.io.FileOutputStream
 
 
 class ProfileViewModel(

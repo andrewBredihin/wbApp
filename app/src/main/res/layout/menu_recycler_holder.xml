@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:background="@color/black">
 
     <ImageView
@@ -29,19 +29,25 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Цезарь с креветками" />
 
-    <TextView
-        android:id="@+id/menu_recycler_holder_description"
-        style="@style/Base.Widget.AppCompat.TextView.Grey12"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/bottom_barrier"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:layout_marginBottom="@dimen/dp_15"
-        android:maxLines="2"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="menu_recycler_holder_button_border,menu_recycler_holder_description,menu_recycler_holder_edit_amount_container,menu_recycler_holder_edit_amount,menu_recycler_holder_button_price"
+        tools:ignore="NotSibling" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@color/cool_grey"
+        android:paddingTop="@dimen/dp_15"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/menu_recycler_holder_button_border"
-        app:layout_constraintStart_toStartOf="@id/menu_recycler_holder_title"
-        app:layout_constraintTop_toBottomOf="@+id/menu_recycler_holder_title"
-        tools:text="Классическое сочетание салатов Айсберг и креветками с курицей…" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottom_barrier" />
 
     <ImageView
         android:id="@+id/menu_recycler_holder_button_border"
@@ -53,28 +59,41 @@
         app:layout_constraintTop_toBottomOf="@+id/menu_recycler_holder_title" />
 
     <TextView
-        android:id="@+id/menu_recycler_holder_button_price"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_33"
-        app:layout_constraintStart_toStartOf="@+id/menu_recycler_holder_button_border"
-        app:layout_constraintTop_toTopOf="@+id/menu_recycler_holder_button_border"
-        style="@style/Base.Widget.AppCompat.TextView.White16"
-        android:gravity="center"
-        tools:text="P 200"
-        tools:visibility="invisible"/>
+        android:id="@+id/menu_recycler_holder_description"
+        style="@style/Base.Widget.AppCompat.TextView.Grey12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_barrier"
+        app:layout_constraintEnd_toStartOf="@+id/menu_recycler_holder_button_border"
+        app:layout_constraintStart_toStartOf="@id/menu_recycler_holder_title"
+        app:layout_constraintTop_toBottomOf="@+id/menu_recycler_holder_title"
+        tools:text="Классическое сочетание салатов Айсберг и креветками с курицей…" />
 
     <FrameLayout
         android:id="@+id/menu_recycler_holder_edit_amount_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/menu_recycler_holder_button_border"
         app:layout_constraintTop_toTopOf="@+id/menu_recycler_holder_button_border"
-        android:visibility="invisible"
         tools:visibility="visible">
 
         <include
             android:id="@+id/menu_recycler_holder_edit_amount"
             layout="@layout/edit_amount_view" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/menu_recycler_holder_button_price"
+        style="@style/Base.Widget.AppCompat.TextView.White16"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_33"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/menu_recycler_holder_button_border"
+        app:layout_constraintTop_toTopOf="@+id/menu_recycler_holder_button_border"
+        tools:text="P 200"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
