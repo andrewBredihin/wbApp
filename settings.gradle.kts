@@ -17,3 +17,4 @@ rootProject.name = "WB App"
 include(":app")
 include(":core")
 include(":core-ui")
+include(":ui")

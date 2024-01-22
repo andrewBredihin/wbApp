@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="titleTextSize" format="dimension" />
+
+        <attr name="hintText" format="string" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="hintTextSize" format="dimension" />
+        <attr name="editTextColor" format="color" />
+        <attr name="editTextSize" format="dimension" />
+        <attr name="enterType" format="enum">
+            <enum name="name" value="0"/>
+            <enum name="email" value="1"/>
+            <enum name="password" value="2"/>
+            <enum name="phone" value="3"/>
+            <enum name="date" value="4"/>
+        </attr>
+
+        <attr name="buttonText" format="string" />
+        <attr name="buttonTextPressed" format="string" />
+        <attr name="buttonTextColor" format="color" />
+        <attr name="buttonTextSize" format="dimension" />
+
+        <attr name="lineSize" format="dimension" />
+        <attr name="lineActiveColor" format="color" />
+        <attr name="linePassiveColor" format="color" />
+    </declare-styleable>
+
+</resources>
