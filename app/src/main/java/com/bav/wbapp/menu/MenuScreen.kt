@@ -1,6 +1,7 @@
 package com.bav.wbapp.menu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class MenuScreen : Fragment() {
          * amount -> выбранное количество товара
          */
         _currentAdapter = MenuScreenAdapter { position, amount ->
+            Log.e("TEST", "position: $position, amount: $amount")
             /*val id = currentAdapter.currentList[position].id
             val bundle = Bundle().apply {
                 // FIXME() вынести в константы
