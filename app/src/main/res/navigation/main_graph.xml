@@ -65,7 +65,16 @@
     <fragment
         android:id="@+id/menuScreen"
         android:name="com.bav.wbapp.menu.MenuScreen"
-        android:label="MenuScreen" />
+        android:label="MenuScreen" >
+        <action
+            android:id="@+id/action_menuScreen_to_basketScreen"
+            app:destination="@id/basketScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/menuScreen" />
+    </fragment>
     <fragment
         android:id="@+id/reviewScreen"
         android:name="com.bav.wbapp.review.ReviewScreen"
@@ -100,5 +109,9 @@
         android:id="@+id/profileEditScreen"
         android:name="com.bav.wbapp.profile.edit.ProfileEditScreen"
         android:label="ProfileEditScreen" />
+    <fragment
+        android:id="@+id/basketScreen"
+        android:name="com.bav.wbapp.basket.BasketScreen"
+        android:label="BasketScreen" />
 
 </navigation>

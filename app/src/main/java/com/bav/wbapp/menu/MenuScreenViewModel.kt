@@ -3,7 +3,9 @@ package com.bav.wbapp.menu
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
+import com.bav.core.basket.AppDatabase
 import com.bav.core.menu.MenuRepository
+import com.bav.wbapp.basket.ProductInBasket
 import com.bav.wbapp.menu.model.MenuItemModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -15,7 +17,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() {
+class MenuScreenViewModel(
+    private val repository: MenuRepository,
+    private val db: AppDatabase
+) : ViewModel() {
 
     companion object {
         const val DEBOUNCE = 500L
@@ -39,7 +44,8 @@ class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() 
                 } else {
                     MenuDataState.Loaded(
                         _loadedList.filter { item ->
-                            item.title.lowercase().contains(value.lowercase()) || item.type.lowercase().contains(value.lowercase())
+                            item.title.lowercase().contains(value.lowercase()) || item.type.lowercase()
+                                .contains(value.lowercase())
                         }
                     )
                 }
@@ -60,6 +66,7 @@ class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() 
         }
     }
 
+    /** Загрузка товаров по API */
     fun loadAllProducts() {
         _menuDataState.value = MenuDataState.Loading
         viewModelScope.launch(Dispatchers.IO) {
@@ -68,9 +75,13 @@ class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() 
                 withContext(Dispatchers.Main) {
                     if (result.code == ResponseCode.RESPONSE_SUCCESSFUL && result.body != null) {
                         _loadedList = result.body!!.map { dto ->
+                            /** КОличество товара в корзине берется из БД */
+                            val amountInBasket = db.productDao().getAmountInBasket(dto.id)
                             MenuItemModel(
                                 id = dto.id,
                                 amount = dto.amount,
+                                amountInBasket = amountInBasket,
+                                price = 250f,
                                 title = dto.title,
                                 description = dto.description,
                                 type = dto.type
@@ -87,6 +98,33 @@ class MenuScreenViewModel(private val repository: MenuRepository) : ViewModel() 
                 }
             }
 
+        }
+    }
+
+    /** Если количество товара = 0, то удаляем из корзины (из БД), иначе - обновляем товар в БД */
+    fun updateProductInBasket(product: ProductInBasket, amount: Int) {
+        if (amount == 0) {
+            deleteProduct(product.productId)
+        } else {
+            updateProduct(product, amount)
+        }
+    }
+
+    /** Если товар в БД не найден, то добавляем его, иначе обновляем его количество */
+    private fun updateProduct(product: ProductInBasket, amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val find = db.productDao().getByProductId(product.productId)
+            if (find.isNotEmpty()) {
+                db.productDao().updateByProductId(product.productId, amount)
+            } else {
+                db.productDao().insert(product.toEntity())
+            }
+        }
+    }
+
+    private fun deleteProduct(productId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            db.productDao().deleteByProductId(productId)
         }
     }
 }

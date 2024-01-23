@@ -37,7 +37,20 @@
     <!--Promotions page-->
     <string name="promotions_toolbar">Акции</string>
 
-    <!--Profile page-->
+    <!--Menu page-->
     <string name="menu_toolbar">Меню</string>
+
+    <!--Basket page-->
+    <string name="basket_toolbar">Мой заказ</string>
+    <string name="enter_promo_code">Введите промокод</string>
+    <string name="promo_code">Промо-код</string>
+    <string name="apply">Применить</string>
+    <string name="discount">Скидка</string>
+    <string name="total_with_discount">Итого со скидкой</string>
+    <string name="order">Заказать</string>
+    <string name="authorization_in_basket">Авторизуйтесь</string>
+    <string name="number_of_guests">Сколько гостей:</string>
+    <string name="basket_description">Мы доставим палочки, салфетки и приправы.\nНа одну порцию роллов полагается: 30 мл Соевого соуса, 6 гр Васаби, 9 гр Имбиря.</string>
+
 
 </resources>

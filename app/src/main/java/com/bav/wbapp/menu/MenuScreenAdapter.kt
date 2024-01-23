@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bav.wbapp.basket.ProductInBasket
 import com.bav.wbapp.databinding.MenuRecyclerHolderBinding
 import com.bav.wbapp.menu.model.MenuItemModel
 
@@ -31,5 +32,16 @@ class MenuScreenAdapter(private val callback: (Int, Int) -> Unit) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as MenuScreenViewHolder).bind(getItem(position))
+    }
+
+    fun getProduct(position: Int): ProductInBasket {
+        val value = currentList[position]
+        return ProductInBasket(
+            productId = value.id,
+            amount = value.amount,
+            title = value.title,
+            type = value.type,
+            price = 100f
+        )
     }
 }

@@ -55,10 +55,6 @@ class EditAmountView constructor(
 
     private var listener: OnAmountChangedListener? = null
 
-    init {
-        initAttrs(attrs, defStyleAttr, defStyleRes)
-    }
-
 
     private var text = ""
     private var minAmount = 0
@@ -66,6 +62,22 @@ class EditAmountView constructor(
     private var currentAmount = 0
 
     private var lineWidth: Float = 0f
+
+    init {
+        if (!isInEditMode) {
+            initAttrs(attrs, defStyleAttr, defStyleRes)
+        } else {
+            currentAmount = 1
+            minAmount = 0
+            maxAmount = 100
+            linePaint.color = getColor(com.bav.core.R.color.tangerine_two)
+            lineWidth = context.toPx(DEFAULT_LINE_WIDTH)
+            linePaint.strokeWidth = lineWidth
+            val textColor = Color.WHITE
+            textPaint2.color = textColor
+            textPaint.color = textColor
+        }
+    }
 
     fun setText(text: String) {
         this.text = text
@@ -79,7 +91,7 @@ class EditAmountView constructor(
         this.maxAmount = value
         invalidate()
     }
-    private fun setCurrentAmount(value: Int) {
+    fun setCurrentAmount(value: Int) {
         this.currentAmount = value
         listener?.invoke(value)
         requestLayout()

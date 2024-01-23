@@ -1,7 +1,6 @@
 package com.bav.wbapp.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.appcompat.widget.Toolbar.LayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bav.core.getNavController
+import com.bav.core.navigate
 import com.bav.wbapp.databinding.MenuScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,20 +40,12 @@ class MenuScreen : Fragment() {
     private fun initViews() {
         viewModel.loadAllProducts()
 
-        /**
-         * Callback - переход на страницу с детальной информацией о товаре
-         * position -> позиция товара в списке адаптера
-         * amount -> выбранное количество товара
-         */
+        /** Добавление товара в корзину (в БД) */
         _currentAdapter = MenuScreenAdapter { position, amount ->
-            Log.e("TEST", "position: $position, amount: $amount")
-            /*val id = currentAdapter.currentList[position].id
-            val bundle = Bundle().apply {
-                // FIXME() вынести в константы
-                putInt("id", id)
-                putInt("amount", amount)
-            }*/
-            // TODO() переход на страницу с детальной информацией о товаре
+            _currentAdapter?.let {
+                val product = it.getProduct(position)
+                viewModel.updateProductInBasket(product, amount)
+            }
         }
         binding.menuRecycler.apply {
             adapter = currentAdapter
@@ -62,6 +54,9 @@ class MenuScreen : Fragment() {
         val navIcon = binding.menuToolbar.navigationIcon
         binding.menuToolbar.setNavigationOnClickListener {
             getNavController().popBackStack()
+        }
+        binding.menuToolbarBasketButton.setOnClickListener {
+            navigate(MenuScreenDirections.actionMenuScreenToBasketScreen())
         }
 
         binding.menuSearchField.apply {

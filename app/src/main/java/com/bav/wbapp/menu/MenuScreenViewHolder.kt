@@ -14,11 +14,11 @@ class MenuScreenViewHolder(
         with(binding) {
             menuRecyclerHolderTitle.text = model.title
             menuRecyclerHolderDescription.text = model.description
-            // FIXME() цена не приходит, поставил количество
             amountView.apply {
                 setMinAmount(0)
                 setMaxAmount(100)
-                setText(model.amount.toString())
+                setCurrentAmount(model.amountInBasket)
+                setText(model.price.toString())
                 setEditAmountListener { amount ->
                     callback(bindingAdapterPosition, amount)
                 }
