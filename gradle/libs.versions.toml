@@ -3,6 +3,7 @@ minSdk      = "26"
 targetSdk   = "34"
 compileSdk  = "34"
 
+org-jetbrains-kotlin-android = "1.9.0"
 retrofit        = "2.9.0"
 koin            = "3.5.0"
 kotlin          = "1.9.0"
@@ -21,8 +22,8 @@ okhttp3         = "4.11.0"
 coroutines      = "1.6.4"
 datastore       = "1.0.0"
 viewpager2      = "1.0.0"
-agp = "8.1.4"
-org-jetbrains-kotlin-android = "1.9.0"
+agp             = "8.1.4"
+room            = "2.6.1"
 
 [libraries]
 koin-android            = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -51,6 +52,10 @@ coroutines-core         = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 coroutines-android      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 datastore               = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 viewpager2              = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
+roomMain                = { module = "androidx.room:room-runtime", version.ref = "room" }
+roomCoroutines          = { module = "androidx.room:room-ktx", version.ref = "room" }
+roomAP                  = { module = "androidx.room:room-compiler", version.ref = "room" }
+roomKSP                 = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 [plugins]
 com-android-library = { id = "com.android.library", version.ref = "agp" }
@@ -91,4 +96,8 @@ lifecycle = [
 coroutines = [
     "coroutines-core",
     "coroutines-android"
+]
+room = [
+    "roomMain",
+    "roomCoroutines"
 ]

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -35,6 +36,11 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.datastore)
     implementation(libs.okhttp)
+
+    // Room
+    implementation(libs.bundles.room)
+    annotationProcessor(libs.roomAP)
+    ksp(libs.roomKSP)
 
     // bundles-libs
     implementation(libs.bundles.common)

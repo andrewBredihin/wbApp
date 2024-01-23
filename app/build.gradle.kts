@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -43,6 +44,11 @@ dependencies {
     implementation(libs.recycler)
     implementation(libs.constraint)
     implementation(libs.viewpager2)
+
+    // Room
+    implementation(libs.roomMain)
+    annotationProcessor(libs.roomAP)
+    ksp(libs.roomKSP)
 
     // bundles-libs
     implementation(libs.bundles.common)
