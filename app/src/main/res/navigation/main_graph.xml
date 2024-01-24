@@ -112,6 +112,19 @@
     <fragment
         android:id="@+id/basketScreen"
         android:name="com.bav.wbapp.basket.BasketScreen"
-        android:label="BasketScreen" />
+        android:label="BasketScreen" >
+        <action
+            android:id="@+id/action_basketScreen_to_createOrderScreen"
+            app:destination="@id/createOrderScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/basketScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/createOrderScreen"
+        android:name="com.bav.wbapp.order.CreateOrderScreen"
+        android:label="CreateOrderScreen" />
 
 </navigation>

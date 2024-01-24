@@ -2,6 +2,7 @@ package com.bav.ui
 
 import android.content.Context
 import android.graphics.Color
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.InputFilter
 import android.text.InputType
 import android.text.method.DigitsKeyListener
@@ -12,6 +13,7 @@ import android.transition.TransitionManager
 import android.transition.TransitionSet
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -40,8 +42,8 @@ class CustomEditText(
     constructor(context: Context) : this(context, null)
 
     companion object {
-        private const val DEFAULT_TITLE_TEXT_SIZE = 10
-        private const val DEFAULT_EDIT_TEXT_SIZE = 14
+        private const val DEFAULT_TITLE_TEXT_SIZE = 12
+        private const val DEFAULT_EDIT_TEXT_SIZE = 16
         private const val DEFAULT_BUTTON_TEXT_SIZE = 10
         private const val DEFAULT_LINE_SIZE = 1
 
@@ -54,7 +56,7 @@ class CustomEditText(
         const val NAME = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PERSON_NAME
         const val DATE = InputType.TYPE_CLASS_DATETIME or InputType.TYPE_DATETIME_VARIATION_DATE
 
-        const val MAX_PHONE_LENGTH = 11
+        const val MAX_PHONE_LENGTH = 16
         const val MAX_DATE_LENGTH = 10
     }
 
@@ -84,7 +86,7 @@ class CustomEditText(
                     R.styleable.CustomEditText_titleTextSize,
                     context.toPx(DEFAULT_TITLE_TEXT_SIZE)
                 )
-                val titleTextColor = typedArray.getColor(R.styleable.CustomEditText_titleTextColor, Color.BLACK)
+                val titleTextColor = typedArray.getColor(R.styleable.CustomEditText_titleTextColor, context.getColor(com.bav.core.R.color.cool_grey))
                 text = titleText
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize)
                 setTextColor(titleTextColor)
@@ -96,21 +98,27 @@ class CustomEditText(
             }
 
             editText.apply {
+                isSingleLine = true
+                val allCaps = typedArray.getBoolean(R.styleable.CustomEditText_textAllCaps, false)
                 val hintText = typedArray.getString(R.styleable.CustomEditText_hintText)
-                val hintTextColor = typedArray.getColor(R.styleable.CustomEditText_hintTextColor, Color.GRAY)
-                hint = hintText
+                val hintTextColor = typedArray.getColor(R.styleable.CustomEditText_hintTextColor, context.getColor(com.bav.core.R.color.cool_grey))
+                hint = if (allCaps) {
+                    hintText?.uppercase()
+                } else {
+                    hintText
+                }
                 setHintTextColor(hintTextColor)
 
                 val editTextSize = typedArray.getDimension(
                     R.styleable.CustomEditText_editTextSize,
                     context.toPx(DEFAULT_EDIT_TEXT_SIZE)
                 )
-                val editTextColor = typedArray.getColor(R.styleable.CustomEditText_editTextColor, Color.BLACK)
+                val editTextColor = typedArray.getColor(R.styleable.CustomEditText_editTextColor, context.getColor(com.bav.core.R.color.white))
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, editTextSize)
                 setTextColor(editTextColor)
 
-                val activeColor = typedArray.getColor(R.styleable.CustomEditText_lineActiveColor, Color.BLACK)
-                val passiveColor = typedArray.getColor(R.styleable.CustomEditText_linePassiveColor, Color.GRAY)
+                val activeColor = typedArray.getColor(R.styleable.CustomEditText_lineActiveColor, context.getColor(com.bav.core.R.color.tangerine_two))
+                val passiveColor = typedArray.getColor(R.styleable.CustomEditText_linePassiveColor, context.getColor(com.bav.core.R.color.cool_grey))
                 setOnFocusChangeListener { _, hasFocus ->
                     val lineColor = if (hasFocus) {
                         activeColor
@@ -153,13 +161,14 @@ class CustomEditText(
                     EnterType.PHONE    -> {
                         inputType = PHONE
                         filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_PHONE_LENGTH))
-                        keyListener = DigitsKeyListener.getInstance("0123456789")
+                        keyListener = DigitsKeyListener.getInstance("0123456789-+ ")
+                        addTextChangedListener(PhoneNumberFormattingTextWatcher())
                     }
 
                     EnterType.DATE     -> {
                         inputType = DATE
                         filters = arrayOf(*this.filters, InputFilter.LengthFilter(MAX_DATE_LENGTH))
-                        keyListener = DigitsKeyListener.getInstance("0123456789-")
+                        keyListener = DigitsKeyListener.getInstance("0123456789")
                     }
                 }
             }
@@ -214,6 +223,20 @@ class CustomEditText(
 
     fun setEditTextListener(listener: OnTextChangedListener) {
         this.listener = listener
+    }
+
+    fun setText(text: String) {
+        binding.editText.setText(text)
+    }
+
+    fun setLinesNumber(number: Int) {
+        binding.editText.apply {
+            isSingleLine = false
+            setLines(number)
+            minLines = number
+            maxLines = number
+            gravity = Gravity.TOP
+        }
     }
 
     private fun Context.toPx(dp: Int): Float = TypedValue.applyDimension(

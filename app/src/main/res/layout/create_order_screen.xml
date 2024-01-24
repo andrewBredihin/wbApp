@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/create_oreder_toolbar"
+        style="@style/Widget.AppCompat.Toolbar.MyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_chevron">
+
+        <TextView
+            android:id="@+id/basket_toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/order_toolbar"
+            android:textColor="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.bav.ui.CustomEditText
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:editTextColor="@color/white"
+                    app:enterType="name"
+                    app:hintText="@string/order_name"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:titleText="@string/order_name" />
+
+                <com.bav.ui.CustomEditText
+                    android:id="@+id/last_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:editTextColor="@color/white"
+                    app:enterType="name"
+                    app:hintText="@string/order_last_name"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    app:titleText="@string/order_last_name" />
+
+                <com.bav.ui.CustomEditText
+                    android:id="@+id/phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:editTextColor="@color/white"
+                    app:enterType="phone"
+                    app:hintText="@string/order_phone"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/last_name"
+                    app:titleText="@string/order_phone" />
+
+                <com.bav.ui.CustomEditText
+                    android:id="@+id/email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:editTextColor="@color/white"
+                    app:enterType="email"
+                    app:hintText="@string/order_email"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/phone"
+                    app:titleText="@string/order_email" />
+
+                <View
+                    android:id="@+id/buttons_background"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/email" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/delivery_button"
+                    style="Widget.AppCompat.Button.MyOrderButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="@dimen/dp_8"
+                    android:background="@drawable/order_button_background"
+                    android:text="@string/delivery"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_background"
+                    app:layout_constraintEnd_toStartOf="@id/in_time_button"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/buttons_background" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/in_time_button"
+                    style="Widget.AppCompat.Button.MyOrderButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="@dimen/dp_8"
+                    android:background="@drawable/order_button_background_null"
+                    android:text="@string/in_time"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_background"
+                    app:layout_constraintEnd_toStartOf="@id/pickup_button"
+                    app:layout_constraintStart_toEndOf="@id/delivery_button"
+                    app:layout_constraintTop_toTopOf="@id/buttons_background" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/pickup_button"
+                    style="Widget.AppCompat.Button.MyOrderButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="@dimen/dp_8"
+                    android:background="@drawable/order_button_background_null"
+                    android:text="@string/pickup"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintBottom_toBottomOf="@id/buttons_background"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/in_time_button"
+                    app:layout_constraintTop_toTopOf="@id/buttons_background" />
+
+                <LinearLayout
+                    android:id="@+id/order_info_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/buttons_background">
+
+                    <LinearLayout
+                        android:id="@+id/date_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_25"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/date_info"
+                            style="@style/Base.Widget.AppCompat.TextView.White14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp_30"
+                            android:text="@string/deliver_on" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/stroke_background"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/date_text"
+                                style="@style/Base.Widget.AppCompat.TextView.White14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                tools:text="24.05.2023, 12:00" />
+
+                            <ImageView
+                                android:id="@+id/date_icon"
+                                android:layout_width="@dimen/dp_25"
+                                android:layout_height="@dimen/dp_25"
+                                android:layout_weight="1"
+                                android:src="@drawable/calendar_icon" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/restaurant_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_74"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:background="@color/dark_grey"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_25"
+                        tools:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/restaurant_icon" />
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/dp_25"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/restaurant_select"
+                                style="@style/Base.Widget.AppCompat.TextView.White14"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/select_restaurant"
+                                android:textAllCaps="true"
+                                tools:visibility="gone" />
+
+                            <LinearLayout
+                                android:id="@+id/restaurant_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <TextView
+                                    android:id="@+id/restaurant_name"
+                                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    tools:text="Водный стадион:" />
+
+                                <TextView
+                                    android:id="@+id/restaurant_address"
+                                    style="@style/Base.Widget.AppCompat.TextView.Grey12"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    tools:text="Головинское шоссе, 5, к. 1" />
+                            </LinearLayout>
+                        </FrameLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/disclosure_icon" />
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/delivery_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_23"
+                        tools:visibility="visible">
+
+                        <com.bav.ui.CustomEditText
+                            android:id="@+id/address"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_25"
+                            app:editTextColor="@color/white"
+                            app:hintText="@string/address"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:textAllCaps="true"
+                            app:titleText="@string/address" />
+
+                        <com.bav.ui.CustomEditText
+                            android:id="@+id/entrance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_25"
+                            android:layout_marginTop="@dimen/dp_33"
+                            app:editTextColor="@color/white"
+                            app:hintText="@string/entrance"
+                            app:layout_constraintEnd_toStartOf="@+id/code"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/address"
+                            app:textAllCaps="true"
+                            app:titleText="@string/entrance" />
+
+                        <com.bav.ui.CustomEditText
+                            android:id="@+id/code"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_50"
+                            app:editTextColor="@color/white"
+                            app:hintText="@string/code"
+                            app:layout_constraintEnd_toStartOf="@id/floor"
+                            app:layout_constraintStart_toEndOf="@id/entrance"
+                            app:layout_constraintTop_toTopOf="@id/entrance"
+                            app:textAllCaps="true"
+                            app:titleText="@string/code" />
+
+                        <com.bav.ui.CustomEditText
+                            android:id="@+id/floor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp_25"
+                            app:editTextColor="@color/white"
+                            app:hintText="@string/floor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/code"
+                            app:layout_constraintTop_toTopOf="@id/entrance"
+                            app:textAllCaps="true"
+                            app:titleText="@string/floor" />
+
+                        <com.bav.ui.CustomEditText
+                            android:id="@+id/apartment"
+                            android:layout_width="@dimen/dp_144"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_25"
+                            android:layout_marginTop="@dimen/dp_33"
+                            app:editTextColor="@color/white"
+                            app:hintText="@string/apartment"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/delivery_barrier"
+                            app:textAllCaps="true"
+                            app:titleText="@string/apartment" />
+
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/delivery_barrier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="entrance,code,floor" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <com.bav.ui.CustomEditText
+                    android:id="@+id/commentary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_33"
+                    app:editTextColor="@color/white"
+                    app:editTextSize="@dimen/sp_14"
+                    app:hintText="@string/commentary"
+                    app:hintTextSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/order_info_container"
+                    app:titleText="@string/commentary" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/apply_button"
+                    style="@style/Widget.AppCompat.Button.MyRoundedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_60"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginBottom="@dimen/dp_40"
+                    android:text="@string/order_continue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/commentary" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/dp_25" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/dp_30" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

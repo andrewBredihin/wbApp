@@ -15,13 +15,45 @@ import java.lang.Exception
 
 class BasketViewModel(private val db: AppDatabase) : ViewModel() {
 
-    private val _basketState: MutableStateFlow<BasketState> = MutableStateFlow(BasketState(isLoading = true))
+    companion object {
+        const val PROMO_CODE_TEMPLATE = "(\\d{4})-(\\d{4})-(\\d{4})"
+
+        const val PROMO_CODE_ENTER = "Введите промокод"
+        const val PROMO_CODE_ACTIVE = "Промокод применен"
+        const val PROMO_CODE_ERROR = "Промокод введен не верно"
+    }
+
+    private val _basketState: MutableStateFlow<BasketState> = MutableStateFlow(BasketState(isLoading = true, promoCodeMessage = PROMO_CODE_ENTER))
     val basketState = _basketState.asStateFlow()
 
     fun startAction(action: BasketAction) {
         when (action) {
             is BasketAction.LoadingAction -> {
                 loadBasket()
+            }
+
+            is BasketAction.ActivatePromoCode -> {
+                val code = action.code
+                if (code.isNotEmpty()) {
+                    val checkPromoCode: Boolean = !PROMO_CODE_TEMPLATE.toRegex().find(code)?.value.isNullOrEmpty()
+                    if (checkPromoCode) {
+                        _basketState.value = _basketState.value.copy(
+                            promoCode = code,
+                            promoCodeStatus = PromoCodeStatus.ACTIVE,
+                            promoCodeMessage = PROMO_CODE_ACTIVE
+                        )
+                    } else {
+                        _basketState.value = _basketState.value.copy(
+                            promoCodeMessage = PROMO_CODE_ERROR,
+                            promoCodeStatus = PromoCodeStatus.ERROR
+                        )
+                    }
+                } else {
+                    _basketState.value = _basketState.value.copy(
+                        promoCodeMessage = PROMO_CODE_ENTER,
+                        promoCodeStatus = PromoCodeStatus.ENTER
+                    )
+                }
             }
         }
     }

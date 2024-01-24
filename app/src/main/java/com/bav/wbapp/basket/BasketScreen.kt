@@ -1,5 +1,6 @@
 package com.bav.wbapp.basket
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bav.core.basket.ProductEntity
 import com.bav.core.getNavController
+import com.bav.core.navigate
+import com.bav.wbapp.R
 import com.bav.wbapp.databinding.BasketScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,21 +50,50 @@ class BasketScreen : Fragment() {
                 setMinAmount(0)
                 setMaxAmount(100)
             }
+
+            orderButton.setOnClickListener {
+                navigate(BasketScreenDirections.actionBasketScreenToCreateOrderScreen())
+            }
+
+            enterPromoButton.setOnClickListener {
+                val promoCode = binding.enterPromo.text.toString()
+                viewModel.startAction(BasketAction.ActivatePromoCode(promoCode))
+            }
         }
 
         observeData()
     }
 
-    private fun renderData(data: List<ProductEntity>) {
+    private fun renderData(state: BasketState) {
         with(binding) {
             loading.visibility = View.INVISIBLE
-            if (data.isNotEmpty()) {
+            if (state.data.isNotEmpty()) {
                 container.visibility = View.VISIBLE
             }
-            _currentAdapter?.submitList(data)
+            _currentAdapter?.submitList(state.data)
 
             /** Актуальная цена за все товары */
-            calculatePrice(data)
+            calculatePrice(state.data)
+
+            /** Promo code */
+            when (state.promoCodeStatus) {
+                PromoCodeStatus.ERROR  -> {
+                    enterPromoText.setTextColor(Color.RED)
+                }
+
+                PromoCodeStatus.ENTER  -> {
+                    enterPromoText.setTextColor(requireContext().getColor(R.color.cool_grey))
+                }
+
+                PromoCodeStatus.ACTIVE -> {
+                    enterPromoText.setTextColor(requireContext().getColor(R.color.tangerine_two))
+                    enterPromo.setTextColor(requireContext().getColor(R.color.cool_grey))
+                    enterPromo.isEnabled = false
+                    enterPromoButton.isEnabled = false
+                }
+            }
+
+            enterPromoText.text = state.promoCodeMessage
         }
     }
 
@@ -78,7 +110,7 @@ class BasketScreen : Fragment() {
                 if (state.isLoading) {
                     renderLoading()
                 } else {
-                    renderData(state.data)
+                    renderData(state)
                 }
             }
         }

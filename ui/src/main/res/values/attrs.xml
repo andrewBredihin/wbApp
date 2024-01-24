@@ -27,6 +27,8 @@
         <attr name="lineSize" format="dimension" />
         <attr name="lineActiveColor" format="color" />
         <attr name="linePassiveColor" format="color" />
+
+        <attr name="textAllCaps" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="EditAmountView">

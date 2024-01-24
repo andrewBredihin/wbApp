@@ -22,11 +22,10 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:paddingVertical="10dp"
-        android:singleLine="true"
         app:layout_constraintEnd_toStartOf="@+id/textButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        tools:hint="Hint" />
+        tools:hint="Hint"/>
 
     <TextView
         android:id="@+id/textButton"

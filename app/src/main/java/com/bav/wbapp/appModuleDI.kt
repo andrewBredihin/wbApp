@@ -7,6 +7,7 @@ import com.bav.wbapp.auth.registration.RegistrationViewModel
 import com.bav.wbapp.basket.BasketViewModel
 import com.bav.wbapp.main.MainScreenViewModel
 import com.bav.wbapp.menu.MenuScreenViewModel
+import com.bav.wbapp.order.OrderViewModel
 import com.bav.wbapp.profile.ProfileViewModel
 import com.bav.wbapp.profile.edit.ProfileEditViewModel
 import com.bav.wbapp.promotions.PromotionViewModel
@@ -23,6 +24,7 @@ fun appModule() = module {
     viewModel { RegistrationViewModel(get()) }
     viewModel { PromotionViewModel(get()) }
     viewModel { BasketViewModel(get()) }
+    viewModel { OrderViewModel(get()) }
 
     single {
         Room.databaseBuilder(
