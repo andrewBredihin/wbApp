@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bav.core.getNavController
+import com.bav.core.navigate
 import com.bav.wbapp.R
 import com.bav.wbapp.databinding.ApplyOrderScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.random.Random
 
 
 class ApplyOrderScreen : Fragment() {
@@ -63,6 +65,8 @@ class ApplyOrderScreen : Fragment() {
                     time.visibility = View.VISIBLE
                     timeText.visibility = View.VISIBLE
                     timeSeparator.visibility = View.VISIBLE
+
+                    viewModel.startAction(ApplyOrderAction.SetDeliveryTime("1ч 20мин"))
                 }
             }
         }
@@ -159,15 +163,29 @@ class ApplyOrderScreen : Fragment() {
         }
     }
 
+    private fun initButtons() {
+        binding.applyOrderButton.setOnClickListener { viewModel.startAction(ApplyOrderAction.CreateOrder) }
+
+        binding.bankCardButton.setOnClickListener { viewModel.startAction(ApplyOrderAction.CreateOrder) }
+    }
+
     private fun renderLoading() {
         binding.container.visibility = View.INVISIBLE
         binding.progress.visibility = View.VISIBLE
 
         viewModel.startAction(ApplyOrderAction.StartLoading)
     }
+    private fun renderCreatingOrder() {
+        binding.container.visibility = View.INVISIBLE
+        binding.progress.visibility = View.VISIBLE
+    }
+
 
     private fun renderLoaded() {
-        // TODO -> navigate()
+        val deliveryTime = viewModel.getDeliveryTime()
+        val orderNum = Random.nextInt(999999)
+        val action = ApplyOrderScreenDirections.actionApplyOrderScreenToOrderCreatedScreen("№ $orderNum", deliveryTime)
+        navigate(action)
     }
 
     private fun renderData() {
@@ -178,6 +196,7 @@ class ApplyOrderScreen : Fragment() {
         initPaymentTypes()
         initPaymentTypesListeners()
         initChangeRequiredCheck()
+        initButtons()
     }
 
     private fun observeData() {
@@ -185,6 +204,8 @@ class ApplyOrderScreen : Fragment() {
             viewModel.applyOrderState.collect { state ->
                 if (state.isLoaded) {
                     renderLoaded()
+                } else if (state.isCreatingOrder) {
+                    renderCreatingOrder()
                 } else if (state.isLoading) {
                     renderLoading()
                 } else {

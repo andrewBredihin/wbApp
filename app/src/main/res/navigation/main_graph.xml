@@ -169,7 +169,27 @@
             android:name="date"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_applyOrderScreen_to_orderCreatedScreen"
+            app:destination="@id/orderCreatedScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/main_screen" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/orderCreatedScreen"
+        android:name="com.bav.wbapp.order.created.OrderCreatedScreen"
+        android:label="OrderCreatedScreen" >
+        <argument
+            android:name="orderNum"
+            app:argType="string" />
+        <argument
+            android:name="deliveryTime"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

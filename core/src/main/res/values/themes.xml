@@ -36,6 +36,12 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/cool_grey</item>
     </style>
+
+    <style name="Base.Widget.AppCompat.TextView.LightGrey14" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/light_grey</item>
+    </style>
+
     <style name="Base.Widget.AppCompat.TextView.Grey11" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/sp_11</item>
         <item name="android:textColor">@color/cool_grey</item>
@@ -45,6 +51,7 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="Base.Widget.AppCompat.TextView.White12" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/white</item>
@@ -54,10 +61,12 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/tangerine_two</item>
     </style>
+
     <style name="Base.Widget.AppCompat.TextView.TangerineTwo16" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">@color/tangerine_two</item>
     </style>
+
     <style name="Base.Widget.AppCompat.TextView.TangerineTwo22" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">@dimen/sp_22</item>
         <item name="android:textColor">@color/tangerine_two</item>
@@ -73,12 +82,18 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="Base.Widget.AppCompat.TextView.White20" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!--Button Styles-->
     <style name="Widget.AppCompat.Button.MyRoundedButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/rounded_button_style</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
+
     <style name="Widget.AppCompat.Button.MyOrderButton" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/sp_14</item>

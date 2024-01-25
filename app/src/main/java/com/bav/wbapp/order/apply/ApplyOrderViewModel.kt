@@ -25,17 +25,17 @@ class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
                 _applyOrderState.value = _applyOrderState.value.copy(moneyAvailable = action.value)
             }
 
-            is ApplyOrderAction.SetOrderPaymentType -> {
-                _applyOrderState.value = _applyOrderState.value.copy(type = action.value)
-            }
-
             ApplyOrderAction.StartLoading           -> {
                 loadingMenu()
             }
 
             ApplyOrderAction.CreateOrder             -> {
-                _applyOrderState.value = _applyOrderState.value.copy(isLoading = true)
+                _applyOrderState.value = _applyOrderState.value.copy(isCreatingOrder = true)
                 createOrder()
+            }
+
+            is ApplyOrderAction.SetDeliveryTime -> {
+                _applyOrderState.value = _applyOrderState.value.copy(deliveryTime = action.value)
             }
         }
     }
@@ -56,6 +56,7 @@ class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
     private fun createOrder() {
         viewModelScope.launch(Dispatchers.Default) {
             delay(3000)
+            db.productDao().deleteAll()
             withContext(Dispatchers.Main) {
                 _applyOrderState.value = _applyOrderState.value.copy(isLoaded = true)
             }
@@ -69,4 +70,6 @@ class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
         }
         return amount
     }
+
+    fun getDeliveryTime() = _applyOrderState.value.deliveryTime
 }

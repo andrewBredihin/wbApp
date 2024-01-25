@@ -86,4 +86,12 @@
     <string name="money_available">У меня будет:</string>
     <string name="delivery_time">Время доставки:</string>
 
+    <!--Order created page-->
+    <string name="thanks_for_order">Спасибо за Ваш заказ!</string>
+    <string name="order_num">Номер Вашего заказа</string>
+    <string name="order_info">В течение 5-8 минут\nс Вами свяжется оператор для\nподтверждения заказа</string>
+    <string name="created_delivery_time">Ориентировочное время доставки:</string>
+    <string name="registration_info">Зарегистрированным пользователям при совершении заказа начисляются бонусы, которыми можно расплатиться при последующих заказах</string>
+    <string name="to_menu">В меню</string>
+
 </resources>
