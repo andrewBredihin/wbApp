@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bav.core.basket.ProductEntity
 import com.bav.core.getNavController
 import com.bav.core.navigate
 import com.bav.wbapp.R
@@ -49,10 +48,16 @@ class BasketScreen : Fragment() {
                 setText("0")
                 setMinAmount(0)
                 setMaxAmount(100)
+                setEditAmountListener { guests ->
+                    viewModel.startAction(BasketAction.SetGuestsAmount(guests))
+                }
             }
 
             orderButton.setOnClickListener {
-                navigate(BasketScreenDirections.actionBasketScreenToCreateOrderScreen())
+                val price = viewModel.getPrice()
+                val guests = viewModel.getGuestsAmount()
+                val action = BasketScreenDirections.actionBasketScreenToCreateOrderScreen(price, guests)
+                navigate(action)
             }
 
             enterPromoButton.setOnClickListener {
@@ -70,13 +75,21 @@ class BasketScreen : Fragment() {
             if (state.data.isNotEmpty()) {
                 container.visibility = View.VISIBLE
             }
+
             _currentAdapter?.submitList(state.data)
 
             /** Актуальная цена за все товары */
-            calculatePrice(state.data)
+            discount.text = "${state.discount}%"
+            totalWithDiscount.text = "${state.price} P"
 
             /** Promo code */
-            when (state.promoCodeStatus) {
+            renderPromoCode(state.promoCodeMessage, state.promoCodeStatus)
+        }
+    }
+
+    private fun renderPromoCode(message: String, status: PromoCodeStatus) {
+        with(binding) {
+            when (status) {
                 PromoCodeStatus.ERROR  -> {
                     enterPromoText.setTextColor(Color.RED)
                 }
@@ -92,8 +105,7 @@ class BasketScreen : Fragment() {
                     enterPromoButton.isEnabled = false
                 }
             }
-
-            enterPromoText.text = state.promoCodeMessage
+            enterPromoText.text = message
         }
     }
 
@@ -120,16 +132,5 @@ class BasketScreen : Fragment() {
         binding.basketToolbar.setNavigationOnClickListener {
             getNavController().popBackStack()
         }
-    }
-
-    private fun calculatePrice(products: List<ProductEntity>) {
-        var price = 0f
-        val discountValue = 10
-        products.forEach { product ->
-            price += product.price * product.amountInBasket
-        }
-        price *= (100f - discountValue) / 100f
-        binding.discount.text = "$discountValue%"
-        binding.totalWithDiscount.text = "$price P"
     }
 }

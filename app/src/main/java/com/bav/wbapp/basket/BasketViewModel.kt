@@ -55,6 +55,12 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
                     )
                 }
             }
+
+            is BasketAction.SetGuestsAmount   -> {
+                _basketState.value = _basketState.value.copy(
+                    guestsAmount = action.amount
+                )
+            }
         }
     }
 
@@ -66,9 +72,11 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
                 delay(1000)
                 val list = db.productDao().getAll()
                 withContext(Dispatchers.Main) {
+                    val price = calculatePrice(list)
                     _basketState.value = _basketState.value.copy(
                         isLoading = false,
-                        data = list
+                        data = list,
+                        price = price
                     )
                 }
             } catch (e: Exception) {
@@ -99,9 +107,11 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
                         list.add(it.copy(amountInBasket = amount))
                     }
                 }
+                val price = calculatePrice(list)
                 _basketState.value = _basketState.value.copy(
                     isLoading = false,
-                    data = list.toList()
+                    data = list.toList(),
+                    price = price
                 )
             }
         }
@@ -117,9 +127,11 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
             val list = _basketState.value.data.filter { it.productId != productId }
             withContext(Dispatchers.Main) {
                 if (list.isNotEmpty()) {
+                    val price = calculatePrice(list)
                     _basketState.value = _basketState.value.copy(
                         isLoading = false,
-                        data = list
+                        data = list,
+                        price = price
                     )
                 } else {
                     loadBasket()
@@ -127,4 +139,17 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
             }
         }
     }
+
+    private fun calculatePrice(products: List<ProductEntity> = _basketState.value.data): Int {
+        var price = 0f
+        val discountValue = _basketState.value.discount
+        products.forEach { product ->
+            price += product.price * product.amountInBasket
+        }
+        price *= (100f - discountValue) / 100f
+        return price.toInt()
+    }
+
+    fun getPrice() = _basketState.value.price
+    fun getGuestsAmount() = _basketState.value.guestsAmount
 }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.bav.core.getNavController
 import com.bav.wbapp.R
 import com.bav.wbapp.databinding.CreateOrderScreenBinding
@@ -26,9 +27,11 @@ class CreateOrderScreen : Fragment() {
         private const val PICKUP = "Заберу заказ:"
     }
 
+    private val args: CreateOrderScreenArgs by navArgs()
     private val viewModel: OrderViewModel by viewModel()
 
     private lateinit var binding: CreateOrderScreenBinding
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)

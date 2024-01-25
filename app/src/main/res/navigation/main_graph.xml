@@ -125,6 +125,15 @@
     <fragment
         android:id="@+id/createOrderScreen"
         android:name="com.bav.wbapp.order.CreateOrderScreen"
-        android:label="CreateOrderScreen" />
+        android:label="CreateOrderScreen" >
+        <argument
+            android:name="price"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="guestsAmount"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
 </navigation>
