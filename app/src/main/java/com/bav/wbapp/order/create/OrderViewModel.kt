@@ -1,4 +1,4 @@
-package com.bav.wbapp.order
+package com.bav.wbapp.order.create
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -174,5 +174,19 @@ class OrderViewModel(
                 checkPhone &&
                 checkEmail &&
                 name.isNotEmpty()
+    }
+
+    fun getName(): String {
+        val lastName = "${_createOrderState.value.lastName} "
+        val name = _createOrderState.value.name
+        return "$lastName$name"
+    }
+    fun getPhone() = _createOrderState.value.phone
+    fun getAddress() = _createOrderState.value.address
+    fun getDate() = _createOrderState.value.date.toString()
+    fun getType() = _createOrderState.value.type
+
+    fun clearState() {
+        _createOrderState.value = CreateOrderState(isLoading = true)
     }
 }

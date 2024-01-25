@@ -1,9 +1,10 @@
-package com.bav.wbapp.order
+package com.bav.wbapp.order.create
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bav.core.getNavController
+import com.bav.core.navigate
 import com.bav.wbapp.R
 import com.bav.wbapp.databinding.CreateOrderScreenBinding
 import kotlinx.coroutines.launch
@@ -43,11 +45,43 @@ class CreateOrderScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.clearState()
+
         initOrderTypeContainers()
         initOrderTypeButtons()
         initEditTextFieldsListeners()
         initCalendarButton()
+        initApplyButton()
         observeData()
+    }
+
+    private fun initApplyButton() {
+        binding.applyButton.setOnClickListener {
+            val price = args.price
+            val guests = args.guestsAmount
+            val name = viewModel.getName()
+            val phone = viewModel.getPhone()
+            val type = viewModel.getType()
+            val address = if (type == OrderType.DELIVERY || type == OrderType.TIME_IN) {
+                viewModel.getAddress()
+            } else {
+                null
+            }
+            val date = if (type == OrderType.PICKUP || type == OrderType.TIME_IN) {
+                viewModel.getDate()
+            } else {
+                null
+            }
+            val action = CreateOrderScreenDirections.actionCreateOrderScreenToApplyOrderScreen(
+                price = price,
+                guestsAmount = guests,
+                name = name,
+                phone = phone,
+                address = address,
+                date = date
+            )
+            navigate(action)
+        }
     }
 
     private fun initCalendarButton() {
@@ -220,7 +254,9 @@ class CreateOrderScreen : Fragment() {
             if (state.date != null) {
                 dateText.text = getDateText(state.date)
             } else {
-                dateText.text = getDateText(LocalDateTime.now())
+                val date = LocalDateTime.now()
+                dateText.text = getDateText(date)
+                viewModel.startAction(CreateOrderAction.SetDate(date))
             }
 
             applyButton.isEnabled = state.continueEnabled
@@ -236,6 +272,7 @@ class CreateOrderScreen : Fragment() {
     private fun observeData() {
         lifecycleScope.launch {
             viewModel.createOrderState.collect { state ->
+                Log.e("BAZA", state.toString())
                 if (state.isLoading) {
                     renderLoading()
                 } else {

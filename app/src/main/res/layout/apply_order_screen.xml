@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/apply_order_toolbar"
+        style="@style/Widget.AppCompat.Toolbar.MyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_chevron">
+
+        <TextView
+            android:id="@+id/apply_order_toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/order_toolbar"
+            android:textColor="@android:color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/cool_grey" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true">
+
+                <View
+                    android:id="@+id/to_pay_background"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintBottom_toBottomOf="@id/to_pay_bottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/to_pay_text"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_pay"
+                    android:textAllCaps="true"
+                    app:layout_constraintBottom_toBottomOf="@id/to_pay"
+                    app:layout_constraintEnd_toStartOf="@id/to_pay"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/to_pay" />
+
+                <TextView
+                    android:id="@+id/to_pay"
+                    style="@style/Base.Widget.AppCompat.TextView.TangerineTwo22"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:textAllCaps="true"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="P 1039" />
+
+                <View
+                    android:id="@+id/to_pay_separator"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@color/cool_grey"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/to_pay" />
+
+                <ImageView
+                    android:id="@+id/menu_icon"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:src="@drawable/menu_icon"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/to_pay_separator" />
+
+                <ImageView
+                    android:id="@+id/shipping_icon"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:src="@drawable/shipping_icon"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/menu_icon" />
+
+                <TextView
+                    android:id="@+id/menu_text"
+                    style="@style/Base.Widget.AppCompat.TextView.White12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_23"
+                    app:layout_constraintBottom_toBottomOf="@id/menu_icon"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/menu_icon"
+                    app:layout_constraintTop_toTopOf="@id/menu_icon"
+                    tools:text="2 персоны, 2 блюда" />
+
+                <TextView
+                    android:id="@+id/shipping_text"
+                    style="@style/Base.Widget.AppCompat.TextView.White12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_23"
+                    android:text="@string/free_delivery"
+                    app:layout_constraintBottom_toBottomOf="@id/shipping_icon"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@id/shipping_icon"
+                    app:layout_constraintTop_toTopOf="@id/shipping_icon" />
+
+                <View
+                    android:id="@+id/order_info_separator"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@color/cool_grey"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/shipping_icon" />
+
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/order_info_separator"
+                    tools:text="Петрова Ольга" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    tools:text="8 (927) 235-4587" />
+
+                <TextView
+                    android:id="@+id/address"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/phone"
+                    tools:text="ул. Заморенова, 12"
+                    tools:visibility="visible"/>
+
+                <View
+                    android:id="@+id/time_separator"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@color/cool_grey"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/address"
+                    tools:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/time_text"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/time_separator"
+                    android:text="@string/delivery_time"
+                    tools:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toBottomOf="@id/time_separator"
+                    tools:text="1ч 20м"
+                    tools:visibility="visible"/>
+
+                <View
+                    android:id="@+id/to_pay_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/dp_15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/time" />
+
+                <TextView
+                    android:id="@+id/confirm_order_type_text"
+                    style="@style/Base.Widget.AppCompat.TextView.White14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirm_order"
+                    app:layout_constraintBottom_toBottomOf="@id/confirm_order_type_button"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/confirm_order_type_button" />
+
+                <LinearLayout
+                    android:id="@+id/confirm_order_type_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:background="@drawable/stroke_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@+id/confirm_order_type_text"
+                    app:layout_constraintTop_toBottomOf="@+id/to_pay_bottom">
+
+                    <TextView
+                        style="@style/Base.Widget.AppCompat.TextView.White14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:text="@string/sms" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
+                        android:layout_weight="1"
+                        android:src="@drawable/arrow_right" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/payment"
+                    style="@style/Base.Widget.AppCompat.TextView.TangerineTwo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="@string/payment"
+                    android:textAllCaps="true"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/confirm_order_type_button" />
+
+                <View
+                    android:id="@+id/card_to_courier_background"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/payment" />
+
+                <TextView
+                    android:id="@+id/card_to_courier_text"
+                    style="@style/Base.Widget.AppCompat.TextView.Grey14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_to_courier"
+                    app:layout_constraintBottom_toBottomOf="@id/card_to_courier_background"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/card_to_courier_background"
+                    tools:textColor="@color/white" />
+
+                <RadioButton
+                    android:id="@+id/card_to_courier_check"
+                    style="@style/MyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/card_to_courier_background"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toTopOf="@id/card_to_courier_background"
+                    tools:checked="true" />
+
+                <View
+                    android:id="@+id/card_in_app_background"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_to_courier_background" />
+
+                <TextView
+                    android:id="@+id/card_in_app_text"
+                    style="@style/Base.Widget.AppCompat.TextView.Grey14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_in_app"
+                    app:layout_constraintBottom_toBottomOf="@id/card_in_app_background"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/card_in_app_background" />
+
+                <RadioButton
+                    android:id="@+id/card_in_app_check"
+                    style="@style/MyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/card_in_app_background"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toTopOf="@id/card_in_app_background" />
+
+                <View
+                    android:id="@+id/cash_to_courier_background"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_56"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/dark_grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card_in_app_background" />
+
+                <TextView
+                    android:id="@+id/cash_to_courier_text"
+                    style="@style/Base.Widget.AppCompat.TextView.Grey14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cash_to_courier"
+                    app:layout_constraintBottom_toBottomOf="@id/cash_to_courier_background"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="@id/cash_to_courier_background" />
+
+                <RadioButton
+                    android:id="@+id/cash_to_courier_check"
+                    style="@style/MyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/cash_to_courier_background"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toTopOf="@id/cash_to_courier_background" />
+
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/change_required_check"
+                    style="@style/MyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@id/cash_to_courier_background"
+                    tools:checked="true"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/change_required_text"
+                    style="@style/Base.Widget.AppCompat.TextView.Grey14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:text="@string/change_required"
+                    app:layout_constraintBottom_toBottomOf="@id/change_required_check"
+                    app:layout_constraintStart_toEndOf="@id/change_required_check"
+                    app:layout_constraintTop_toTopOf="@id/change_required_check"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/money_available_text"
+                    style="@style/Base.Widget.AppCompat.TextView.Grey14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/money_available"
+                    android:textColor="@color/light_grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/money_available"
+                    app:layout_constraintStart_toStartOf="@id/change_required_text"
+                    app:layout_constraintTop_toTopOf="@id/money_available"
+                    tools:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/money_available"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/stroke_background"
+                    android:paddingHorizontal="0dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintStart_toEndOf="@+id/money_available_text"
+                    app:layout_constraintTop_toBottomOf="@id/change_required_check"
+                    android:inputType="number"
+                    tools:text="2000"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/apply_order_button"
+                    style="@style/Widget.AppCompat.Button.MyRoundedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_60"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginBottom="@dimen/dp_40"
+                    android:text="@string/apply_order"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/money_available"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bank_card_button"
+                    style="@style/Widget.AppCompat.Button.MyRoundedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_60"
+                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginBottom="@dimen/dp_40"
+                    android:text="@string/bank_card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cash_to_courier_background"
+                    tools:visibility="invisible" />
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/dp_25" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/dp_25" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_gravity="center"
+            tools:visibility="invisible" />
+    </FrameLayout>
+
+</LinearLayout>

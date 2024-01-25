@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="guests_number">
+        <item quantity="one">%1$d персона</item>
+        <item quantity="few">%1$d персоны</item>
+        <item quantity="many">%1$d персон</item>
+    </plurals>
+    <plurals name="menu_number">
+        <item quantity="one">%1$d блюдо</item>
+        <item quantity="few">%1$d блюда</item>
+        <item quantity="many">%1$d блюд</item>
+    </plurals>
+</resources>

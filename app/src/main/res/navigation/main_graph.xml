@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/createOrderScreen"
-        android:name="com.bav.wbapp.order.CreateOrderScreen"
+        android:name="com.bav.wbapp.order.create.CreateOrderScreen"
         android:label="CreateOrderScreen" >
         <argument
             android:name="price"
@@ -133,7 +133,43 @@
         <argument
             android:name="guestsAmount"
             app:argType="integer"
+            android:defaultValue="1" />
+        <action
+            android:id="@+id/action_createOrderScreen_to_applyOrderScreen"
+            app:destination="@id/applyOrderScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/createOrderScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/applyOrderScreen"
+        android:name="com.bav.wbapp.order.apply.ApplyOrderScreen"
+        android:label="ApplyOrderScreen">
+        <argument
+            android:name="price"
+            app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="guestsAmount"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="address"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="date"
+            app:argType="string"
+            app:nullable="true" />
+
     </fragment>
 
 </navigation>

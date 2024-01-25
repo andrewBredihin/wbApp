@@ -151,5 +151,5 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
     }
 
     fun getPrice() = _basketState.value.price
-    fun getGuestsAmount() = _basketState.value.guestsAmount
+    fun getGuestsAmount() = _basketState.value.guestsAmount + 1
 }

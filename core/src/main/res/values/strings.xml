@@ -52,7 +52,7 @@
     <string name="number_of_guests">Сколько гостей:</string>
     <string name="basket_description">Мы доставим палочки, салфетки и приправы.\nНа одну порцию роллов полагается: 30 мл Соевого соуса, 6 гр Васаби, 9 гр Имбиря.</string>
 
-    <!--Order page-->
+    <!--Create Order page-->
     <string name="order_toolbar">Оформление заказа</string>
     <string name="delivery">Доставка</string>
     <string name="deliver_on">Доставить:</string>
@@ -70,5 +70,20 @@
     <string name="order_name">*Имя</string>
     <string name="order_last_name">Фамилия</string>
     <string name="order_phone">*Номер телефона</string>
+
+    <!--Apply Order page-->
+    <string name="to_pay">К оплате:</string>
+    <string name="free_delivery">Бесплатная доставка в пределах МКАД</string>
+    <string name="sms">по СМС</string>
+    <string name="confirm_order">Подтвердить заказ:</string>
+    <string name="payment">Оплата</string>
+    <string name="card_to_courier">Картой курьеру</string>
+    <string name="card_in_app">Картой в приложении</string>
+    <string name="cash_to_courier">Наличными курьеру</string>
+    <string name="apply_order">Оформить заказ</string>
+    <string name="bank_card">банковская карта</string>
+    <string name="change_required">Требуется сдача</string>
+    <string name="money_available">У меня будет:</string>
+    <string name="delivery_time">Время доставки:</string>
 
 </resources>
