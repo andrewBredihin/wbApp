@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bav.core.navigate
 import com.bav.wbapp.MainActivity
 import com.bav.wbapp.databinding.OrderCreatedScreenBinding
+
 
 class OrderCreatedScreen : Fragment() {
 
@@ -19,6 +21,11 @@ class OrderCreatedScreen : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = OrderCreatedScreenBinding.inflate(inflater, container, false)
+
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
+            requireActivity().navigate(MainActivity::class.java)
+        }
+
         return binding.root
     }
 
