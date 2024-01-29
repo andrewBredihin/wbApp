@@ -17,7 +17,7 @@
         tools:text="Title" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/customEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -25,7 +25,8 @@
         app:layout_constraintEnd_toStartOf="@+id/textButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        tools:hint="Hint"/>
+        tools:hint="Hint"
+        android:saveEnabled="false"/>
 
     <TextView
         android:id="@+id/textButton"
@@ -33,10 +34,10 @@
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
         android:paddingHorizontal="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/editText"
+        app:layout_constraintBottom_toBottomOf="@id/customEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@id/editText"
+        app:layout_constraintStart_toEndOf="@+id/customEditText"
+        app:layout_constraintTop_toTopOf="@id/customEditText"
         tools:text="show" />
 
     <View
@@ -44,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="2dp"
         app:layout_constraintEnd_toEndOf="@id/textButton"
-        app:layout_constraintStart_toStartOf="@id/editText"
-        app:layout_constraintTop_toBottomOf="@id/editText"
+        app:layout_constraintStart_toStartOf="@id/customEditText"
+        app:layout_constraintTop_toBottomOf="@id/customEditText"
         tools:background="@color/black" />
 </merge>

@@ -12,6 +12,7 @@ import com.bav.wbapp.order.create.OrderViewModel
 import com.bav.wbapp.profile.ProfileViewModel
 import com.bav.wbapp.profile.edit.ProfileEditViewModel
 import com.bav.wbapp.promotions.PromotionViewModel
+import com.bav.wbapp.restaurants.RestaurantsMapViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -27,6 +28,7 @@ fun appModule() = module {
     viewModel { BasketViewModel(get()) }
     viewModel { OrderViewModel(get()) }
     viewModel { ApplyOrderViewModel(get()) }
+    viewModel { RestaurantsMapViewModel() }
 
     single {
         Room.databaseBuilder(

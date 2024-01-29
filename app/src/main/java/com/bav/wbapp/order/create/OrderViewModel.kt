@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.profile.ProfileRepository
+import com.bav.wbapp.restaurants.RestaurantInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +20,7 @@ class OrderViewModel(
         const val PHONE_TEMPLATE = "([8 ]|[\\+7 ])?(\\d{3}) (\\d{3})-(\\d{2})-(\\d{2})"
     }
 
-    private val _createOrderState: MutableStateFlow<CreateOrderState> = MutableStateFlow(CreateOrderState(isLoading = true))
+    private val _createOrderState: MutableStateFlow<CreateOrderState> = MutableStateFlow(CreateOrderState())
     val createOrderState = _createOrderState.asStateFlow()
 
     fun startAction(action: CreateOrderAction) {
@@ -115,9 +116,16 @@ class OrderViewModel(
                 )
             }
 
-            is CreateOrderAction.Loaded        -> {
+            CreateOrderAction.SetUserInfoLoaded -> {
                 _createOrderState.value = _createOrderState.value.copy(
-                    isLoaded = true
+                    userDataLoaded = true
+                )
+            }
+
+            is CreateOrderAction.SetRestaurant -> {
+                _createOrderState.value = _createOrderState.value.copy(
+                    restaurant = action.restaurant,
+                    continueEnabled = checkContinueButtonEnabled(restaurantInfo = action.restaurant)
                 )
             }
         }
@@ -152,7 +160,8 @@ class OrderViewModel(
         email: String = _createOrderState.value.email,
         address: String = _createOrderState.value.address,
         date: LocalDateTime? = _createOrderState.value.date,
-        type: OrderType = _createOrderState.value.type
+        type: OrderType = _createOrderState.value.type,
+        restaurantInfo: RestaurantInfo? = _createOrderState.value.restaurant
     ): Boolean {
         val checkOrderTypeFields: Boolean = when (type) {
             OrderType.DELIVERY -> {
@@ -164,8 +173,7 @@ class OrderViewModel(
             }
 
             OrderType.PICKUP   -> {
-                // TODO
-                true
+                restaurantInfo != null
             }
         }
         val checkPhone: Boolean = !PHONE_TEMPLATE.toRegex().find(phone)?.value.isNullOrEmpty()
@@ -181,12 +189,11 @@ class OrderViewModel(
         val name = _createOrderState.value.name
         return "$lastName$name"
     }
+    fun getFirstName() = _createOrderState.value.name
+    fun getLastName() = _createOrderState.value.lastName
     fun getPhone() = _createOrderState.value.phone
     fun getAddress() = _createOrderState.value.address
-    fun getDate() = _createOrderState.value.date.toString()
+    fun getDate() = _createOrderState.value.date
     fun getType() = _createOrderState.value.type
-
-    fun clearState() {
-        _createOrderState.value = CreateOrderState(isLoading = true)
-    }
+    fun getEmail() = _createOrderState.value.email
 }

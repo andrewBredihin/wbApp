@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -19,10 +22,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+   buildFeatures {
+       buildConfig = true
+   }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        debug {
+            val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
+            buildConfigField("String", "MAP_API_KEY", key)
         }
     }
     compileOptions {
@@ -38,12 +49,19 @@ android {
     }
 }
 
+fun readProperties(propertiesFile: File) = Properties().apply {
+    propertiesFile.inputStream().use { fis ->
+        load(fis)
+    }
+}
+
 dependencies {
 
     // libs
     implementation(libs.recycler)
     implementation(libs.constraint)
     implementation(libs.viewpager2)
+    implementation(libs.map)
 
     // Room
     implementation(libs.roomMain)

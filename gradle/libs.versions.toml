@@ -24,6 +24,7 @@ datastore       = "1.0.0"
 viewpager2      = "1.0.0"
 agp             = "8.1.4"
 room            = "2.6.1"
+map             = "4.4.0-lite"
 
 [libraries]
 koin-android            = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -56,6 +57,7 @@ roomMain                = { module = "androidx.room:room-runtime", version.ref =
 roomCoroutines          = { module = "androidx.room:room-ktx", version.ref = "room" }
 roomAP                  = { module = "androidx.room:room-compiler", version.ref = "room" }
 roomKSP                 = { module = "androidx.room:room-compiler", version.ref = "room" }
+map                     = { module = "com.yandex.android:maps.mobile", version.ref = "map" }
 
 [plugins]
 com-android-library = { id = "com.android.library", version.ref = "agp" }

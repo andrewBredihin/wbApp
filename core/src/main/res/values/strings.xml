@@ -94,4 +94,7 @@
     <string name="registration_info">Зарегистрированным пользователям при совершении заказа начисляются бонусы, которыми можно расплатиться при последующих заказах</string>
     <string name="to_menu">В меню</string>
 
+    <!--Restaraunt pages-->
+    <string name="map">Карта</string>
+
 </resources>

@@ -1,13 +1,13 @@
 package com.bav.wbapp.order.create
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -15,11 +15,14 @@ import com.bav.core.getNavController
 import com.bav.core.navigate
 import com.bav.wbapp.R
 import com.bav.wbapp.databinding.CreateOrderScreenBinding
+import com.bav.wbapp.restaurants.RestaurantInfo
+import com.bav.wbapp.restaurants.RestaurantsMapViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Calendar
 
 class CreateOrderScreen : Fragment() {
@@ -30,10 +33,15 @@ class CreateOrderScreen : Fragment() {
     }
 
     private val args: CreateOrderScreenArgs by navArgs()
-    private val viewModel: OrderViewModel by viewModel()
+    private val viewModel: OrderViewModel by activityViewModel()
+    private val restaurantsViewModel: RestaurantsMapViewModel by activityViewModel()
 
     private lateinit var binding: CreateOrderScreenBinding
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel.startAction(CreateOrderAction.LoadingAction)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -45,14 +53,20 @@ class CreateOrderScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.clearState()
-
         initOrderTypeContainers()
         initOrderTypeButtons()
         initEditTextFieldsListeners()
         initCalendarButton()
         initApplyButton()
+        initChoiceRestaurantButton()
         observeData()
+        restaurantObserve()
+    }
+
+    private fun initChoiceRestaurantButton() {
+        binding.restaurantContainer.setOnClickListener {
+            navigate(CreateOrderScreenDirections.actionCreateOrderScreenToRestaurantsMapScreen())
+        }
     }
 
     private fun initApplyButton() {
@@ -68,7 +82,7 @@ class CreateOrderScreen : Fragment() {
                 null
             }
             val date = if (type == OrderType.PICKUP || type == OrderType.TIME_IN) {
-                viewModel.getDate()
+                viewModel.getDate().toString()
             } else {
                 null
             }
@@ -144,9 +158,6 @@ class CreateOrderScreen : Fragment() {
                 viewModel.startAction(CreateOrderAction.SetApartment(text))
             }
 
-            // Date info
-            // TODO -> viewModel.startAction(CreateOrderAction.SetDate(date))
-
             // Commentary
             commentary.setEditTextListener { text ->
                 viewModel.startAction(CreateOrderAction.SetCommentary(text))
@@ -164,91 +175,111 @@ class CreateOrderScreen : Fragment() {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun initOrderTypeButtons() {
         with(binding) {
-            deliveryButton.setOnClickListener {
-                it.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background,
-                    requireContext().theme
-                )
-                inTimeButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
-                pickupButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
+            deliveryButton.setOnClickListener { setDelivery() }
+            inTimeButton.setOnClickListener { setInTime() }
+            pickupButton.setOnClickListener { setPickup() }
+        }
+    }
 
-                deliveryContainer.visibility = View.VISIBLE
-                dateContainer.visibility = View.GONE
-                restaurantContainer.visibility = View.GONE
+    private fun setDelivery() {
+        with(binding) {
+            deliveryButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background
+            )
+            inTimeButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
+            pickupButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
 
-                viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.DELIVERY))
-            }
+            deliveryContainer.visibility = View.VISIBLE
+            dateContainer.visibility = View.GONE
+            restaurantContainer.visibility = View.GONE
+        }
+        viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.DELIVERY))
+    }
 
-            inTimeButton.setOnClickListener {
-                it.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background,
-                    requireContext().theme
-                )
-                deliveryButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
-                pickupButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
+    private fun setInTime() {
+        with(binding) {
+            inTimeButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background
+            )
+            deliveryButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
+            pickupButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
 
-                deliveryContainer.visibility = View.VISIBLE
-                dateContainer.visibility = View.VISIBLE
-                restaurantContainer.visibility = View.GONE
+            deliveryContainer.visibility = View.VISIBLE
+            dateContainer.visibility = View.VISIBLE
+            restaurantContainer.visibility = View.GONE
 
-                dateInfo.text = DELIVER_ON
+            dateInfo.text = DELIVER_ON
+        }
+        viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.TIME_IN))
+    }
 
-                viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.TIME_IN))
-            }
+    private fun setPickup() {
+        with(binding) {
+            pickupButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background
+            )
+            inTimeButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
+            deliveryButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.order_button_background_null
+            )
 
-            pickupButton.setOnClickListener {
-                it.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background,
-                    requireContext().theme
-                )
-                inTimeButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
-                deliveryButton.background = context?.resources?.getDrawable(
-                    R.drawable.order_button_background_null,
-                    requireContext().theme
-                )
+            deliveryContainer.visibility = View.GONE
+            dateContainer.visibility = View.VISIBLE
+            restaurantContainer.visibility = View.VISIBLE
 
-                deliveryContainer.visibility = View.GONE
-                dateContainer.visibility = View.VISIBLE
-                restaurantContainer.visibility = View.VISIBLE
+            dateInfo.text = PICKUP
+        }
+        viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.PICKUP))
+    }
 
-                dateInfo.text = PICKUP
-
-                viewModel.startAction(CreateOrderAction.SetOrderType(OrderType.PICKUP))
-            }
+    private fun setRestaurant(restaurant: RestaurantInfo) {
+        with(binding) {
+            restaurantSelect.visibility = View.GONE
+            restaurantInfo.visibility = View.VISIBLE
+            restaurantName.text = restaurant.area
+            restaurantAddress.text = restaurant.address
         }
     }
 
     private fun renderData(state: CreateOrderState) {
         with(binding) {
-            /** Если данные о пользователе уже были загружены - не загружать их снова */
-            if (!state.isLoaded) {
-                viewModel.startAction(CreateOrderAction.Loaded)
+            progress.visibility = View.INVISIBLE
+            container.visibility = View.VISIBLE
 
-                progress.visibility = View.INVISIBLE
-                container.visibility = View.VISIBLE
-
+            if (!state.userDataLoaded) {
                 name.setText(state.name)
                 lastName.setText(state.lastName ?: "")
                 email.setText(state.email)
                 phone.setText(state.phone)
+                address.setText(state.address)
+                entrance.setText(state.entrance ?: "")
+                code.setText(state.code ?: "")
+                floor.setText(state.floor ?: "")
+                apartment.setText(state.apartment ?: "")
+                commentary.setText(state.commentary)
+
+                viewModel.startAction(CreateOrderAction.SetUserInfoLoaded)
             }
 
             if (state.date != null) {
@@ -259,24 +290,42 @@ class CreateOrderScreen : Fragment() {
                 viewModel.startAction(CreateOrderAction.SetDate(date))
             }
 
+            when(state.type) {
+                OrderType.DELIVERY -> setDelivery()
+                OrderType.TIME_IN  -> setInTime()
+                OrderType.PICKUP   -> {
+                    setPickup()
+                    if (state.restaurant != null) {
+                        setRestaurant(state.restaurant)
+                    }
+                }
+            }
+
             applyButton.isEnabled = state.continueEnabled
         }
     }
 
     private fun renderLoading() {
-        viewModel.startAction(CreateOrderAction.LoadingAction)
         binding.progress.visibility = View.VISIBLE
         binding.container.visibility = View.INVISIBLE
     }
 
     private fun observeData() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             viewModel.createOrderState.collect { state ->
-                Log.e("BAZA", state.toString())
                 if (state.isLoading) {
                     renderLoading()
                 } else {
                     renderData(state)
+                }
+            }
+        }
+    }
+    private fun restaurantObserve() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            restaurantsViewModel.currentRestaurant.collect { restaurant ->
+                if (restaurant != null) {
+                    viewModel.startAction(CreateOrderAction.SetRestaurant(restaurant))
                 }
             }
         }

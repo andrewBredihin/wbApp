@@ -1,10 +1,10 @@
 package com.bav.wbapp.order.create
 
+import com.bav.wbapp.restaurants.RestaurantInfo
 import java.time.LocalDateTime
 
 sealed class CreateOrderAction {
     data object LoadingAction : CreateOrderAction()
-    data object Loaded : CreateOrderAction()
     data class SetOrderType(val type: OrderType) : CreateOrderAction()
     data class SetName(val name: String) : CreateOrderAction()
     data class SetLastName(val lastName: String) : CreateOrderAction()
@@ -17,6 +17,8 @@ sealed class CreateOrderAction {
     data class SetApartment(val apartment: String) : CreateOrderAction()
     data class SetDate(val date: LocalDateTime) : CreateOrderAction()
     data class SetCommentary(val commentary: String) : CreateOrderAction()
+    data class SetRestaurant(val restaurant: RestaurantInfo) : CreateOrderAction()
+    data object SetUserInfoLoaded : CreateOrderAction()
 }
 
 enum class OrderType {
@@ -38,7 +40,8 @@ data class CreateOrderState(
     val apartment: String? = "",
     val commentary: String = "",
     val type: OrderType = OrderType.DELIVERY,
+    val restaurant: RestaurantInfo? = null,
     val isLoading: Boolean = false,
     val continueEnabled: Boolean = false,
-    val isLoaded: Boolean = false
+    val userDataLoaded: Boolean = false
 )

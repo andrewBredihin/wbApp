@@ -43,7 +43,7 @@ class MainScreen : Fragment() {
                 MainCategoryModel.MENU        -> MainScreenDirections.actionMainScreenToMenuScreen()
                 MainCategoryModel.INFO        -> MainScreenDirections.actionMainScreenToInfoScreen()
                 MainCategoryModel.REVIEW      -> MainScreenDirections.actionMainScreenToReviewScreen()
-                MainCategoryModel.RESTAURANTS -> MainScreenDirections.actionMainScreenToRestaurantsScreen()
+                MainCategoryModel.RESTAURANTS -> MainScreenDirections.actionMainScreenToRestaurantsMapScreen()
                 MainCategoryModel.HISTORY     -> MainScreenDirections.actionMainScreenToHistoryScreen2()
                 MainCategoryModel.DELIVERY    -> MainScreenDirections.actionMainScreenToDeliveryScreen()
 
