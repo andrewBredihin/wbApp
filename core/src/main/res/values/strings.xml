@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">WB App</string>
+
+    <!--Login/Registration page-->
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="phone">Телефон</string>
+    <string name="show">Показать</string>
+    <string name="hide">Скрыть</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login">Войти</string>
+    <string name="authorization">Авторизация</string>
+    <string name="registration">Регистрация</string>
+    <string name="login_with_social_networks">или с помощью соц. сетей</string>
+    <string name="login_error">Неверный логин и/или пароль</string>
+    <string name="registration_error">Пользователь уже существует</string>
+    <string name="processing_of_personal_data">Даю свое согласие на обработку персональных данных</string>
+    <string name="registration_ok">Зарегистрироваться</string>
+    <string name="registration_bad">Не все поля заполнены</string>
+
+    <!--Profile page-->
+    <string name="profile_toolbar">Личные данные</string>
+    <string name="profile_date_of_birth">Дата рождения</string>
+    <string name="profile_phone">Номер телефона</string>
+    <string name="profile_email">Email</string>
+    <string name="logout">Выйти</string>
+    <string name="not_data">Не заполнено</string>
+    <string name="edit_profile">Редактирование</string>
+    <string name="edit_password">Изменить пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_password">Подтверждение пароля</string>
+    <string name="save">Сохранить</string>
+    <string name="permissions_denied">Отсутствует разрешение</string>
+
+</resources>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_auth">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.AppCompat.Toolbar.MyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_chevron">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/profile_toolbar"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/basket_button"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@android:color/transparent"
+            android:src="@drawable/basket" />
+
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@android:color/transparent"
+            android:src="@drawable/edit" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dp_40" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profile_photo_container"
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="@dimen/dp_110"
+        android:layout_marginTop="@dimen/dp_23"
+        app:cardCornerRadius="@dimen/dp_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/not_photo" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/edit_photo_container"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_23"
+        app:cardCornerRadius="@dimen/dp_40"
+        app:layout_constraintCircle="@id/profile_photo_container"
+        app:layout_constraintCircleAngle="60"
+        app:layout_constraintCircleRadius="@dimen/dp_56"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/edit_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/not_photo2" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/Base.Widget.AppCompat.TextView.White22"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/profile_photo_container"
+
+        tools:text="@tools:sample/full_names" />
+
+    <FrameLayout
+        android:id="@+id/date_of_birth_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_56"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/name">
+
+        <include
+            android:id="@+id/date_of_birth"
+            layout="@layout/custom_text" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/phone_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/date_of_birth_container">
+
+        <include
+            android:id="@+id/phone"
+            layout="@layout/custom_text" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_33"
+        android:background="@color/cool_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/phone_container" />
+
+    <FrameLayout
+        android:id="@+id/email_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/separator">
+
+        <include
+            android:id="@+id/email"
+            layout="@layout/custom_text" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout_button"
+        style="@style/Widget.AppCompat.Button.MyRoundedButton"
+        android:layout_width="@dimen/dp_255"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_56"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_container" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

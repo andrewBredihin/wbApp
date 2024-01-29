@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/auth_graph"
+    app:startDestination="@id/login_screen">
+
+    <fragment
+        android:id="@+id/login_screen"
+        android:name="com.bav.wbapp.auth.login.LoginScreen"
+        android:label="@string/authorization">
+        <action
+            android:id="@+id/action_login_screen_to_registrationScreen"
+            app:destination="@id/registration_screen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/login_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registration_screen"
+        android:name="com.bav.wbapp.auth.registration.RegistrationScreen"
+        android:label="@string/registration">
+    </fragment>
+
+</navigation>

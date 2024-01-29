@@ -18,7 +18,12 @@
             app:destination="@id/historyScreen2" />
         <action
             android:id="@+id/action_main_screen_to_profileScreen"
-            app:destination="@id/profileScreen" />
+            app:destination="@id/profileScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/main_screen" />
         <action
             android:id="@+id/action_main_screen_to_reviewScreen"
             app:destination="@id/reviewScreen" />
@@ -59,7 +64,16 @@
     <fragment
         android:id="@+id/profileScreen"
         android:name="com.bav.wbapp.profile.ProfileScreen"
-        android:label="ProfileScreen" />
+        android:label="ProfileScreen" >
+        <action
+            android:id="@+id/action_profileScreen_to_profileEditScreen"
+            app:destination="@id/profileEditScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/profileScreen"/>
+    </fragment>
     <fragment
         android:id="@+id/restaurantsScreen"
         android:name="com.bav.wbapp.restaurants.RestaurantsScreen"
@@ -73,5 +87,9 @@
     <include app:graph="@navigation/profile_graph" />
     <include app:graph="@navigation/info_graph" />
     <include app:graph="@navigation/history_graph" />
+    <fragment
+        android:id="@+id/profileEditScreen"
+        android:name="com.bav.wbapp.profile.edit.ProfileEditScreen"
+        android:label="ProfileEditScreen"/>
 
 </navigation>
