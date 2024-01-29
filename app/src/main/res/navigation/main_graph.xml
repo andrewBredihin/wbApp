@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/menuScreen"
         android:name="com.bav.wbapp.menu.MenuScreen"
-        android:label="MenuScreen"/>
+        android:label="MenuScreen" />
     <fragment
         android:id="@+id/reviewScreen"
         android:name="com.bav.wbapp.review.ReviewScreen"

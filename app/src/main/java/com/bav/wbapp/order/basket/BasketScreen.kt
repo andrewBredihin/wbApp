@@ -14,6 +14,7 @@ import com.bav.wbapp.databinding.BasketScreenBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class BasketScreen : Fragment() {
 
     private val viewModel: BasketViewModel by viewModel()

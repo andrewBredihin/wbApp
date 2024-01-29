@@ -29,7 +29,6 @@ class OrderCreatedScreen : Fragment() {
 
         binding.toMenuButton.setOnClickListener {
             requireActivity().navigate(MainActivity::class.java)
-            requireActivity().finish()
         }
     }
 
