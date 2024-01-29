@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bav.wbapp.basket.ProductInBasket
+import com.bav.wbapp.order.basket.ProductInBasket
 import com.bav.wbapp.databinding.MenuRecyclerHolderBinding
 import com.bav.wbapp.menu.model.MenuItemModel
 

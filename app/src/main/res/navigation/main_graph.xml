@@ -71,16 +71,7 @@
     <fragment
         android:id="@+id/menuScreen"
         android:name="com.bav.wbapp.menu.MenuScreen"
-        android:label="MenuScreen">
-        <action
-            android:id="@+id/action_menuScreen_to_basketScreen"
-            app:destination="@id/basketScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/menuScreen" />
-    </fragment>
+        android:label="MenuScreen"/>
     <fragment
         android:id="@+id/reviewScreen"
         android:name="com.bav.wbapp.review.ReviewScreen"
@@ -99,112 +90,9 @@
             app:popUpTo="@id/profileScreen" />
     </fragment>
     <fragment
-        android:id="@+id/restaurantsScreen"
-        android:name="com.bav.wbapp.restaurants.RestaurantsScreen"
-        android:label="RestaurantsScreen" />
-
-    <include app:graph="@navigation/stock_graph" />
-    <include app:graph="@navigation/menu_graph" />
-    <include app:graph="@navigation/restaurants_graph" />
-    <include app:graph="@navigation/delivery_graph" />
-    <include app:graph="@navigation/review_graph" />
-    <include app:graph="@navigation/profile_graph" />
-    <include app:graph="@navigation/info_graph" />
-    <include app:graph="@navigation/history_graph" />
-    <fragment
         android:id="@+id/profileEditScreen"
         android:name="com.bav.wbapp.profile.edit.ProfileEditScreen"
         android:label="ProfileEditScreen" />
-    <fragment
-        android:id="@+id/basketScreen"
-        android:name="com.bav.wbapp.basket.BasketScreen"
-        android:label="BasketScreen">
-        <action
-            android:id="@+id/action_basketScreen_to_createOrderScreen"
-            app:destination="@id/createOrderScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/basketScreen" />
-    </fragment>
-    <fragment
-        android:id="@+id/createOrderScreen"
-        android:name="com.bav.wbapp.order.create.CreateOrderScreen"
-        android:label="CreateOrderScreen">
-        <argument
-            android:name="price"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="guestsAmount"
-            android:defaultValue="1"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_createOrderScreen_to_applyOrderScreen"
-            app:destination="@id/applyOrderScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/createOrderScreen" />
-        <action
-            android:id="@+id/action_createOrderScreen_to_restaurantsMapScreen"
-            app:destination="@id/restaurantsMapScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/createOrderScreen" />
-    </fragment>
-    <fragment
-        android:id="@+id/applyOrderScreen"
-        android:name="com.bav.wbapp.order.apply.ApplyOrderScreen"
-        android:label="ApplyOrderScreen">
-        <argument
-            android:name="price"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <argument
-            android:name="guestsAmount"
-            android:defaultValue="1"
-            app:argType="integer" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="address"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="date"
-            app:argType="string"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_applyOrderScreen_to_orderCreatedScreen"
-            app:destination="@id/orderCreatedScreen"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/main_screen" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/orderCreatedScreen"
-        android:name="com.bav.wbapp.order.created.OrderCreatedScreen"
-        android:label="OrderCreatedScreen">
-        <argument
-            android:name="orderNum"
-            app:argType="string" />
-        <argument
-            android:name="deliveryTime"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
     <fragment
         android:id="@+id/restaurantsMapScreen"
         android:name="com.bav.wbapp.restaurants.RestaurantsMapScreen"

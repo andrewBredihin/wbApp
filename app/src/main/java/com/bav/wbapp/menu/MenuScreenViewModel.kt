@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
 import com.bav.core.basket.AppDatabase
 import com.bav.core.menu.MenuRepository
-import com.bav.wbapp.basket.ProductInBasket
+import com.bav.wbapp.order.basket.ProductInBasket
 import com.bav.wbapp.menu.model.MenuItemModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

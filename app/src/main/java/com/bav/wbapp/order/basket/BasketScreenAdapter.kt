@@ -1,4 +1,4 @@
-package com.bav.wbapp.basket
+package com.bav.wbapp.order.basket
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

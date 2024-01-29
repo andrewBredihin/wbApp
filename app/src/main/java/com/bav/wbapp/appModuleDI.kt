@@ -4,7 +4,7 @@ import androidx.room.Room
 import com.bav.core.basket.AppDatabase
 import com.bav.wbapp.auth.login.LoginViewModel
 import com.bav.wbapp.auth.registration.RegistrationViewModel
-import com.bav.wbapp.basket.BasketViewModel
+import com.bav.wbapp.order.basket.BasketViewModel
 import com.bav.wbapp.main.MainScreenViewModel
 import com.bav.wbapp.menu.MenuScreenViewModel
 import com.bav.wbapp.order.apply.ApplyOrderViewModel

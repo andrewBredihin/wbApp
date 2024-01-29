@@ -82,6 +82,7 @@ class LoginScreen : Fragment() {
             viewModel.loginState.collect { state ->
                 if (state.isAuth) {
                     requireActivity().navigate(MainActivity::class.java)
+                    requireActivity().finish()
                 } else {
                     if (state.isLoading) {
                         renderLoading()

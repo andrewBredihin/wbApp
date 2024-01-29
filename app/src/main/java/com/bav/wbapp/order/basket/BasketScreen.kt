@@ -1,4 +1,4 @@
-package com.bav.wbapp.basket
+package com.bav.wbapp.order.basket
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bav.core.getNavController
 import com.bav.core.navigate
+import com.bav.wbapp.MainActivity
 import com.bav.wbapp.R
 import com.bav.wbapp.databinding.BasketScreenBinding
 import kotlinx.coroutines.launch
@@ -130,7 +130,7 @@ class BasketScreen : Fragment() {
 
     private fun initToolbar() {
         binding.basketToolbar.setNavigationOnClickListener {
-            getNavController().popBackStack()
+            requireActivity().navigate(MainActivity::class.java)
         }
     }
 }

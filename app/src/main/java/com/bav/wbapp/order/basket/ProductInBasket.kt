@@ -1,4 +1,4 @@
-package com.bav.wbapp.basket
+package com.bav.wbapp.order.basket
 
 import com.bav.core.basket.ProductEntity
 

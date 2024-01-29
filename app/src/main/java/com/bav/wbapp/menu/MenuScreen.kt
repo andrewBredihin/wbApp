@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bav.core.getNavController
 import com.bav.core.navigate
 import com.bav.wbapp.databinding.MenuScreenBinding
+import com.bav.wbapp.order.OrderActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,7 +57,7 @@ class MenuScreen : Fragment() {
             getNavController().popBackStack()
         }
         binding.menuToolbarBasketButton.setOnClickListener {
-            navigate(MenuScreenDirections.actionMenuScreenToBasketScreen())
+            requireActivity().navigate(OrderActivity::class.java)
         }
 
         binding.menuSearchField.apply {

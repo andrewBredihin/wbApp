@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.bav.core.getNavController
-import com.bav.wbapp.R
+import com.bav.core.navigate
+import com.bav.wbapp.MainActivity
 import com.bav.wbapp.databinding.OrderCreatedScreenBinding
 
 class OrderCreatedScreen : Fragment() {
@@ -26,7 +26,11 @@ class OrderCreatedScreen : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initArgs()
-        binding.toMenuButton.setOnClickListener { getNavController().navigate(R.id.main_screen) }
+
+        binding.toMenuButton.setOnClickListener {
+            requireActivity().navigate(MainActivity::class.java)
+            requireActivity().finish()
+        }
     }
 
     private fun initArgs() {

@@ -1,4 +1,4 @@
-package com.bav.wbapp.basket
+package com.bav.wbapp.order.basket
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -28,7 +28,7 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
 
     fun startAction(action: BasketAction) {
         when (action) {
-            is BasketAction.LoadingAction -> {
+            is BasketAction.LoadingAction     -> {
                 loadBasket()
             }
 
