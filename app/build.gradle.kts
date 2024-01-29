@@ -24,6 +24,7 @@ android {
 
    buildFeatures {
        buildConfig = true
+       compose = true
    }
 
     buildTypes {
@@ -47,6 +48,10 @@ android {
     viewBinding {
         enable = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
+    }
 }
 
 fun readProperties(propertiesFile: File) = Properties().apply {
@@ -54,6 +59,10 @@ fun readProperties(propertiesFile: File) = Properties().apply {
         load(fis)
     }
 }
+
+val compose = "1.5.8"
+val composeConstraintLayout = "1.0.1"
+val composeBom = "2024.01.00"
 
 dependencies {
 
@@ -67,6 +76,11 @@ dependencies {
     implementation(libs.roomMain)
     annotationProcessor(libs.roomAP)
     ksp(libs.roomKSP)
+
+    // Compose
+    implementation(platform("androidx.compose:compose-bom:$composeBom"))
+    debugImplementation(libs.compose.tooling)
+    implementation(libs.bundles.compose)
 
     // bundles-libs
     implementation(libs.bundles.common)

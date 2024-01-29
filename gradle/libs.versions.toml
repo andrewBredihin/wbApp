@@ -6,7 +6,7 @@ compileSdk  = "34"
 org-jetbrains-kotlin-android = "1.9.0"
 retrofit        = "2.9.0"
 koin            = "3.5.0"
-kotlin          = "1.9.0"
+kotlin          = "1.12.0"
 material        = "1.8.0"
 appcompat       = "1.6.1"
 navigation      = "2.7.5"
@@ -25,6 +25,8 @@ viewpager2      = "1.0.0"
 agp             = "8.1.4"
 room            = "2.6.1"
 map             = "4.4.0-lite"
+compose         = "1.5.8"
+composeConstraintLayout = "1.0.1"
 
 [libraries]
 koin-android            = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -58,6 +60,13 @@ roomCoroutines          = { module = "androidx.room:room-ktx", version.ref = "ro
 roomAP                  = { module = "androidx.room:room-compiler", version.ref = "room" }
 roomKSP                 = { module = "androidx.room:room-compiler", version.ref = "room" }
 map                     = { module = "com.yandex.android:maps.mobile", version.ref = "map" }
+compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-tooling-android = { module = "androidx.compose.ui:ui-tooling-preview-android", version.ref = "compose" }
+compose-tooling         = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-constraintlayout= { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "composeConstraintLayout" }
+compose-ui              = { module = "androidx.compose.ui:ui" }
+compose-ui-graphics     = { module = "androidx.compose.ui:ui-graphics" }
+compose-material        = { module = "androidx.compose.material3:material3" }
 
 [plugins]
 com-android-library = { id = "com.android.library", version.ref = "agp" }
@@ -102,4 +111,12 @@ coroutines = [
 room = [
     "roomMain",
     "roomCoroutines"
+]
+compose = [
+    "compose-tooling-preview",
+    "compose-tooling-android",
+    "compose-constraintlayout",
+    "compose-ui",
+    "compose-ui-graphics",
+    "compose-material"
 ]
