@@ -8,15 +8,19 @@ import com.bav.core.api.TokenManager
 import com.bav.core.auth.AuthenticationApi
 import com.bav.core.auth.AuthorizationRepository
 import com.bav.core.auth.AuthorizationRepositoryImpl
+import com.bav.core.auth.AuthorizationRepositoryMock
 import com.bav.core.menu.MenuApi
 import com.bav.core.menu.MenuRepository
 import com.bav.core.menu.MenuRepositoryImpl
+import com.bav.core.menu.MenuRepositoryMock
 import com.bav.core.profile.ProfileApi
 import com.bav.core.profile.ProfileRepository
 import com.bav.core.profile.ProfileRepositoryImpl
+import com.bav.core.profile.ProfileRepositoryMock
 import com.bav.core.promotions.PromotionRepository
 import com.bav.core.promotions.PromotionRepositoryImpl
 import com.bav.core.promotions.PromotionsApi
+import com.bav.core.promotions.PromotionsRepositoryMock
 import com.google.gson.GsonBuilder
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -80,8 +84,15 @@ fun networkModule() = module {
         retrofit.create(PromotionsApi::class.java)
     }
 
-    single<AuthorizationRepository> { AuthorizationRepositoryImpl(get(), get()) }
-    single<ProfileRepository> { ProfileRepositoryImpl(get()) }
-    single<MenuRepository> { MenuRepositoryImpl(get()) }
-    single<PromotionRepository> { PromotionRepositoryImpl(get()) }
+    if (BuildConfig.MOCK) {
+        single<AuthorizationRepository> { AuthorizationRepositoryMock() }
+        single<ProfileRepository> { ProfileRepositoryMock() }
+        single<MenuRepository> { MenuRepositoryMock() }
+        single<PromotionRepository> { PromotionsRepositoryMock() }
+    } else {
+        single<AuthorizationRepository> { AuthorizationRepositoryImpl(get(), get()) }
+        single<ProfileRepository> { ProfileRepositoryImpl(get()) }
+        single<MenuRepository> { MenuRepositoryImpl(get()) }
+        single<PromotionRepository> { PromotionRepositoryImpl(get()) }
+    }
 }

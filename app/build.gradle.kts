@@ -22,19 +22,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-   buildFeatures {
-       buildConfig = true
-       compose = true
-   }
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("Boolean", "MOCK", "false")
+            val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
+            buildConfigField("String", "MAP_API_KEY", key)
         }
         debug {
             val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
             buildConfigField("String", "MAP_API_KEY", key)
+            buildConfigField("Boolean", "MOCK", "false")
+        }
+        create("mock") {
+            buildConfigField("Boolean", "MOCK", "true")
+            val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
+            buildConfigField("String", "MAP_API_KEY", key)
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
