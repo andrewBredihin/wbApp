@@ -84,7 +84,7 @@ fun networkModule() = module {
         retrofit.create(PromotionsApi::class.java)
     }
 
-    if (BuildConfig.MOCK) {
+    if (BuildConfig.FLAVOR_MOCK) {
         single<AuthorizationRepository> { AuthorizationRepositoryMock() }
         single<ProfileRepository> { ProfileRepositoryMock() }
         single<MenuRepository> { MenuRepositoryMock() }

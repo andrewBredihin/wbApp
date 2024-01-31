@@ -2,6 +2,8 @@ package com.bav.wbapp
 
 import androidx.room.Room
 import com.bav.core.basket.AppDatabase
+import com.bav.core.basket.ProductDao
+import com.bav.core.basket.ProductDaoMock
 import com.bav.wbapp.auth.login.LoginViewModel
 import com.bav.wbapp.auth.registration.RegistrationViewModel
 import com.bav.wbapp.order.basket.BasketViewModel
@@ -35,5 +37,16 @@ fun appModule() = module {
             get(),
             AppDatabase::class.java, "basket-database"
         ).build()
+    }
+
+    if (BuildConfig.FLAVOR_MOCK) {
+        single<ProductDao> {
+            ProductDaoMock()
+        }
+    } else {
+        single<ProductDao> {
+            val db: AppDatabase = get()
+            db.productDao()
+        }
     }
 }

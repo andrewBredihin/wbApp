@@ -3,7 +3,7 @@ package com.bav.wbapp.order.basket
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bav.core.basket.AppDatabase
+import com.bav.core.basket.ProductDao
 import com.bav.core.basket.ProductEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class BasketViewModel(private val db: AppDatabase) : ViewModel() {
+class BasketViewModel(private val productDao: ProductDao) : ViewModel() {
 
     companion object {
         const val PROMO_CODE_TEMPLATE = "(\\d{4})-(\\d{4})-(\\d{4})"
@@ -70,7 +70,7 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 delay(1000)
-                val list = db.productDao().getAll()
+                val list = productDao.getAll()
                 withContext(Dispatchers.Main) {
                     val price = calculatePrice(list)
                     _basketState.value = _basketState.value.copy(
@@ -97,7 +97,7 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
     /** Изменить количество товара в корзине и обновить state для отображения актуальной цены */
     private fun updateProduct(productId: Int, amount: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.productDao().updateByProductId(productId, amount)
+            productDao.updateByProductId(productId, amount)
             withContext(Dispatchers.Main) {
                 val list = mutableListOf<ProductEntity>()
                 _basketState.value.data.forEach {
@@ -123,7 +123,7 @@ class BasketViewModel(private val db: AppDatabase) : ViewModel() {
      * */
     private fun deleteProduct(productId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.productDao().deleteByProductId(productId)
+            productDao.deleteByProductId(productId)
             val list = _basketState.value.data.filter { it.productId != productId }
             withContext(Dispatchers.Main) {
                 if (list.isNotEmpty()) {
