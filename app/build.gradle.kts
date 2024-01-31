@@ -31,20 +31,12 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("Boolean", "MOCK", "false")
             val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
             buildConfigField("String", "MAP_API_KEY", key)
         }
         debug {
             val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
             buildConfigField("String", "MAP_API_KEY", key)
-            buildConfigField("Boolean", "MOCK", "false")
-        }
-        create("mock") {
-            buildConfigField("Boolean", "MOCK", "true")
-            val key: String = gradleLocalProperties(rootDir).getProperty("MAP_API_KEY")
-            buildConfigField("String", "MAP_API_KEY", key)
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -61,6 +53,17 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.2"
+    }
+    flavorDimensions += listOf("data")
+    productFlavors {
+        create("mockdata") {
+            dimension = "data"
+            buildConfigField("Boolean", "FLAVOR_MOCK", "true")
+        }
+        create("realdata") {
+            dimension = "data"
+            buildConfigField("Boolean", "FLAVOR_MOCK", "false")
+        }
     }
 }
 
