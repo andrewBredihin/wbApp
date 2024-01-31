@@ -92,10 +92,12 @@ class EditAmountView constructor(
         invalidate()
     }
     fun setCurrentAmount(value: Int) {
-        this.currentAmount = value
-        listener?.invoke(value)
-        requestLayout()
-        invalidate()
+        if (value <= maxAmount || value >= minAmount) {
+            this.currentAmount = value
+            listener?.invoke(value)
+            requestLayout()
+            invalidate()
+        }
     }
 
     fun setEditAmountListener(listener: OnAmountChangedListener) {
@@ -229,4 +231,5 @@ class EditAmountView constructor(
         resources.displayMetrics
     )
 
+    fun getAmount() = this.currentAmount
 }
