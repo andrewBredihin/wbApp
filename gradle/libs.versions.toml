@@ -27,6 +27,8 @@ room            = "2.6.1"
 map             = "4.4.0-lite"
 compose         = "1.5.8"
 composeConstraintLayout = "1.0.1"
+kakao           = "2.3.4"
+testRules       = "1.5.0"
 
 [libraries]
 koin-android            = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -35,6 +37,8 @@ common-core             = { module = "androidx.core:core-ktx", version.ref = "ko
 common-appcompat        = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 common-material         = { module = "com.google.android.material:material", version.ref = "material" }
 test-junit              = { module = "junit:junit", version.ref = "junit" }
+test-rules              = { module = "androidx.test:rules", version.ref = "testRules" }
+test-runner             = { module = "androidx.test:runner", version.ref = "testRules" }
 test-androidx-junit     = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
 test-espresso           = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 constraint              = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraint" }
@@ -67,6 +71,7 @@ compose-constraintlayout= { module = "androidx.constraintlayout:constraintlayout
 compose-ui              = { module = "androidx.compose.ui:ui" }
 compose-ui-graphics     = { module = "androidx.compose.ui:ui-graphics" }
 compose-material        = { module = "androidx.compose.material3:material3" }
+kakao                   = { module = "com.agoda.kakao:kakao", version.ref = "kakao" }
 
 [plugins]
 com-android-library = { id = "com.android.library", version.ref = "agp" }
@@ -86,7 +91,10 @@ common = [
 test = [
     "test-junit",
     "test-androidx-junit",
-    "test-espresso"
+    "test-espresso",
+    "kakao",
+    "test-rules",
+    "test-runner"
 ]
 navigation = [
     "navigation-fragment",
