@@ -56,11 +56,11 @@ android {
     }
     flavorDimensions += listOf("data")
     productFlavors {
-        create("mockdata") {
+        create("mock") {
             dimension = "data"
             buildConfigField("Boolean", "FLAVOR_MOCK", "true")
         }
-        create("realdata") {
+        create("real") {
             dimension = "data"
             buildConfigField("Boolean", "FLAVOR_MOCK", "false")
         }
