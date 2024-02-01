@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.constraint)
     implementation(libs.viewpager2)
     implementation(libs.map)
+    testImplementation(libs.coroutines.test)
 
     // Room
     implementation(libs.roomMain)

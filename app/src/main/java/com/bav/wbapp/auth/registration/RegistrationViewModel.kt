@@ -1,5 +1,6 @@
 package com.bav.wbapp.auth.registration
 
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
@@ -147,7 +148,7 @@ class RegistrationViewModel(private val authRepository: AuthorizationRepository)
     ): Boolean {
         return name.length >= MIN_FIELD_LENGTH
                 && checkPhone(phone)
-                && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                && PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
                 && password.length >= MIN_FIELD_LENGTH
                 && isCheck
     }

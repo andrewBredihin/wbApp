@@ -4,8 +4,8 @@ class ProductDaoMock : ProductDao {
 
     private val list = listOf(
         ProductEntity(
-            id = 1,
-            productId = 1,
+            id = 0,
+            productId = 0,
             amount = 25,
             title = "Product 1",
             type = "Type 1",
@@ -14,8 +14,8 @@ class ProductDaoMock : ProductDao {
             available = true
         ),
         ProductEntity(
-            id = 2,
-            productId = 2,
+            id = 1,
+            productId = 1,
             amount = 10,
             title = "Product 2",
             type = "Type 2",

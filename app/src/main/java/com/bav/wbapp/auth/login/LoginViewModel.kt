@@ -1,5 +1,6 @@
 package com.bav.wbapp.auth.login
 
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bav.core.api.ResponseCode
@@ -12,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class LoginViewModel(private val authRepository: AuthorizationRepository) : ViewModel() {
 
@@ -90,7 +90,7 @@ class LoginViewModel(private val authRepository: AuthorizationRepository) : View
     }
 
     private fun checkLoginFields(email: String, password: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
                 && password.length >= MIN_FIELD_LENGTH
     }
 }

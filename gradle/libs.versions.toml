@@ -57,6 +57,7 @@ lifecycle-livedata      = { module = "androidx.lifecycle:lifecycle-livedata-ktx"
 lifecycle-viewmodel     = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 coroutines-core         = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android      = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test         = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 datastore               = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 viewpager2              = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 roomMain                = { module = "androidx.room:room-runtime", version.ref = "room" }

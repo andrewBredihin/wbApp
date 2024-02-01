@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.bav.core.basket.ProductDao
 import com.bav.core.basket.ProductEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -69,7 +68,6 @@ class BasketViewModel(private val productDao: ProductDao) : ViewModel() {
         _basketState.value = _basketState.value.copy(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                delay(1000)
                 val list = productDao.getAll()
                 withContext(Dispatchers.Main) {
                     val price = calculatePrice(list)
