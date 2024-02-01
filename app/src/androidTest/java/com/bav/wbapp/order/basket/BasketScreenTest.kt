@@ -1,4 +1,4 @@
-package com.bav.wbapp.order
+package com.bav.wbapp.order.basket
 
 import android.view.View
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -8,9 +8,10 @@ import com.agoda.kakao.recycler.KRecyclerItem
 import com.agoda.kakao.recycler.KRecyclerView
 import com.agoda.kakao.screen.Screen
 import com.agoda.kakao.text.KTextView
-import com.bav.wbapp.MainActivity
 import com.bav.wbapp.R
-import com.bav.wbapp.order.basket.BasketScreen
+import com.bav.wbapp.order.KEditAmount
+import com.bav.wbapp.order.OrderActivity
+import com.bav.wbapp.order.getText
 import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Rule
@@ -23,7 +24,7 @@ class BasketScreenTest {
 
     @Rule
     @JvmField
-    var activityRule = ActivityTestRule(MainActivity::class.java)
+    var activityRule = ActivityTestRule(OrderActivity::class.java)
 
     private val screen = BasketTestScreen()
 
@@ -64,7 +65,7 @@ open class BasketTestScreen : Screen<BasketTestScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.basket_recycler)
     }, itemTypeBuilder = {
-        itemType(::Item)
+        itemType(BasketTestScreen::Item)
     })
 
     val price: KTextView = KTextView { withId(R.id.total_with_discount) }

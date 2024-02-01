@@ -2,7 +2,7 @@ package com.bav.wbapp.order.apply
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bav.core.basket.AppDatabase
+import com.bav.core.basket.ProductDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
+class ApplyOrderViewModel(private val productDao: ProductDao) : ViewModel() {
 
     private val _applyOrderState: MutableStateFlow<ApplyOrderState> = MutableStateFlow(ApplyOrderState())
     val applyOrderState = _applyOrderState.asStateFlow()
@@ -42,7 +42,7 @@ class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
 
     private fun loadingMenu() {
         viewModelScope.launch(Dispatchers.IO) {
-            val list = db.productDao().getAll()
+            val list = productDao.getAll()
             withContext(Dispatchers.Main) {
                 _applyOrderState.value = _applyOrderState.value.copy(
                     isLoading = false,
@@ -56,7 +56,7 @@ class ApplyOrderViewModel(private val db: AppDatabase) : ViewModel() {
     private fun createOrder() {
         viewModelScope.launch(Dispatchers.Default) {
             delay(3000)
-            db.productDao().deleteAll()
+            productDao.deleteAll()
             withContext(Dispatchers.Main) {
                 _applyOrderState.value = _applyOrderState.value.copy(isLoaded = true)
             }
